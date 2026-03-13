@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import prisma from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 // GET all leads (admin)
 export async function GET() {
   try {
