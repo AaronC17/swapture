@@ -3,9 +3,7 @@ import prisma from '@/lib/prisma'
 import OpenAI from 'openai'
 import { sanitizeString, sanitizeEmail, sanitizePhone, sanitizeNumber, rateLimit, getClientIp, CHAT_LIMIT } from '@/lib/security'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
@@ -113,6 +111,15 @@ REGLAS ESTRICTAS:
 6. NO pidas datos de contacto tú mismo — el sistema tiene un formulario para eso
 7. Enfócate SOLO en responder la pregunta sobre el negocio/servicios
 8. Si la pregunta no tiene que ver con el negocio, redirige amablemente a los servicios disponibles`
+
+    const apiKey = process.env.OPENAI_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({
+        reply: 'Por ahora no puedo responder automáticamente. Déjanos tus datos y te contactamos directamente.',
+      })
+    }
+
+    const openai = new OpenAI({ apiKey })
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
