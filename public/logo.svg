@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" fill="none">
+  <g stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- S-shape upper curve (top-right arrow going left-down) -->
+    <path d="M140 30 C95 14, 38 28, 38 72 C38 102, 68 118, 110 122" stroke-width="10"/>
+    <!-- S-shape lower curve (bottom-left arrow going right-up) -->
+    <path d="M110 122 C152 126, 182 142, 182 174 C182 212, 125 228, 78 216" stroke-width="10"/>
+
+    <!-- Top-right arrowhead -->
+    <polyline points="124,16 142,32 124,48" stroke-width="8"/>
+    <!-- Bottom-left arrowhead -->
+    <polyline points="96,202 78,218 96,232" stroke-width="8"/>
+
+    <!-- Handshake – left hand reaching right -->
+    <path d="M68 108 C78 96, 92 92, 104 100" stroke-width="7"/>
+    <path d="M74 118 C84 106, 96 102, 106 110" stroke-width="6"/>
+    <path d="M80 128 C88 118, 98 114, 106 120" stroke-width="5"/>
+    <!-- Handshake – right hand reaching left -->
+    <path d="M152 108 C142 96, 128 92, 116 100" stroke-width="7"/>
+    <path d="M146 118 C136 106, 124 102, 114 110" stroke-width="6"/>
+    <path d="M140 128 C132 118, 122 114, 114 120" stroke-width="5"/>
+
+    <!-- Knuckle detail -->
+    <path d="M100 104 C104 98, 112 96, 120 104" stroke-width="4"/>
+
+    <!-- Spark / shine at top-right corner -->
+    <line x1="158" y1="22" x2="158" y2="6" stroke-width="6"/>
+    <line x1="150" y1="14" x2="166" y2="14" stroke-width="6"/>
+    <line x1="151" y1="8" x2="165" y2="22" stroke-width="4"/>
+    <line x1="165" y1="8" x2="151" y2="22" stroke-width="4"/>
+  </g>
+</svg>

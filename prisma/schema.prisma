@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== USUARIOS ====================
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("client") // "admin" | "client"
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client Client?
+}
+
+// ==================== CLIENTES ====================
+model Client {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @unique @db.ObjectId
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  businessName String
+  businessType String   @default("")
+  phone        String   @default("")
+  website      String   @default("")
+  domain       String   @default("")
+  slug         String   @unique @default("")
+  
+  status       String   @default("pending") // "pending" | "configuring" | "active" | "paused" | "cancelled"
+  plan         String   @default("starter") // "starter" | "growth" | "scale"
+  
+  brandColor   String   @default("#a855f7")
+  logoUrl      String   @default("")
+  description  String   @default("")
+  services     String   @default("") // comma separated
+  
+  // Website setup tracking
+  websiteStatus    String @default("not_started") // "not_started" | "designing" | "review" | "published"
+  automationStatus String @default("not_started") // "not_started" | "configuring" | "active"
+  crmStatus        String @default("not_started") // "not_started" | "configuring" | "active"
+  whatsappNumber   String @default("")
+  googleAnalytics  String @default("")
+  facebookPixel    String @default("")
+  customNotes      String @default("") // internal setup notes
+  
+  subscriptionStart DateTime?
+  subscriptionEnd   DateTime?
+  monthlyPrice      Float    @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leads   Lead[]
+  notes   Note[]
+}
+
+// ==================== LEADS ====================
+model Lead {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clientId  String   @db.ObjectId
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  name      String
+  email     String   @default("")
+  phone     String   @default("")
+  message   String   @default("")
+  source    String   @default("website") // "website" | "whatsapp" | "manual" | "form" | "chatbot"
+  status    String   @default("new")     // "new" | "contacted" | "qualified" | "converted" | "lost"
+  
+  // Enhanced CRM fields
+  orderDetails String   @default("")  // JSON: items ordered via chatbot/cart
+  totalAmount  Float    @default(0)   // order total in colones
+  tags         String   @default("")  // comma-separated tags
+  rating       Int      @default(0)   // 1-5 priority/quality rating
+  lastContactAt DateTime?             // when client last interacted
+  convertedAt   DateTime?             // when marked as converted
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes      LeadNote[]
+  activities LeadActivity[]
+}
+
+// ==================== LEAD NOTES (client can add notes to leads) ====================
+model LeadNote {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  leadId   String   @db.ObjectId
+  lead     Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  content  String
+  author   String   @default("client") // "client" | "admin" | "system"
+  
+  createdAt DateTime @default(now())
+}
+
+// ==================== LEAD ACTIVITY LOG ====================
+model LeadActivity {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  leadId   String   @db.ObjectId
+  lead     Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  type     String   // "status_change" | "note_added" | "order_placed" | "message_sent" | "whatsapp_click" | "chatbot_conversation" | "form_submission" | "page_visit"
+  detail   String   @default("") // JSON or text description
+  author   String   @default("system") // "client" | "admin" | "system" | "visitor"
+  
+  createdAt DateTime @default(now())
+}
+
+// ==================== NOTAS INTERNAS ====================
+model Note {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clientId  String   @db.ObjectId
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  content   String
+  author    String   @default("admin")
+  
+  createdAt DateTime @default(now())
+}

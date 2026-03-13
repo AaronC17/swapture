@@ -1,0 +1,236 @@
+const { PrismaClient } = require('@prisma/client')
+const bcrypt = require('bcryptjs')
+
+const prisma = new PrismaClient()
+
+async function main() {
+  console.log('🌱 Seeding database...')
+
+  // Clean existing data
+  await prisma.note.deleteMany()
+  await prisma.lead.deleteMany()
+  await prisma.client.deleteMany()
+  await prisma.user.deleteMany()
+
+  // ==================== ADMIN ====================
+  const adminPassword = await bcrypt.hash('admin123', 12)
+  const admin = await prisma.user.create({
+    data: {
+      email: 'admin@swapture.com',
+      password: adminPassword,
+      name: 'Admin Swapture',
+      role: 'admin',
+    },
+  })
+  console.log('✅ Admin creado:', admin.email)
+
+  // ==================== CLIENTE 1: Quincho's Smash Burger (ACTIVO) ====================
+  const pw1 = await bcrypt.hash('demo123', 12)
+  const user1 = await prisma.user.create({
+    data: {
+      email: 'quinchos@smashburger.cr',
+      password: pw1,
+      name: 'Quincho López',
+      role: 'client',
+    },
+  })
+
+  const quinchosMenu = JSON.stringify({
+    categories: [
+      {
+        name: 'Burgers Clásicas',
+        emoji: '🍔',
+        items: [
+          { name: 'Cheeseburger', desc: 'Pan brioche, torta de carne Angus, queso americano, pepinillos y salsa especial', price: 5570 },
+          { name: 'Bacon Cheeseburger', desc: 'Angus con queso y tocino americano, salsa especial', price: 7000 },
+          { name: 'Doble Cheeseburger', desc: 'Doble carne y queso americano', price: 8140 },
+          { name: 'Doble Bacon', desc: 'Doble carne, doble queso y doble tocino', price: 8500 },
+          { name: 'Triple Bacon', desc: 'Triple carne, triple queso y tocino', price: 11140 },
+          { name: 'Oklahoma', desc: 'Doble carne con cebolla caramelizada y doble queso', price: 8200 },
+        ]
+      },
+      {
+        name: 'Burgers Premium',
+        emoji: '✨',
+        items: [
+          { name: 'Portobello', desc: 'Doble carne, queso americano + mozzarella, champiñones salteados y salsa mostaza miel', price: 9640 },
+          { name: 'Tropical', desc: 'Doble carne con queso pepper jack, piña salteada y aderezo de aguacate', price: 9420 },
+          { name: 'Onion BBQ', desc: 'Doble carne, queso, tocino y salsa BBQ con aros de cebolla', price: 10900 },
+          { name: 'Cheeselover', desc: 'Doble carne + queso, tocino, 3 palitos mozzarella y aros de cebolla', price: 12700 },
+          { name: 'Trufada', desc: 'Doble carne, queso suizo, hongos y mayonesa trufada', price: 12420 },
+        ]
+      },
+      {
+        name: 'Chicken Burgers',
+        emoji: '🍗',
+        items: [
+          { name: 'Chicken BBQ', desc: 'Pechuga empanizada con queso americano y salsa BBQ', price: 8850 },
+          { name: 'Chicken Jalapeña', desc: 'Pechuga empanizada con queso y salsa chipotle picante', price: 8420 },
+        ]
+      },
+      {
+        name: 'Acompañamientos',
+        emoji: '🍟',
+        items: [
+          { name: 'Smash Fries', desc: 'Papas estilo smash con salsa especial', price: 7000 },
+          { name: 'Bacon Fries XL', desc: 'Papas con tocino y queso derretido', price: 6420 },
+          { name: 'Aros de Cebolla x12', desc: 'Aros de cebolla empanizados y crujientes', price: 7000 },
+          { name: 'Bolitas de Yuca x6', desc: 'Bolitas de yuca fritas', price: 4850 },
+          { name: 'Bolitas de Yuca x12', desc: 'Porción grande de bolitas de yuca', price: 8420 },
+          { name: 'Palitos de Queso x6', desc: 'Palitos de queso mozzarella', price: 5640 },
+          { name: 'Palitos de Queso x12', desc: 'Porción grande de palitos de queso', price: 11280 },
+        ]
+      }
+    ],
+    hours: 'Lunes a Domingo: 10:00 AM – 1:45 AM',
+    locations: ['Jacó, Puntarenas', 'Esparza, Puntarenas', 'Orotina, Alajuela'],
+    style: 'Hamburguesas estilo smash — carne Angus aplastada en plancha caliente para máximo sabor y jugosidad. Ingredientes americanos: pan brioche, queso americano, tocino y salsas especiales.'
+  })
+
+  await prisma.client.create({
+    data: {
+      userId: user1.id,
+      businessName: "Quincho's Smash Burger",
+      businessType: 'Restaurante – Smash Burgers',
+      phone: '+506 6012 3456',
+      website: '',
+      domain: 'quinchossmash.cr',
+      slug: 'quinchos-smash-burger',
+      status: 'active',
+      plan: 'growth',
+      monthlyPrice: 2999,
+      brandColor: '#6abf4b',
+      description: 'Las mejores smash burgers de Costa Rica. Carne Angus 100%, pan brioche artesanal y salsas especiales. Locales en Jacó, Esparza y Orotina.',
+      services: 'Smash Burgers, Chicken Burgers, Papas y Acompañamientos, Delivery, Para llevar',
+      websiteStatus: 'published',
+      automationStatus: 'active',
+      crmStatus: 'active',
+      whatsappNumber: '+50661555619',
+      googleAnalytics: 'G-ABC123DEF',
+      customNotes: quinchosMenu,
+      subscriptionStart: new Date('2025-11-15'),
+    },
+  })
+  console.log("✅ Cliente 1: Quincho's Smash Burger (activo, 0 leads — listo para recibir)")
+
+  // ==================== CLIENTE 2: Sonrisa Perfecta (CONFIGURANDO) ====================
+  const pw2 = await bcrypt.hash('dental123', 12)
+  const user2 = await prisma.user.create({
+    data: {
+      email: 'dra.santos@sonrisaperfecta.mx',
+      password: pw2,
+      name: 'Dra. Patricia Santos',
+      role: 'client',
+    },
+  })
+  await prisma.client.create({
+    data: {
+      userId: user2.id,
+      businessName: 'Sonrisa Perfecta Dental',
+      businessType: 'Clínica dental',
+      phone: '+52 33 9876 5432',
+      website: '',
+      domain: 'sonrisaperfecta.mx',
+      slug: 'sonrisa-perfecta',
+      status: 'configuring',
+      plan: 'growth',
+      monthlyPrice: 3499,
+      brandColor: '#0ea5e9',
+      description: 'Clínica dental en Guadalajara. Ortodoncia, implantes, estética dental y odontología general.',
+      services: 'Ortodoncia, Implantes, Blanqueamiento, Limpieza dental, Estética dental',
+      websiteStatus: 'review',
+      automationStatus: 'configuring',
+      crmStatus: 'configuring',
+      whatsappNumber: '+5213398765432',
+      subscriptionStart: new Date('2026-02-20'),
+    },
+  })
+  console.log('✅ Cliente 2: Sonrisa Perfecta Dental (configurando, 0 leads)')
+
+  // ==================== CLIENTE 3: IronFit Gym (ACTIVO) ====================
+  const pw3 = await bcrypt.hash('gym123', 12)
+  const user3 = await prisma.user.create({
+    data: {
+      email: 'jorge@ironfit.mx',
+      password: pw3,
+      name: 'Jorge Castillo',
+      role: 'client',
+    },
+  })
+  await prisma.client.create({
+    data: {
+      userId: user3.id,
+      businessName: 'IronFit Gym',
+      businessType: 'Gimnasio',
+      phone: '+52 81 5555 1234',
+      website: 'https://ironfit.mx',
+      domain: 'ironfit.mx',
+      slug: 'ironfit-gym',
+      status: 'active',
+      plan: 'scale',
+      monthlyPrice: 4999,
+      brandColor: '#22c55e',
+      description: 'Gimnasio premium en Monterrey. CrossFit, pesas, cardio y clases grupales. 3 sucursales.',
+      services: 'CrossFit, Musculación, Clases grupales, Entrenamiento personal, Nutrición',
+      websiteStatus: 'published',
+      automationStatus: 'active',
+      crmStatus: 'active',
+      whatsappNumber: '+5218155551234',
+      googleAnalytics: 'G-XYZ789GHI',
+      facebookPixel: '123456789012345',
+      subscriptionStart: new Date('2025-09-01'),
+    },
+  })
+  console.log('✅ Cliente 3: IronFit Gym (activo, 0 leads — listo para recibir)')
+
+  // ==================== CLIENTE 4: Bella Estilo (PENDIENTE) ====================
+  const pw4 = await bcrypt.hash('bella123', 12)
+  const user4 = await prisma.user.create({
+    data: {
+      email: 'rosa@bellaestilo.com',
+      password: pw4,
+      name: 'Rosa Villarreal',
+      role: 'client',
+    },
+  })
+  await prisma.client.create({
+    data: {
+      userId: user4.id,
+      businessName: 'Bella Estilo Salón',
+      businessType: 'Salón de belleza',
+      phone: '+52 55 4321 8765',
+      slug: 'bella-estilo',
+      status: 'pending',
+      plan: 'starter',
+      monthlyPrice: 1999,
+      brandColor: '#ec4899',
+      description: 'Salón de belleza y spa en Coyoacán. Cortes, color, uñas y tratamientos faciales.',
+      services: 'Corte, Color, Uñas, Facial, Depilación, Maquillaje',
+      websiteStatus: 'not_started',
+      automationStatus: 'not_started',
+      crmStatus: 'not_started',
+    },
+  })
+  console.log('✅ Cliente 4: Bella Estilo Salón (pendiente, 0 leads)')
+
+  console.log('\n🎉 Seed completado — Base de datos limpia, sin datos de prueba')
+  console.log('\n📋 Credenciales:')
+  console.log('   Admin:     admin@swapture.com / admin123')
+  console.log("   Cliente 1: quinchos@smashburger.cr / demo123  (activo)")
+  console.log('   Cliente 2: dra.santos@sonrisaperfecta.mx / dental123  (configurando)')
+  console.log('   Cliente 3: jorge@ironfit.mx / gym123  (activo)')
+  console.log('   Cliente 4: rosa@bellaestilo.com / bella123  (pendiente)')
+  console.log('\n🌐 Páginas públicas:')
+  console.log('   /site/quinchos-smash-burger')
+  console.log('   /site/ironfit-gym')
+  console.log('   (Solo clientes activos tienen página visible)')
+}
+
+main()
+  .catch((e) => {
+    console.error('❌ Error:', e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
