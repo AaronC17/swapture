@@ -5,7 +5,7 @@ import {
   Send, MessageCircle, X, ChevronDown, Phone, CheckCircle2,
   ArrowRight, User, Mail, MessageSquare, Bot, MapPin, Clock,
   Star, Flame, UtensilsCrossed, ShoppingCart, Plus, Minus,
-  Trash2, ChevronRight, Sparkles, Heart, Timer, Truck, Menu as MenuIcon
+  Trash2, ChevronRight, Sparkles, Heart, Timer, Truck, Instagram, Menu as MenuIcon
 } from 'lucide-react'
 
 /* ═══════════════════════════════════════════════
@@ -1298,6 +1298,14 @@ export default function SiteClient({ data }: { data: SiteData }) {
                   <Phone size={11} className="text-[#25D366]/50" />{data.whatsappNumber}
                 </a>
               )}
+              <a
+                href="https://www.instagram.com/quinchossmash_cr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-white/30 hover:text-[#E1306C] transition-colors flex items-center gap-1.5 font-semibold"
+              >
+                <Instagram size={11} className="text-[#E1306C]/60" />Instagram
+              </a>
             </div>
           </div>
           {/* Bottom divider + copyright */}
