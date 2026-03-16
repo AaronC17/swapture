@@ -9,17 +9,17 @@ const faqs = [
   {
     question: '¿La página web está incluida?',
     answer:
-      'Sí. Tu página web profesional viene incluida en tu suscripción mensual. No la hacemos aparte — es parte de todo el sistema que armamos para tu negocio.',
+      'Sí. La página web forma parte de la solución cuando el proyecto lo requiere. Se define desde el inicio junto con el resto de herramientas.',
   },
   {
     question: '¿Hay algún costo de instalación?',
     answer:
-      'No. Solo pagas tu suscripción mensual y nosotros nos encargamos de armar, configurar y lanzar todo sin costos adicionales.',
+      'Depende del alcance. Antes de iniciar te presentamos una propuesta con fases, entregables y costos claros para evitar sorpresas.',
   },
   {
     question: '¿Cuánto tarda en estar listo?',
     answer:
-      'En las primeras semanas ya tienes tu sistema funcionando. Desde el primer mes empiezas a notar más consultas, más contactos y mejores resultados.',
+      'Depende del alcance y del material disponible. Normalmente en pocas semanas puedes tener una primera versión funcional para empezar a operar.',
   },
   {
     question: '¿Necesito saber de computadoras o internet?',
@@ -29,7 +29,7 @@ const faqs = [
   {
     question: '¿Puedo cancelar cuando quiera?',
     answer:
-      'Trabajamos con un mínimo de 3 meses para que puedas ver resultados reales. Después de eso, puedes cancelar cuando quieras. Pero cuando veas cómo funciona, no vas a querer.',
+      'Las condiciones se acuerdan antes de iniciar. Siempre trabajamos con objetivos, tiempos y responsabilidades claras para ambas partes.',
   },
   {
     question: '¿Esto sirve para mi tipo de negocio?',

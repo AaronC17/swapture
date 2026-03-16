@@ -30,7 +30,7 @@ const includes = [
   {
     icon: Shield,
     title: 'Siempre acompañado',
-    description: 'No te dejamos solo. Cada mes revisamos y mejoramos tu sistema para que funcione cada vez mejor.',
+    description: 'No te dejamos solo. Revisamos resultados, hacemos ajustes y te acompañamos para que el sistema siga mejorando.',
   },
 ]
 
@@ -41,19 +41,19 @@ export default function System() {
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <Reveal>
-            <span className="section-label">Una sola suscripción</span>
+            <span className="section-label">Solución integral</span>
           </Reveal>
           <Reveal delay={1}>
             <h2 className="section-title">
               Todo incluido.
               <br />
-              <span className="text-gradient">Sin costos ocultos.</span>
+              <span className="text-gradient">Con alcance claro.</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>
             <p className="text-muted text-base sm:text-lg max-w-xl mx-auto">
               Tu página web, la captación de clientes, el seguimiento y los reportes.
-              Todo incluido en un solo pago. Sin costos de instalación ni sorpresas.
+              Definimos contigo el alcance y te entregamos una propuesta clara, sin letras pequeñas.
             </p>
           </Reveal>
         </div>

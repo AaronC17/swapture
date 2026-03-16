@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Swapture — Todo lo que necesitas para generar clientes',
-  description: 'Página web, automatizaciones, CRM, métricas y soporte en una sola suscripción mensual. El sistema completo que genera clientes para tu negocio.',
-  keywords: 'SaaS, sistema de clientes, suscripción, automatización, captación de clientes, plataforma digital',
+  description: 'Página web, automatizaciones, CRM, métricas y acompañamiento para ayudarte a generar más clientes con una estrategia digital clara.',
+  keywords: 'sistema de clientes, automatización, captación de clientes, estrategia digital, página web para negocios',
   openGraph: {
     title: 'Swapture — Todo lo que necesitas para generar clientes',
-    description: 'Un solo sistema. Un solo pago mensual. Página, automatizaciones, CRM y métricas — todo incluido.',
+    description: 'Solución integral para atraer, organizar y convertir contactos en clientes con procesos digitales más eficientes.',
     type: 'website',
   },
 }

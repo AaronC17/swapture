@@ -54,11 +54,11 @@ export default function Hero() {
         {/* Minimal trust line */}
         <Reveal delay={4}>
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-muted/50">
-            <span>Sin contrato largo</span>
+            <span>Propuesta según alcance</span>
             <span className="w-1 h-1 rounded-full bg-border/40 hidden sm:block" />
             <span>Listo en semanas</span>
             <span className="w-1 h-1 rounded-full bg-border/40 hidden sm:block" />
-            <span>Soporte incluido</span>
+            <span>Acompañamiento continuo</span>
           </div>
         </Reveal>
       </div>

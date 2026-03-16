@@ -5,10 +5,10 @@ import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const features = [
-  'Sin costo de instalación',
+  'Diagnóstico inicial del negocio',
   'Listo en semanas',
-  'Todo incluido en un solo pago',
-  'Cancelación flexible',
+  'Alcance y entregables definidos',
+  'Ajustes según resultados',
 ]
 
 export default function CTA() {
@@ -65,7 +65,7 @@ export default function CTA() {
             <Reveal delay={2}>
               <p className="text-muted text-sm sm:text-base mb-8 leading-relaxed">
                 Cuéntanos sobre tu negocio y te mostramos cómo podemos
-                ayudarte a conseguir más clientes desde el primer mes.
+                ayudarte a captar más oportunidades con una propuesta realista y aterrizada a tu contexto.
               </p>
             </Reveal>
             <Reveal delay={3}>
