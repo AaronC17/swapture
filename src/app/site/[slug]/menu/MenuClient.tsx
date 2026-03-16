@@ -379,7 +379,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
   }, [activeCat])
 
   return (
-    <div className="min-h-screen text-white selection:bg-green-500/30 overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #0d0f0c 0%, #0a0b09 35%, #0c0d0b 70%, #0a0b09 100%)' }}>
+    <div className="relative min-h-screen max-w-full overflow-x-clip text-white selection:bg-green-500/30" style={{ background: 'linear-gradient(180deg, #0d0f0c 0%, #0a0b09 35%, #0c0d0b 70%, #0a0b09 100%)' }}>
       {/* Ambient glow */}
       <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${G}04, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${G}02, transparent 60%)` }} />
 
@@ -581,7 +581,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
 
 
           {/* ═══════ MENU ITEMS ═══════ */}
-          <main className="relative max-w-6xl mx-auto px-3 sm:px-8 py-4 sm:py-8 pb-28">
+          <main className="relative max-w-6xl mx-auto w-full px-3 sm:px-8 py-4 sm:py-8 pb-28 overflow-x-clip">
             {/* Ambient category glow */}
             <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-[140px] opacity-[0.05] pointer-events-none" style={{ background: G }} />
             {menu.categories.map((cat, ci) => ci === activeCat && (
@@ -605,7 +605,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                   const grouped = groupItems(cat.items)
                   const total = grouped.length
                   return (
-                    <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3">
+                    <div className="grid w-full grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3">
                       {grouped.map((di, idx) => {
                         const selV = di.kind === 'single'
                           ? di.variants[0]

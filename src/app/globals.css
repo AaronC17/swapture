@@ -13,10 +13,14 @@
     scroll-padding-top: 80px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   body {
     @apply bg-bg text-white font-body overflow-x-hidden;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   /* Keyboard-only focus ring (accessibility) */
