@@ -11,12 +11,13 @@ mongodb+srv://USER:PASSWORD@cluster.mongodb.net/swapture?retryWrites=true&w=majo
 En Vercel -> Project -> Settings -> Environment Variables agrega:
 
 - DATABASE_URL (obligatoria)
+- MONGODB_URI (alternativa valida, la crea la integracion de Mongo Atlas en Vercel)
 - JWT_SECRET (obligatoria)
 - OPENAI_API_KEY (opcional)
 - TELEGRAM_BOT_TOKEN (opcional)
 - TELEGRAM_CHAT_ID (opcional)
 
-Puedes usar `.env.example` como referencia.
+Puedes usar `.env.example` como referencia. El codigo acepta `DATABASE_URL` o `MONGODB_URI`.
 
 ## 3) Build y runtime
 La app ya ejecuta Prisma Client en build con:
