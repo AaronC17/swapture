@@ -98,8 +98,8 @@ export async function safeJsonParse(req: Request): Promise<Record<string, unknow
 }
 
 // ─── RATE LIMIT PRESETS ───────────────────────────
-/** 5 login attempts per 15 minutes per IP */
-export const LOGIN_LIMIT = { max: 5, window: 15 * 60 * 1000 }
+/** 12 login attempts per 5 minutes per IP */
+export const LOGIN_LIMIT = { max: 12, window: 5 * 60 * 1000 }
 /** 10 contact form submissions per 15 minutes per IP */
 export const CONTACT_LIMIT = { max: 10, window: 15 * 60 * 1000 }
 /** 20 lead/order submissions per 15 minutes per IP */

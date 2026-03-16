@@ -9,9 +9,13 @@ export async function POST(req: NextRequest) {
     const ip = getClientIp(req)
     const rl = rateLimit(`login:${ip}`, LOGIN_LIMIT.max, LOGIN_LIMIT.window)
     if (!rl.allowed) {
+      const retryAfter = Math.ceil(rl.resetIn / 1000)
       return NextResponse.json(
-        { error: 'Demasiados intentos. Intenta en unos minutos.' },
-        { status: 429, headers: { 'Retry-After': String(Math.ceil(rl.resetIn / 1000)) } }
+        {
+          error: `Demasiados intentos. Espera ${retryAfter} segundos e intenta de nuevo.`,
+          retryAfter,
+        },
+        { status: 429, headers: { 'Retry-After': String(retryAfter) } }
       )
     }
 
