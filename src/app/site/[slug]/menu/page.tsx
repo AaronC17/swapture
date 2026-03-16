@@ -22,6 +22,16 @@ const locationImages: Record<string, string> = {
   esparza: '/menu/triple bacon.png',
 }
 
+function getDisplayHours(locationKey: string, locationName: string, fallbackHours?: string): string | undefined {
+  const normalized = `${locationKey} ${locationName}`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+
+  if (normalized.includes('jaco')) return '10:00 a.m. - 2:00 a.m.'
+  return fallbackHours
+}
+
 export default async function MenuPage({ params }: Props) {
   const client = await prisma.client.findUnique({
     where: { slug: params.slug },
@@ -115,6 +125,7 @@ export default async function MenuPage({ params }: Props) {
               const loc = menuData.locations[key]
               const hasLocMenu = loc.categories && loc.categories.length > 0
               const totalItems = hasLocMenu ? loc.categories.reduce((s: number, c: { items: unknown[] }) => s + c.items.length, 0) : 0
+              const displayHours = getDisplayHours(key, loc.name, loc.hours)
               const waLink = loc.whatsapp
                 ? `https://wa.me/${loc.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola, quiero hacer un pedido en Quincho's — ${loc.name}`)}`
                 : null
@@ -185,9 +196,9 @@ export default async function MenuPage({ params }: Props) {
                           {loc.phone}
                         </span>
                       )}
-                      {loc.hours && (
+                      {displayHours && (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[9px] font-semibold text-white/50">
-                          🕐 {loc.hours}
+                          🕐 {displayHours}
                         </span>
                       )}
                     </div>

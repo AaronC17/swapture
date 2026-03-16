@@ -438,7 +438,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                 <Star size={9} className="fill-current" /> {data.locationName || 'Smash Burgers'}
               </div>
               {data.locationPhone && (
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/30 backdrop-blur-xl border border-white/[0.06] text-[9px] font-medium text-white/50">
+                <div className="inline-flex max-w-full items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/30 backdrop-blur-xl border border-white/[0.06] text-[9px] font-medium text-white/50 break-all">
                   <Phone size={8} /> {`${data.locationPhone}${data.locationPhone2 ? ` / ${data.locationPhone2}` : ''}`}
                 </div>
               )}
@@ -459,7 +459,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
             {menu.hours && (
               <div className="flex items-center gap-1.5 text-white/45 shrink-0">
                 <Clock size={11} style={{ color: `${G}80` }} />
-                <span className="text-[10px] sm:text-[11px] font-medium whitespace-nowrap">{menu.hours}</span>
+                <span className="text-[10px] sm:text-[11px] font-medium max-w-[44vw] truncate sm:max-w-none">{menu.hours}</span>
               </div>
             )}
             {data.locationName && (
@@ -667,7 +667,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
 
                             {/* Content */}
                             <div className="p-2.5 sm:p-4">
-                              <h3 className="font-bold text-[12px] sm:text-sm leading-tight mb-0.5 sm:mb-1 line-clamp-1">{di.baseName}</h3>
+                              <h3 className="font-bold text-[12px] sm:text-sm leading-tight mb-0.5 sm:mb-1 line-clamp-1 break-words">{di.baseName}</h3>
                               <p className="text-[9px] sm:text-[10px] text-white/50 leading-relaxed line-clamp-2 min-h-[26px] sm:min-h-[32px]">{di.desc}</p>
 
                               {/* Variant selector */}
@@ -679,7 +679,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                       <button
                                         key={v.fullName}
                                         onClick={() => setVariantSel(prev => ({ ...prev, [di.baseName]: v.fullName }))}
-                                        className="w-7 py-0.5 rounded text-[9px] font-bold text-center transition-all duration-150"
+                                        className="min-w-[2.25rem] px-1.5 py-0.5 rounded text-[9px] font-bold text-center transition-all duration-150"
                                         style={isSel
                                           ? { background: G, color: '#000' }
                                           : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.08)' }

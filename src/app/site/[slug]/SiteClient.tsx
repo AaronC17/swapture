@@ -61,6 +61,18 @@ const reviews = [
   { name: 'Diego F.', text: 'Los Smash Fries con doble carne son adictivos. Llevo meses pidiendo cada semana y nunca me ha fallado ni una vez.', rating: 5, loc: 'Orotina' },
 ]
 
+const JACO_HOURS = '10:00 a.m. - 2:00 a.m.'
+
+function getDisplayHours(locationKey: string, locationName: string, fallbackHours?: string): string | undefined {
+  const normalized = `${locationKey} ${locationName}`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+
+  if (normalized.includes('jaco')) return JACO_HOURS
+  return fallbackHours
+}
+
 /* ═══════════════════════════════════════════════
    NAV ITEMS
    ═══════════════════════════════════════════════ */
@@ -322,9 +334,10 @@ export default function SiteClient({ data }: { data: SiteData }) {
       addUser('Horarios y sucursales')
       setTimeout(() => {
         if (menu?.locations && Object.keys(menu.locations).length) {
-          const locs = Object.values(menu.locations as Record<string, any>).map((loc: any) =>
-            `\uD83D\uDCCD **${loc.name}**${loc.hours ? `\n\uD83D\uDD50 ${loc.hours}` : ''}${loc.phone ? `\n\uD83D\uDCDE ${loc.phone}` : ''}`
-          ).join('\n\n')
+          const locs = Object.entries(menu.locations as Record<string, any>).map(([locKey, loc]: [string, any]) => {
+            const hours = getDisplayHours(locKey, loc.name, loc.hours)
+            return `\uD83D\uDCCD **${loc.name}**${hours ? `\n\uD83D\uDD50 ${hours}` : ''}${loc.phone ? `\n\uD83D\uDCDE ${loc.phone}` : ''}`
+          }).join('\n\n')
           addBot(locs, 'options', [
             { label: '\uD83C\uDF54 Ver men\u00FA', value: 'services' },
             { label: '\uD83D\uDCAC Consulta', value: 'ask' },
@@ -685,7 +698,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
               QUINCHO&apos;S
             </h2>
             <p
-              className="text-[10px] font-black uppercase tracking-[0.35em] mt-1.5"
+              className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.28em] mt-1.5"
               style={{ color: `${G}90` }}
             >
               Smash Burgers
@@ -708,7 +721,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
             </div>
             <div className="leading-none">
               <span className="text-base sm:text-xl font-black tracking-tight uppercase">Quincho&apos;s</span>
-              <p className="text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5" style={{ color: G }}>Smash Burgers</p>
+              <p className="text-[8px] sm:text-[10px] font-semibold tracking-[0.14em] sm:tracking-[0.22em] uppercase mt-0.5" style={{ color: G }}>Smash Burgers</p>
             </div>
           </button>
 
@@ -776,7 +789,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
             </div>
             <div className="leading-none">
               <span className="text-base font-black tracking-tight uppercase">Quincho&apos;s</span>
-              <p className="text-[9px] font-bold tracking-[0.25em] uppercase mt-0.5" style={{ color: G }}>Smash Burgers</p>
+              <p className="text-[8px] font-semibold tracking-[0.14em] uppercase mt-0.5" style={{ color: G }}>Smash Burgers</p>
             </div>
           </div>
           <button onClick={() => setMobileMenuOpen(false)} className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 bg-white/[0.04] active:scale-95 transition-transform">
@@ -873,11 +886,11 @@ export default function SiteClient({ data }: { data: SiteData }) {
                 QUINCHO&apos;S
               </span>
               <span
-                className="block text-[1.15rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.05em] sm:tracking-[0.3em] mt-1 sm:mt-4"
+                className="block text-[1.08rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.02em] sm:tracking-[0.3em] mt-1 sm:mt-4"
                 style={{
                   color: G,
                   fontFamily: 'Georgia, "Times New Roman", serif',
-                  textShadow: `0 0 50px ${G}20, 0 2px 0 #4a8a33`,
+                  textShadow: `0 0 16px ${G}22, 0 1px 0 #4a8a33`,
                 }}
               >
                 Smash Burgers
@@ -1110,8 +1123,9 @@ export default function SiteClient({ data }: { data: SiteData }) {
               <h2 className="text-xl sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: G }}>HORARIOS</span></h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-              {Object.entries(menu.locations).map(([locKey, loc]) => {
+              {Object.entries(menu.locations as Record<string, { name: string; phone?: string; phone2?: string; whatsapp?: string; hours?: string; categories: MenuCategory[] }>).map(([locKey, loc]) => {
                 const hasLocMenu = loc.categories && loc.categories.length > 0
+                const displayHours = getDisplayHours(locKey, loc.name, loc.hours || menu.hours)
                 const locWaLink = loc.whatsapp
                   ? `https://wa.me/${loc.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola, quiero hacer un pedido en Quincho's — ${loc.name}`)}`
                   : waLink
@@ -1132,12 +1146,12 @@ export default function SiteClient({ data }: { data: SiteData }) {
                       </div>
                     </div>
                     <div className="space-y-2 sm:space-y-3 pt-3 sm:pt-5 border-t border-white/[0.06]">
-                      {menu.hours && (
+                      {displayHours && (
                         <div className="flex items-start gap-3">
                           <Clock size={16} className="mt-0.5 shrink-0" style={{ color: G }} />
                           <div className="text-sm text-white/40 leading-relaxed">
                             <p className="font-bold text-white/60 mb-1">Horario</p>
-                            <p>{menu.hours}</p>
+                            <p>{displayHours}</p>
                           </div>
                         </div>
                       )}
@@ -1262,7 +1276,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
               </div>
               <div>
                 <p className="font-black text-sm uppercase tracking-tight leading-none">Quincho&apos;s</p>
-                <p className="text-[8px] font-bold uppercase tracking-[0.2em] leading-none mt-0.5" style={{ color: G }}>Smash Burgers</p>
+                <p className="text-[8px] font-semibold uppercase tracking-[0.14em] leading-none mt-0.5" style={{ color: G }}>Smash Burgers</p>
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">

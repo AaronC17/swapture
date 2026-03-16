@@ -3,6 +3,16 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import MenuClient from '../MenuClient'
 
+function getDisplayHours(locationKey: string, locationName: string, fallbackHours?: string): string | undefined {
+  const normalized = `${locationKey} ${locationName}`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+
+  if (normalized.includes('jaco')) return '10:00 a.m. - 2:00 a.m.'
+  return fallbackHours
+}
+
 interface Props {
   params: { slug: string; location: string }
 }
@@ -49,7 +59,7 @@ export default async function LocationMenuPage({ params }: Props) {
   // Build a MenuData-compatible object for this location
   const locationMenu = {
     categories: locData.categories,
-    hours: locData.hours || menuData.hours,
+    hours: getDisplayHours(params.location, locData.name || params.location, locData.hours || menuData.hours),
     style: menuData.style,
   }
 
