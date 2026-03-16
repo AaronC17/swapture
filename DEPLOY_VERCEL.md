@@ -18,6 +18,7 @@ En Vercel -> Project -> Settings -> Environment Variables agrega:
 - TELEGRAM_CHAT_ID (opcional)
 
 Puedes usar `.env.example` como referencia. El codigo acepta `DATABASE_URL` o `MONGODB_URI`.
+Si la URI viene sin nombre de base de datos (termina en `/`), el codigo aplica `swapture` por defecto.
 
 ## 3) Build y runtime
 La app ya ejecuta Prisma Client en build con:
