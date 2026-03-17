@@ -192,23 +192,87 @@ export default function SiteClient({ data }: { data: SiteData }) {
     setTimeout(() => setOrderSent(false), 4000)
   }
 
+  const normalizeForMatch = (value: string): string => value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  const compactForMatch = (value: string): string => normalizeForMatch(value).replace(/\s+/g, '')
+
+  const singularizeWord = (word: string): string => {
+    if (word.length <= 4) return word
+    if (word.endsWith('es')) return word.slice(0, -2)
+    if (word.endsWith('s')) return word.slice(0, -1)
+    return word
+  }
+
+  const extractQuantityAndQuery = (raw: string): { qty: number; query: string } => {
+    const numWords: Record<string, number> = {
+      una: 1, un: 1, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5,
+      seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10,
+    }
+
+    let qty = 1
+    let query = raw
+
+    const xQty = query.match(/(?:^|\s)x\s*(\d{1,2})(?:\s|$)/i) || query.match(/(?:^|\s)(\d{1,2})\s*x(?:\s|$)/i)
+    if (xQty) {
+      qty = Math.max(1, Math.min(20, Number(xQty[1])))
+      query = query.replace(xQty[0], ' ')
+    } else {
+      const digitQty = query.match(/(?:^|\s)(\d{1,2})(?:\s|$)/)
+      if (digitQty) {
+        qty = Math.max(1, Math.min(20, Number(digitQty[1])))
+        query = query.replace(digitQty[0], ' ')
+      } else {
+        const wordQty = Object.entries(numWords).find(([word]) => new RegExp(`(?:^|\\s)${word}(?:\\s|$)`, 'i').test(query))
+        if (wordQty) {
+          qty = wordQty[1]
+          query = query.replace(new RegExp(`(?:^|\\s)${wordQty[0]}(?:\\s|$)`, 'i'), ' ')
+        }
+      }
+    }
+
+    query = query
+      .replace(/\b(quiero|me|das|dame|para|porfa|porfavor|favor|agregame|agrega|agregar|pedido|pedir|orden|ordenar)\b/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+
+    return { qty, query: query || raw }
+  }
+
   /* ── Helper: find menu item by fuzzy name ── */
   const findMenuItem = useCallback((query: string): MenuItem | null => {
     if (!allCategories.length) return null
-    const q = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const qNorm = normalizeForMatch(query)
+    const qCompact = compactForMatch(query)
+    const qTokens = qNorm.split(/\s+/).map(singularizeWord).filter(Boolean)
+
+    let best: { item: MenuItem; score: number } | null = null
+
     for (const cat of allCategories) {
       for (const item of cat.items) {
-        const n = item.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        if (n.includes(q) || q.includes(n)) return item
+        const itemNorm = normalizeForMatch(item.name)
+        const itemCompact = compactForMatch(item.name)
+        const itemTokens = itemNorm.split(/\s+/).map(singularizeWord).filter(Boolean)
+
+        if (itemNorm.includes(qNorm) || qNorm.includes(itemNorm) || itemCompact.includes(qCompact) || qCompact.includes(itemCompact)) {
+          return item
+        }
+
+        const overlap = qTokens.filter(t => itemTokens.some(it => it.includes(t) || t.includes(it))).length
+        const score = overlap / Math.max(1, qTokens.length)
+
+        if (!best || score > best.score) {
+          best = { item, score }
+        }
       }
     }
-    for (const cat of allCategories) {
-      for (const item of cat.items) {
-        const words = item.name.toLowerCase().split(/\s+/)
-        if (words.some(w => q.includes(w) && w.length > 3)) return item
-      }
-    }
-    return null
+
+    return best && best.score >= 0.6 ? best.item : null
   }, [allCategories])
 
   /* ── Contact form ── */
@@ -266,42 +330,22 @@ export default function SiteClient({ data }: { data: SiteData }) {
   /* ── Detect ordering intent from free text (multi-item) ── */
   const tryOrderFromText = useCallback((text: string): boolean => {
     if (!menu) return false
-    const numWords: Record<string, number> = { una: 1, un: 1, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10 }
-    const numPat = `(?:${Object.keys(numWords).join('|')}|\\d+)`
     const parts = text.split(/\s*(?:,|\+|\by\b)\s*/i).map(s => s.trim()).filter(Boolean)
     const added: { name: string; qty: number; price: number }[] = []
+
     for (const part of parts) {
-      const qtyRx = new RegExp(`^(${numPat})\\s*x?\\s*(.+)$`, 'i')
-      const m = part.match(qtyRx)
-      let qty = 1
-      let nameQuery = part
-      if (m) {
-        const qw = m[1].toLowerCase()
-        qty = numWords[qw] ?? parseInt(qw)
-        if (!isNaN(qty) && qty >= 1 && qty <= 20) {
-          nameQuery = m[2]
-        } else {
-          qty = 1
-        }
-      }
-      const trailingQty = nameQuery.match(/(.+?)\s*x\s*(\d+)\s*$/i)
-      if (trailingQty) {
-        nameQuery = trailingQty[1]
-        qty = Math.min(parseInt(trailingQty[2]), 20)
-      }
-      const item = findMenuItem(nameQuery)
+      const { qty, query } = extractQuantityAndQuery(part)
+      const item = findMenuItem(query)
       if (item) {
         for (let i = 0; i < qty; i++) addToCart(item)
         added.push({ name: item.name, qty, price: item.price })
       }
     }
+
     if (added.length === 0) {
-      const item = findMenuItem(text)
+      const { qty, query } = extractQuantityAndQuery(text)
+      const item = findMenuItem(query)
       if (!item) return false
-      let qty = 1
-      const qm = text.match(/(\d+)\s*x?\s*/i)
-      if (qm) qty = Math.min(parseInt(qm[1]), 20)
-      for (const [w, n] of Object.entries(numWords)) { if (text.toLowerCase().includes(w)) { qty = n; break } }
       for (let i = 0; i < qty; i++) addToCart(item)
       added.push({ name: item.name, qty, price: item.price })
     }
