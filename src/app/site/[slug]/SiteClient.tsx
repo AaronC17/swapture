@@ -31,6 +31,16 @@ interface CartItem { name: string; price: number; qty: number }
 type BubbleType = 'text' | 'options' | 'input-name' | 'input-phone' | 'input-email' | 'input-interest' | 'input-sucursal' | 'lead-saved' | 'service-list' | 'cart-update'
 interface ChatBubble { id: string; from: 'bot' | 'user'; type: BubbleType; text: string; options?: { label: string; value: string }[] }
 type ChatPhase = 'welcome' | 'menu' | 'services' | 'ask-gpt' | 'collect-name' | 'collect-phone' | 'collect-sucursal' | 'collect-email' | 'collect-interest' | 'saving' | 'done' | 'gpt-chat'
+interface LeadCaptureData { name: string; phone: string; email: string; interest: string; sucursal: string }
+interface PersistedChatState {
+  updatedAt: number
+  phase: ChatPhase
+  chatOpen: boolean
+  bubbles: ChatBubble[]
+  gptHistory: Array<{ role: 'user' | 'assistant'; content: string }>
+  leadData: LeadCaptureData
+  leadSaved: boolean
+}
 
 /* ═══════════════════════════════════════════════
    CONSTANTS
@@ -89,6 +99,8 @@ const navSections = [
    COMPONENT
    ═══════════════════════════════════════════════ */
 export default function SiteClient({ data }: { data: SiteData }) {
+  const chatStorageKey = useMemo(() => `swapture-chat:${data.slug}`, [data.slug])
+
   /* ── Hydration guard ── */
   const [mounted, setMounted] = useState(false)
 
@@ -291,10 +303,62 @@ export default function SiteClient({ data }: { data: SiteData }) {
   const [leadData, setLeadData] = useState({ name: '', phone: '', email: '', interest: '', sucursal: '' })
   const [leadSaved, setLeadSaved] = useState(false)
   const [hasNotif, setHasNotif] = useState(true)
+  const [chatStateHydrated, setChatStateHydrated] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const idC = useRef(0)
   const uid = () => `b-${++idC.current}`
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(chatStorageKey)
+      if (!raw) {
+        setChatStateHydrated(true)
+        return
+      }
+
+      const parsed = JSON.parse(raw) as PersistedChatState
+      const isExpired = Date.now() - parsed.updatedAt > 24 * 60 * 60 * 1000
+      if (isExpired) {
+        localStorage.removeItem(chatStorageKey)
+        setChatStateHydrated(true)
+        return
+      }
+
+      setPhase(parsed.phase || 'welcome')
+      setChatOpen(Boolean(parsed.chatOpen))
+      setBubbles(Array.isArray(parsed.bubbles) ? parsed.bubbles : [])
+      setGptHistory(Array.isArray(parsed.gptHistory) ? parsed.gptHistory : [])
+      setLeadData(parsed.leadData || { name: '', phone: '', email: '', interest: '', sucursal: '' })
+      setLeadSaved(Boolean(parsed.leadSaved))
+      if (Array.isArray(parsed.bubbles) && parsed.bubbles.length > 0) setHasNotif(false)
+
+      const maxId = (parsed.bubbles || []).reduce((max, b) => {
+        const n = Number(String(b.id || '').replace('b-', ''))
+        return Number.isFinite(n) ? Math.max(max, n) : max
+      }, 0)
+      idC.current = maxId
+    } catch {
+      // If state is corrupted, reset to clean flow.
+      localStorage.removeItem(chatStorageKey)
+    } finally {
+      setChatStateHydrated(true)
+    }
+  }, [chatStorageKey])
+
+  useEffect(() => {
+    if (!chatStateHydrated) return
+    const payload: PersistedChatState = {
+      updatedAt: Date.now(),
+      phase,
+      chatOpen,
+      bubbles,
+      gptHistory,
+      leadData,
+      leadSaved,
+    }
+    localStorage.setItem(chatStorageKey, JSON.stringify(payload))
+  }, [chatStateHydrated, phase, chatOpen, bubbles, gptHistory, leadData, leadSaved, chatStorageKey])
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [bubbles, chatLoading])
   useEffect(() => { if (chatOpen) setTimeout(() => inputRef.current?.focus(), 200) }, [phase, chatOpen])
