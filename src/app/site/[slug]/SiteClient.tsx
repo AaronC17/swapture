@@ -446,7 +446,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
             ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
           ])
         } else {
-          addBot('No tenemos información de horarios disponible.', 'options', [
+          addBot('No tenemos información de horarios disponible por ahora.', 'options', [
             { label: '🍔 Ver menú', value: 'services' },
             ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
           ])
