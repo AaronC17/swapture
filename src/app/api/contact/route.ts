@@ -36,11 +36,8 @@ export async function POST(req: NextRequest) {
     const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID
 
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-      console.error('Missing Telegram env vars')
-      return NextResponse.json(
-        { error: 'Error de configuración del servidor.' },
-        { status: 500 }
-      )
+      console.warn('Missing Telegram env vars. Accepting contact request without Telegram delivery.')
+      return NextResponse.json({ success: true, delivered: false }, { status: 202 })
     }
 
     // Format message for Telegram
@@ -70,10 +67,7 @@ export async function POST(req: NextRequest) {
     if (!tgResponse.ok) {
       const err = await tgResponse.text()
       console.error('Telegram API error:', err)
-      return NextResponse.json(
-        { error: 'Error al enviar el mensaje.' },
-        { status: 500 }
-      )
+      return NextResponse.json({ success: true, delivered: false }, { status: 202 })
     }
 
     return NextResponse.json({ success: true })
