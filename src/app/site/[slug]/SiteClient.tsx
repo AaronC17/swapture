@@ -249,7 +249,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
     }
 
     query = query
-      .replace(/\b(quiero|me|das|dame|para|porfa|porfavor|favor|agregame|agrega|agregar|pedido|pedir|orden|ordenar)\b/gi, ' ')
+      .replace(/\b(quiero|quier|kiero|qiero|me|das|dame|para|porfa|porfavor|favor|agregame|agrega|agregar|pedido|pedir|orden|ordenar)\b/gi, ' ')
       .replace(/\s+/g, ' ')
       .trim()
 
@@ -284,7 +284,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
       }
     }
 
-    return best && best.score >= 0.6 ? best.item : null
+    return best && best.score >= 0.5 ? best.item : null
   }, [allCategories])
 
   /* ── Contact form ── */
@@ -394,7 +394,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
   /* ── Detect ordering intent from free text (multi-item) ── */
   const tryOrderFromText = useCallback((text: string): boolean => {
     if (!menu) return false
-    const parts = text.split(/\s*(?:,|\+|\by\b)\s*/i).map(s => s.trim()).filter(Boolean)
+    const parts = text.split(/\s*(?:,|\+|\by\b|\bo\b|\/)\s*/i).map(s => s.trim()).filter(Boolean)
     const added: { name: string; qty: number; price: number }[] = []
 
     for (const part of parts) {
@@ -489,6 +489,15 @@ export default function SiteClient({ data }: { data: SiteData }) {
           { label: '\uD83D\uDD19 Inicio', value: 'restart' },
         ]), 400)
       }
+    } else if (value === 'order') {
+      addUser('Hacer pedido')
+      setTimeout(() => {
+        addBot('Perfecto. Escribí tu pedido así: "2 cheeseburger" o "1 maradona y 1 papas gajo".', 'options', [
+          { label: '🛒 Ver mi orden', value: 'view-cart' },
+          { label: '🍔 Ver menú', value: 'services' },
+        ])
+        setPhase('menu')
+      }, 300)
     } else if (value === 'clear-cart') {
       setCart([])
       addUser('Vaciar carrito')
@@ -595,6 +604,18 @@ export default function SiteClient({ data }: { data: SiteData }) {
     } else if (phase === 'gpt-chat' || phase === 'menu' || phase === 'services' || phase === 'done') {
       addUser(text)
       if (tryOrderFromText(text)) return
+      const normalizedText = text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+      const looksLikeOrder = /(\d+\s*x?|\bx\s*\d+|quier|kiero|qiero|dame|agrega|pedido|orden|hamburg|burger|papas?|gajo|nacho|quesadilla|burrito|batido|malteada)/i.test(normalizedText)
+      if (looksLikeOrder) {
+        addBot('No encontré ese producto exacto. Prueba con el nombre del menú, por ejemplo: "2 Cheeseburger", "1 Maradona" o "1 Gajo Small".', 'options', [
+          { label: '🍔 Ver menú', value: 'services' },
+          { label: '🛒 Ver mi orden', value: 'view-cart' },
+        ])
+        return
+      }
       setChatLoading(true)
       const newH = [...gptHistory, { role: 'user' as const, content: text }]
       setGptHistory(newH)
