@@ -430,49 +430,39 @@ export default function SiteClient({ data }: { data: SiteData }) {
     if (value === 'services') {
       addUser('Ver el men\u00FA')
       setTimeout(() => {
-        addBot('\uD83C\uDF54 Te llevo al men\u00FA completo con fotos y precios.', 'options', [
-          { label: '\uD83D\uDCCB Abrir men\u00FA', value: 'goto-menu' },
-          { label: '\uD83D\uDD19 Volver', value: 'restart' },
+        addBot('Para pedidos, usa **Ver menú**. El chatbot es para consultas, horarios y ayuda rápida.', 'options', [
+          { label: '🍔 Ver menú', value: 'services' },
+          { label: '🕐 Horarios', value: 'horarios' },
+          { label: '💬 Consulta', value: 'ask' },
+          ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
         ])
-        setPhase('services')
-      }, 400)
-    } else if (value === 'goto-menu') {
-      window.location.href = `/site/${data.slug}/menu`
-    } else if (value === 'horarios') {
-      addUser('Horarios y sucursales')
-      setTimeout(() => {
-        if (menu?.locations && Object.keys(menu.locations).length) {
-          const locs = Object.entries(menu.locations as Record<string, any>).map(([locKey, loc]: [string, any]) => {
             const hours = getDisplayHours(locKey, loc.name, loc.hours)
             return `\uD83D\uDCCD **${loc.name}**${hours ? `\n\uD83D\uDD50 ${hours}` : ''}${loc.phone ? `\n\uD83D\uDCDE ${loc.phone}` : ''}`
           }).join('\n\n')
-          addBot(locs, 'options', [
-            { label: '\uD83C\uDF54 Ver men\u00FA', value: 'services' },
-            { label: '\uD83D\uDCAC Consulta', value: 'ask' },
-            ...(data.whatsappNumber ? [{ label: '\uD83D\uDCF1 WhatsApp', value: 'whatsapp' }] : []),
-          ])
-        } else {
-          addBot('No tenemos informaci\u00F3n de horarios disponible.', 'options', [
-            ...(data.whatsappNumber ? [{ label: '\uD83D\uDCF1 WhatsApp', value: 'whatsapp' }] : []),
-          ])
-        }
-        setPhase('services')
-      }, 400)
+      setTimeout(() => addBot('Para pedidos, usa **Ver menú**. Ahí eliges productos y cantidades por sucursal.', 'options', [
+        { label: '🍔 Ver menú', value: 'services' },
+        { label: '🕐 Horarios', value: 'horarios' },
+        { label: '💬 Consulta', value: 'ask' },
+        ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
+      ]), 400)
     } else if (value === 'view-cart') {
       addUser('Ver mi orden')
       setTimeout(() => {
-        if (cart.length === 0) {
-          addBot('Tu carrito est\u00E1 vac\u00EDo. \u00BFQuer\u00E9s pedir algo?', 'options', [
+        addBot('Para pedir, entra a **Ver menú**. El chatbot queda para consultas y horarios.', 'options', [
             { label: '\uD83C\uDF54 Ver men\u00FA', value: 'services' },
+          { label: '🕐 Horarios', value: 'horarios' },
+          { label: '💬 Consulta', value: 'ask' },
+          ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
             { label: '\uD83D\uDED2 Hacer pedido', value: 'order' },
           ])
         } else {
           const items = cart.map(c => `\u2022 ${c.qty}x ${c.name} \u2014 ${fmt(c.price * c.qty)}`).join('\n')
-          addBot(`\uD83D\uDED2 **Tu orden actual:**\n\n${items}\n\n**Total: ${fmt(cartTotal)}**`, 'options', [
             { label: '\u2795 Agregar m\u00E1s', value: 'order' },
-            { label: '\u2705 Pedir por WhatsApp', value: 'send-order' },
+      setTimeout(() => addBot('Para pedidos usa **Ver menú**. Desde aquí te ayudo con consultas y horarios.', 'options', [
             { label: '\uD83D\uDDD1\uFE0F Vaciar carrito', value: 'clear-cart' },
-          ])
+        { label: '🕐 Horarios', value: 'horarios' },
+        { label: '💬 Consulta', value: 'ask' },
+        ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
         }
       }, 400)
     } else if (value === 'send-order') {
@@ -587,7 +577,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
         setTimeout(() => {
           addBot(`¡Perfecto, **${final.name}**! ✅ Ya te tengo registrado.\n\nAhora sí, ¿qué te gustaría hacer?`, 'options', [
             { label: '🍔 Ver menú', value: 'services' },
-            { label: '� Horarios', value: 'horarios' },
+            { label: '🕐 Horarios', value: 'horarios' },
             { label: '💬 Consulta', value: 'ask' },
             ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
           ])
@@ -603,16 +593,16 @@ export default function SiteClient({ data }: { data: SiteData }) {
       setTimeout(() => showMainMenu(), 400)
     } else if (phase === 'gpt-chat' || phase === 'menu' || phase === 'services' || phase === 'done') {
       addUser(text)
-      if (tryOrderFromText(text)) return
       const normalizedText = text
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
       const looksLikeOrder = /(\d+\s*x?|\bx\s*\d+|quier|kiero|qiero|dame|agrega|pedido|orden|hamburg|burger|papas?|gajo|nacho|quesadilla|burrito|batido|malteada)/i.test(normalizedText)
       if (looksLikeOrder) {
-        addBot('No encontré ese producto exacto. Prueba con el nombre del menú, por ejemplo: "2 Cheeseburger", "1 Maradona" o "1 Gajo Small".', 'options', [
+        addBot('Para hacer pedidos usa **Ver menú**. El chatbot queda para consultas, horarios y ayuda rápida.', 'options', [
           { label: '🍔 Ver menú', value: 'services' },
-          { label: '🛒 Ver mi orden', value: 'view-cart' },
+          { label: '🕐 Horarios', value: 'horarios' },
+          ...(data.whatsappNumber ? [{ label: '📱 WhatsApp', value: 'whatsapp' }] : []),
         ])
         return
       }
@@ -627,7 +617,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
         addBot(reply)
         setTimeout(() => addBot('', 'options', [
           { label: '\uD83D\uDCAC Otra pregunta', value: 'new-question' },
-          { label: '\uD83D\uDED2 Hacer pedido', value: 'order' },
+          { label: '🍔 Ver menú', value: 'services' },
           { label: '\uD83D\uDD19 Inicio', value: 'restart' },
         ]), 600)
       } catch { addBot('Hubo un problema t\u00E9cnico.') }
@@ -656,7 +646,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
       case 'collect-sucursal': return 'Seleccioná tu sucursal...'
       case 'collect-email': return 'tu@correo.com o "no"'
       case 'collect-interest': return 'Ej: Reserva para 6'
-      case 'gpt-chat': return 'Ej: Quiero una Doble Bacon...'
+      case 'gpt-chat': return 'Escribí tu consulta...'
       case 'menu': return 'Escrib\u00ED lo que necesit\u00E1s...'
       case 'services': return 'Escrib\u00ED lo que necesit\u00E1s...'
       default: return 'Escrib\u00ED algo...'
@@ -1524,7 +1514,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-bold truncate">Asistente Quincho&apos;s</p>
-              <p className="text-[11px] text-green-400/80">En l&iacute;nea &bull; Pod&eacute;s pedir desde aqu&iacute;</p>
+              <p className="text-[11px] text-green-400/80">En línea • Consultas, horarios y ayuda rápida</p>
             </div>
             <button onClick={() => setChatOpen(false)} className="p-2 rounded-lg hover:bg-white/[0.06]"><X size={18} className="text-white/50" /></button>
           </div>
