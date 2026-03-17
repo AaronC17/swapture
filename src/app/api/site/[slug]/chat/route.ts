@@ -5,6 +5,80 @@ import { sanitizeString, sanitizeEmail, sanitizePhone, sanitizeNumber, rateLimit
 
 export const dynamic = 'force-dynamic'
 
+function normalizeText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
+
+function buildFallbackReply(client: { businessName: string; businessType: string; description: string; services: string; phone: string; whatsappNumber: string; customNotes: string }, recentMessages: Array<{ role: 'assistant' | 'user'; content: string }>): string {
+  const lastUserMessage = [...recentMessages].reverse().find(m => m.role === 'user')?.content || ''
+  const q = normalizeText(lastUserMessage)
+
+  let menuData: Record<string, unknown> | null = null
+  if (client.customNotes) {
+    try {
+      menuData = JSON.parse(client.customNotes) as Record<string, unknown>
+    } catch {
+      menuData = null
+    }
+  }
+
+  const locations = (menuData?.locations as Record<string, { name?: string; phone?: string; phone2?: string; hours?: string }> | undefined) || {}
+  const hasLocations = Object.keys(locations).length > 0
+  const globalHours = typeof menuData?.hours === 'string' ? menuData.hours : ''
+
+  if (/horario|abre|cierran|hora/.test(q)) {
+    if (hasLocations) {
+      const lines = Object.values(locations)
+        .slice(0, 4)
+        .map(loc => `- ${loc.name || 'Sucursal'}: ${loc.hours || globalHours || 'Horario por confirmar'}`)
+      return `Estos son los horarios disponibles:\n${lines.join('\n')}`
+    }
+    if (globalHours) return `Nuestro horario actual es: ${globalHours}.`
+    return 'El horario se confirma según sucursal. Si quieres, te ayudamos por WhatsApp en este momento.'
+  }
+
+  if (/sucursal|ubicacion|direccion|local/.test(q)) {
+    if (hasLocations) {
+      const lines = Object.values(locations)
+        .slice(0, 4)
+        .map(loc => `- ${loc.name || 'Sucursal'}${loc.phone ? ` (${loc.phone}${loc.phone2 ? ` / ${loc.phone2}` : ''})` : ''}`)
+      return `Tenemos estas sucursales:\n${lines.join('\n')}`
+    }
+    return `Atendemos por ${client.businessName}. Si quieres la ubicación exacta, te la compartimos por WhatsApp.`
+  }
+
+  if (/telefono|whatsapp|contacto|llamar/.test(q)) {
+    const phones = [client.phone, client.whatsappNumber].filter(Boolean)
+    if (phones.length > 0) return `Puedes contactarnos al: ${phones.join(' / ')}.`
+    return 'En este momento te atendemos por el canal principal del negocio.'
+  }
+
+  if (/menu|carta|comida|pedido|ordenar|pedir|hamburguesa|burger/.test(q)) {
+    return 'Puedes ver el menú completo y hacer tu pedido desde la opción "Ver menú". Si prefieres, también te apoyamos por WhatsApp.'
+  }
+
+  if (/precio|cuanto cuesta|cuanto vale|promo|promocion/.test(q)) {
+    return 'Los precios pueden variar por producto y sucursal. En el menú actualizado puedes ver montos exactos en tiempo real.'
+  }
+
+  if (/domicilio|envio|delivery/.test(q)) {
+    return 'Sí manejamos pedidos para recoger y opciones de envío según la zona. Te confirmamos cobertura al momento de ordenar.'
+  }
+
+  const services = client.services
+    ? client.services.split(',').map(s => s.trim()).filter(Boolean).slice(0, 6)
+    : []
+
+  if (services.length > 0) {
+    return `Te puedo ayudar con: ${services.join(', ')}. Si quieres, dime cuál te interesa y te guío paso a paso.`
+  }
+
+  return `Gracias por tu mensaje. Puedo ayudarte con menú, horarios, sucursales y pedidos de ${client.businessName}. ¿Qué deseas consultar?`
+}
+
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     // Rate limit — chat is expensive (OpenAI calls)
@@ -114,9 +188,7 @@ REGLAS ESTRICTAS:
 
     const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) {
-      return NextResponse.json({
-        reply: 'Por ahora no puedo responder automáticamente. Déjanos tus datos y te contactamos directamente.',
-      })
+      return NextResponse.json({ reply: buildFallbackReply(client, recentMessages) })
     }
 
     const openai = new OpenAI({ apiKey })
