@@ -2,14 +2,15 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = (() => {
+const COOKIE_NAME = 'swapture-token'
+
+function getJwtSecret(): string {
   const secret = process.env.JWT_SECRET
   if (!secret) {
     throw new Error('JWT_SECRET is missing. Configure it in your environment variables.')
   }
   return secret
-})()
-const COOKIE_NAME = 'swapture-token'
+}
 
 export interface TokenPayload {
   userId: string
@@ -29,13 +30,13 @@ export async function comparePassword(password: string, hash: string): Promise<b
 
 // Create JWT
 export function createToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' })
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: '7d' })
 }
 
 // Verify JWT
 export function verifyToken(token: string): TokenPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as TokenPayload
+    return jwt.verify(token, getJwtSecret()) as TokenPayload
   } catch {
     return null
   }

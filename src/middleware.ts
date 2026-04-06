@@ -2,15 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 
 const COOKIE_NAME = 'swapture-token'
-const JWT_SECRET_VALUE = (() => {
-  const secret = process.env.JWT_SECRET
-  if (!secret) {
-    throw new Error('JWT_SECRET is missing. Configure it in your environment variables.')
-  }
-  return secret
-})()
+const JWT_SECRET_VALUE = process.env.JWT_SECRET
 
-const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_VALUE)
+function getJwtSecret(): Uint8Array | null {
+  if (!JWT_SECRET_VALUE) return null
+  return new TextEncoder().encode(JWT_SECRET_VALUE)
+}
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -21,6 +18,15 @@ export async function middleware(req: NextRequest) {
   const isLoginRoute = pathname === '/login'
 
   const token = req.cookies.get(COOKIE_NAME)?.value
+  const jwtSecret = getJwtSecret()
+
+  // If no JWT secret configured, keep login reachable and deny protected routes.
+  if (!jwtSecret) {
+    if (isAdminRoute || isDashboardRoute) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+    return NextResponse.next()
+  }
 
   // If no token and trying to access protected route → redirect to login
   if (!token && (isAdminRoute || isDashboardRoute)) {
@@ -30,7 +36,7 @@ export async function middleware(req: NextRequest) {
   // If has token, verify it
   if (token) {
     try {
-      const { payload } = await jwtVerify(token, JWT_SECRET)
+      const { payload } = await jwtVerify(token, jwtSecret)
       const role = payload.role as string
 
       // If on login page and already authenticated → redirect to panel
