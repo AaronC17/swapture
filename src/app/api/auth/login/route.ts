@@ -5,6 +5,14 @@ import { sanitizeString, rateLimit, getClientIp, safeJsonParse, LOGIN_LIMIT } fr
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.JWT_SECRET) {
+      console.error('Login configuration error: JWT_SECRET is missing')
+      return NextResponse.json(
+        { error: 'Configuracion del servidor incompleta. Contacta al administrador.' },
+        { status: 503 }
+      )
+    }
+
     // Rate limit login attempts
     const ip = getClientIp(req)
     const rl = rateLimit(`login:${ip}`, LOGIN_LIMIT.max, LOGIN_LIMIT.window)
@@ -64,6 +72,9 @@ export async function POST(req: NextRequest) {
     return response
   } catch (error) {
     console.error('Login error:', error)
-    return NextResponse.json({ error: 'Error del servidor.' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Error del servidor. Revisa la configuracion del entorno.' },
+      { status: 500 }
+    )
   }
 }
