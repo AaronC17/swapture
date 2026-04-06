@@ -28,10 +28,22 @@ interface LeadDetail extends Lead {
 
 /* ─── constants ─── */
 const sourceLabels: Record<string, string> = {
-  website: 'Web', whatsapp: 'WhatsApp', manual: 'Manual', form: 'Formulario', chatbot: 'Chatbot'
+  website: 'Web',
+  whatsapp: 'WhatsApp',
+  'whatsapp-menu': 'WhatsApp (menú)',
+  'whatsapp-chatbot': 'WhatsApp (chatbot)',
+  manual: 'Manual',
+  form: 'Formulario',
+  chatbot: 'Chatbot',
 }
 const sourceEmoji: Record<string, string> = {
-  website: '🌐', whatsapp: '📱', manual: '✏️', form: '📋', chatbot: '🤖'
+  website: '🌐',
+  whatsapp: '📱',
+  'whatsapp-menu': '🛒',
+  'whatsapp-chatbot': '🤖',
+  manual: '✏️',
+  form: '📋',
+  chatbot: '🤖',
 }
 
 const timeAgo = (dateStr: string) => {

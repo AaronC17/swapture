@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
   try {
     const user = await getCurrentUser()
-    if (!user || (user.role !== 'client' && user.role !== 'admin')) {
+    if (!user || user.role !== 'client') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
     }
 

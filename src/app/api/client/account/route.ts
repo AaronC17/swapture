@@ -7,7 +7,7 @@ import { rateLimit, getClientIp, LOGIN_LIMIT } from '@/lib/security'
 export async function GET() {
   try {
     const user = await getCurrentUser()
-    if (!user) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+    if (!user || user.role !== 'client') return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
 
     const client = await prisma.client.findUnique({
       where: { userId: user.userId },
@@ -34,7 +34,7 @@ export async function GET() {
 // PATCH - change password
 export async function PATCH(request: Request) {
   const user = await getCurrentUser()
-  if (!user) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  if (!user || user.role !== 'client') return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
 
   // Rate limit password changes
   const ip = getClientIp(request)

@@ -976,9 +976,8 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
             {/* 100% ANGUS strip — prominent design */}
             <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-5 mb-5 sm:mb-8">
-              <div className="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-6 py-2 sm:py-3 rounded-xl border-2 backdrop-blur-md shrink-0" style={{ borderColor: `${G}50`, background: `${G}08` }}>
-                <Heart size={14} className="shrink-0" style={{ color: G }} />
-                <div>
+              <div className="flex items-center justify-center px-3 sm:px-6 py-2 sm:py-3 rounded-xl border-2 backdrop-blur-md shrink-0" style={{ borderColor: `${G}50`, background: `${G}08` }}>
+                <div className="text-center">
                   <p className="text-base sm:text-2xl font-black tracking-tight leading-none" style={{ color: G }}>100%</p>
                   <p className="text-[7px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] text-white/70">Carne Angus</p>
                 </div>
@@ -1055,7 +1054,11 @@ export default function SiteClient({ data }: { data: SiteData }) {
           ].map((s, i) => (
             <div key={i} className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-[#111]/80 backdrop-blur-xl text-center hover:border-white/[0.15] transition-all duration-700 hover:translate-y-[-3px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.5)' }}>
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${G}08` }} />
-              <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: G }} />
+              {s.icon ? (
+                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: G }} />
+              ) : (
+                <div className="h-[18px] sm:h-[18px] mb-1 sm:mb-2" />
+              )}
               <p className="text-lg sm:text-3xl font-black relative z-10" style={{ color: G }}>{s.val}</p>
               <p className="text-[7px] sm:text-[11px] text-white/50 uppercase tracking-[0.1em] sm:tracking-[0.15em] mt-0.5 sm:mt-1 font-black relative z-10">{s.label}</p>
               <p className="text-[6px] sm:text-[10px] text-white/20 uppercase tracking-wider mt-0.5 relative z-10 hidden sm:block">{s.sub}</p>

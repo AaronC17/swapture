@@ -2,7 +2,13 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'swapture-dev-secret'
+const JWT_SECRET = (() => {
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    throw new Error('JWT_SECRET is missing. Configure it in your environment variables.')
+  }
+  return secret
+})()
 const COOKIE_NAME = 'swapture-token'
 
 export interface TokenPayload {

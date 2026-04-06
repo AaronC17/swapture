@@ -2,7 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 
 const COOKIE_NAME = 'swapture-token'
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'swapture-dev-secret')
+const JWT_SECRET_VALUE = (() => {
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    throw new Error('JWT_SECRET is missing. Configure it in your environment variables.')
+  }
+  return secret
+})()
+
+const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_VALUE)
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl

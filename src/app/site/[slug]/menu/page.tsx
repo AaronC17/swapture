@@ -22,6 +22,130 @@ const locationImages: Record<string, string> = {
   esparza: '/menu/triple bacon.png',
 }
 
+const COSTA_RICA_TIMEZONE = 'America/Costa_Rica'
+const WEEKDAY_INDEX: Record<string, number> = {
+  domingo: 0,
+  lunes: 1,
+  martes: 2,
+  miercoles: 3,
+  jueves: 4,
+  viernes: 5,
+  sabado: 6,
+}
+
+function normalizeText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+}
+
+function parseTimeToMinutes(timeValue: string): number | null {
+  let value = normalizeText(timeValue).replace(/\./g, '')
+  const meridiemMatch = value.match(/\b(am|pm)\b/)
+  const meridiem = meridiemMatch?.[1]
+  value = value.replace(/\b(am|pm)\b/g, '').trim()
+
+  const timeMatch = value.match(/(\d{1,2})(?::(\d{2}))?/) 
+  if (!timeMatch) return null
+
+  let hour = Number(timeMatch[1])
+  const minute = Number(timeMatch[2] || '0')
+  if (Number.isNaN(hour) || Number.isNaN(minute) || minute < 0 || minute > 59 || hour < 0 || hour > 23) {
+    return null
+  }
+
+  if (meridiem) {
+    if (hour === 12) {
+      hour = meridiem === 'am' ? 0 : 12
+    } else if (meridiem === 'pm') {
+      hour += 12
+    }
+  }
+
+  return (hour * 60) + minute
+}
+
+function getCostaRicaNow() {
+  const formatter = new Intl.DateTimeFormat('es-CR', {
+    timeZone: COSTA_RICA_TIMEZONE,
+    weekday: 'long',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+  const parts = formatter.formatToParts(new Date())
+  const weekdayRaw = parts.find((p) => p.type === 'weekday')?.value || 'lunes'
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value || '0')
+  const minute = Number(parts.find((p) => p.type === 'minute')?.value || '0')
+
+  return {
+    weekday: normalizeText(weekdayRaw),
+    minutes: (hour * 60) + minute,
+  }
+}
+
+function parseAllowedDays(dayExpression: string): Set<number> | null {
+  const normalized = normalizeText(dayExpression)
+  if (!normalized || normalized.includes('todos')) return null
+
+  const dayTokens = normalized
+    .split(/[^a-z]+/)
+    .filter((token) => token in WEEKDAY_INDEX)
+
+  if (!dayTokens.length) return null
+
+  const hasRangeSyntax = /\ba\b|\bal\b|\bhasta\b/.test(normalized)
+  if (hasRangeSyntax && dayTokens.length >= 2) {
+    const start = WEEKDAY_INDEX[dayTokens[0]]
+    const end = WEEKDAY_INDEX[dayTokens[dayTokens.length - 1]]
+    const allowed = new Set<number>()
+
+    if (start <= end) {
+      for (let day = start; day <= end; day += 1) allowed.add(day)
+    } else {
+      for (let day = start; day <= 6; day += 1) allowed.add(day)
+      for (let day = 0; day <= end; day += 1) allowed.add(day)
+    }
+    return allowed
+  }
+
+  return new Set(dayTokens.map((token) => WEEKDAY_INDEX[token]))
+}
+
+function isBranchOpen(hours?: string): boolean {
+  if (!hours) return true
+
+  const separatorIndex = hours.indexOf(':')
+  const dayExpression = separatorIndex >= 0 ? hours.slice(0, separatorIndex) : ''
+  const timeExpression = separatorIndex >= 0 ? hours.slice(separatorIndex + 1) : hours
+
+  const timeChunks = timeExpression.match(/\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?|am|pm)?/gi)
+  if (!timeChunks || timeChunks.length < 2) return true
+
+  const openMinutes = parseTimeToMinutes(timeChunks[0])
+  const closeMinutes = parseTimeToMinutes(timeChunks[1])
+  if (openMinutes === null || closeMinutes === null) return true
+
+  const now = getCostaRicaNow()
+  const today = WEEKDAY_INDEX[now.weekday]
+  if (today === undefined) return true
+
+  const allowedDays = parseAllowedDays(dayExpression)
+  const isAllowedToday = !allowedDays || allowedDays.has(today)
+
+  if (openMinutes < closeMinutes) {
+    return isAllowedToday && now.minutes >= openMinutes && now.minutes < closeMinutes
+  }
+
+  const yesterday = today === 0 ? 6 : today - 1
+  const wasAllowedYesterday = !allowedDays || allowedDays.has(yesterday)
+
+  return (isAllowedToday && now.minutes >= openMinutes)
+    || (wasAllowedYesterday && now.minutes < closeMinutes)
+}
+
 function getDisplayHours(locationKey: string, locationName: string, fallbackHours?: string): string | undefined {
   const normalized = `${locationKey} ${locationName}`
     .toLowerCase()
@@ -62,7 +186,7 @@ export default async function MenuPage({ params }: Props) {
     return (
       <div className="min-h-screen text-white selection:bg-green-500/30" style={{ background: 'linear-gradient(180deg, #0d0f0c 0%, #0a0b09 35%, #0c0d0b 70%, #0a0b09 100%)' }}>
         {/* Ambient glow */}
-        <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${G}04, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${G}02, transparent 60%)` }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${G}02, transparent 72%), radial-gradient(ellipse 60% 40% at 50% 100%, ${G}01, transparent 62%)` }} />
 
         {/* ═══════ FLOATING NAV ═══════ */}
         <nav className="fixed top-0 left-0 right-0 z-50">
@@ -91,7 +215,7 @@ export default async function MenuPage({ params }: Props) {
         {/* ═══════ HERO ═══════ */}
         <header className="relative pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 overflow-hidden">
           {/* Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] rounded-full blur-[140px] opacity-[0.06]" style={{ background: G }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[560px] h-[380px] rounded-full blur-[170px] opacity-[0.03]" style={{ background: G }} />
 
           <div className="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
             {/* Pill badge */}
@@ -115,15 +239,16 @@ export default async function MenuPage({ params }: Props) {
         <main className="relative max-w-5xl mx-auto px-4 sm:px-8 pb-8 sm:pb-14">
           {/* Section divider */}
           <div className="flex items-center gap-4 mb-5 sm:mb-8 px-1">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
             <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.3em] uppercase text-white/25 shrink-0">Nuestros locales</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
           </div>
 
           <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {allKeys.map((key, idx) => {
               const loc = menuData.locations[key]
               const hasLocMenu = loc.categories && loc.categories.length > 0
+              const openNow = hasLocMenu ? isBranchOpen(loc.hours || getDisplayHours(key, loc.name, loc.hours)) : false
               const totalItems = hasLocMenu ? loc.categories.reduce((s: number, c: { items: unknown[] }) => s + c.items.length, 0) : 0
               const displayHours = getDisplayHours(key, loc.name, loc.hours)
               const waLink = loc.whatsapp
@@ -158,10 +283,21 @@ export default async function MenuPage({ params }: Props) {
                     {/* Status */}
                     <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                       {hasLocMenu ? (
-                        <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xl border border-white/[0.06]">
-                          <div className="w-1.5 h-1.5 rounded-full" style={{ background: G }} />
-                          <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider" style={{ color: G }}>Activo</span>
-                        </div>
+                        openNow ? (
+                          <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xl border border-white/[0.06]">
+                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: G }} />
+                            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider" style={{ color: G }}>
+                              Activo
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xl border border-white/[0.06]">
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                            <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.04em] text-red-500">
+                              Cerrado
+                            </span>
+                          </div>
+                        )
                       ) : (
                         <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-xl border border-white/[0.06]">
                           <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/50" />

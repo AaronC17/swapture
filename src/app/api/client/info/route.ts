@@ -7,7 +7,7 @@ import { sanitizeString, safeJsonParse } from '@/lib/security'
 export async function GET() {
   try {
     const user = await getCurrentUser()
-    if (!user || (user.role !== 'client' && user.role !== 'admin')) {
+    if (!user || user.role !== 'client') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
     }
 
@@ -27,7 +27,7 @@ export async function GET() {
 export async function PATCH(req: NextRequest) {
   try {
     const user = await getCurrentUser()
-    if (!user || (user.role !== 'client' && user.role !== 'admin')) {
+    if (!user || user.role !== 'client') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
     }
 

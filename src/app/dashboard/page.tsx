@@ -28,8 +28,24 @@ interface DashboardData {
 }
 
 const planLabels: Record<string, string> = { starter: 'Básico', growth: 'Crecimiento', scale: 'Premium' }
-const sourceLabels: Record<string, string> = { website: 'Web', whatsapp: 'WhatsApp', manual: 'Manual', form: 'Formulario', chatbot: 'Chatbot' }
-const sourceEmoji: Record<string, string> = { website: '🌐', whatsapp: '📱', manual: '✏️', form: '📋', chatbot: '🤖' }
+const sourceLabels: Record<string, string> = {
+  website: 'Web',
+  whatsapp: 'WhatsApp',
+  'whatsapp-menu': 'WhatsApp (menú)',
+  'whatsapp-chatbot': 'WhatsApp (chatbot)',
+  manual: 'Manual',
+  form: 'Formulario',
+  chatbot: 'Chatbot',
+}
+const sourceEmoji: Record<string, string> = {
+  website: '🌐',
+  whatsapp: '📱',
+  'whatsapp-menu': '🛒',
+  'whatsapp-chatbot': '🤖',
+  manual: '✏️',
+  form: '📋',
+  chatbot: '🤖',
+}
 
 const timeAgo = (dateStr: string) => {
   const d = new Date(dateStr)

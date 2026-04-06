@@ -7,7 +7,7 @@ import { sanitizeString, safeJsonParse } from '@/lib/security'
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await getCurrentUser()
-    if (!user || (user.role !== 'client' && user.role !== 'admin')) {
+    if (!user || user.role !== 'client') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
     }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       data: {
         leadId: params.id,
         content,
-        author: user.role === 'admin' ? 'admin' : 'client',
+        author: 'client',
       },
     })
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         leadId: params.id,
         type: 'note_added',
         detail: content.substring(0, 100),
-        author: user.role === 'admin' ? 'admin' : 'client',
+        author: 'client',
       },
     })
 

@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import {
   ArrowLeft, Phone, ShoppingCart, Plus, Minus, Trash2,
   X, ChevronRight, Flame, Star,
-  CheckCircle2, Clock, MapPin, Search
+  CheckCircle2, Clock, MapPin, Search, User, Smartphone, Home, Truck
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -27,6 +27,13 @@ interface MenuSiteData {
 }
 
 interface CartItem { name: string; price: number; qty: number }
+interface PersistedChatLeadState {
+  updatedAt?: number
+  leadData?: {
+    name?: string
+    phone?: string
+  }
+}
 
 /* ═══════════════════════════════════════════════
    VARIANT GROUPING
@@ -303,6 +310,25 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
   const [variantSel, setVariantSel] = useState<Record<string, string>>({})
   const cartTotal = cart.reduce((s, i) => s + i.price * i.qty, 0)
   const cartCount = cart.reduce((s, i) => s + i.qty, 0)
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(`swapture-chat:${data.slug}`)
+      if (!raw) return
+
+      const parsed = JSON.parse(raw) as PersistedChatLeadState
+      const isExpired = typeof parsed.updatedAt === 'number' && Date.now() - parsed.updatedAt > 24 * 60 * 60 * 1000
+      if (isExpired) return
+
+      const savedName = String(parsed.leadData?.name || '').trim()
+      const savedPhone = String(parsed.leadData?.phone || '').trim()
+
+      if (savedName) setCustName((prev) => (prev.trim() ? prev : savedName))
+      if (savedPhone) setCustPhone((prev) => (prev.trim() ? prev : savedPhone))
+    } catch {
+      // Ignore malformed local storage data and continue with empty fields.
+    }
+  }, [data.slug])
 
   const addToCart = useCallback((item: MenuItem | { name: string; price: number }) => {
     setCart(prev => {
@@ -807,7 +833,14 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                       </div>
                     ) : (
                       <button
-                        onClick={() => { setCheckoutStep('info'); setTimeout(() => nameInputRef.current?.focus(), 200) }}
+                        onClick={() => {
+                          if (custName.trim() && custPhone.trim()) {
+                            setCheckoutStep('confirm')
+                            return
+                          }
+                          setCheckoutStep('info')
+                          setTimeout(() => nameInputRef.current?.focus(), 200)
+                        }}
                         className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px]"
                         style={{ background: G, boxShadow: `0 4px 20px ${G}30` }}
                       >
@@ -874,17 +907,37 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                       <ArrowLeft size={12} /> Editar datos
                     </button>
                     <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 space-y-2">
+                      <p className="text-[11px] text-white/40 font-bold uppercase tracking-wider">Tipo de entrega</p>
+                      <div className="flex gap-2">
+                        {(['recoger', 'envio'] as const).map(opt => (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => setCustOrderType(opt)}
+                            className={`flex-1 py-2.5 rounded-xl text-[12px] font-bold border transition-all ${
+                              custOrderType === opt
+                                ? 'text-black border-transparent'
+                                : 'bg-white/[0.04] border-white/[0.08] text-white/50 hover:text-white/70'
+                            }`}
+                            style={custOrderType === opt ? { background: G } : {}}
+                          >
+                            {opt === 'recoger' ? 'Para recoger' : 'Envío'}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 space-y-2">
                       <p className="text-[11px] text-white/40 font-bold uppercase tracking-wider">Resumen del pedido</p>
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/50">👤</span>
+                        <User size={14} className="text-white/50" />
                         <span className="text-white/80 font-medium">{custName}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/50">📱</span>
+                        <Smartphone size={14} className="text-white/50" />
                         <span className="text-white/80 font-medium">{custPhone}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="text-white/50">{custOrderType === 'recoger' ? '🏠' : '🛵'}</span>
+                        {custOrderType === 'recoger' ? <Home size={14} className="text-white/50" /> : <Truck size={14} className="text-white/50" />}
                         <span className="text-white/80 font-medium">{custOrderType === 'recoger' ? 'Para recoger' : 'Envío a domicilio'}</span>
                       </div>
                       <div className="w-full h-px bg-white/[0.05] my-1" />

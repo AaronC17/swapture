@@ -26,7 +26,7 @@ export default async function SitePage({ params }: Props) {
     notFound()
   }
 
-  const services = client.services ? client.services.split(',').map(s => s.trim()).filter(Boolean) : []
+  const services = client.services ? client.services.split(',').map((s: string) => s.trim()).filter(Boolean) : []
 
   // Parse menu data from customNotes if available (JSON)
   let menuData = null

@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { sanitizeString, sanitizeEmail, sanitizePhone, sanitizeNumber, rateLimit, getClientIp, safeJsonParse, LEAD_LIMIT } from '@/lib/security'
 
+const ALLOWED_SOURCES = new Set([
+  'website',
+  'whatsapp',
+  'chatbot',
+  'manual',
+  'form',
+  'whatsapp-menu',
+  'whatsapp-chatbot',
+])
+
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     // Rate limit
@@ -22,7 +32,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     const email = sanitizeEmail(body.email)
     const phone = sanitizePhone(body.phone)
     const message = sanitizeString(body.message, 1000)
-    const source = ['website', 'whatsapp', 'chatbot'].includes(String(body.source)) ? String(body.source) : 'website'
+    const source = ALLOWED_SOURCES.has(String(body.source)) ? String(body.source) : 'website'
     const orderDetails = sanitizeString(body.orderDetails, 5000)
     const totalAmount = sanitizeNumber(body.totalAmount, 0, 9999999)
 
