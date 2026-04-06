@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from 'react'
 import {
   Search, Phone, Mail, Send, X, Clock,
-  ShoppingBag, User, MessageCircle, ChevronRight, Repeat
+  ShoppingBag, User, MessageCircle, ChevronRight, Repeat,
+  Pencil, Save, Trash2
 } from 'lucide-react'
 
 /* ─── types ─── */
@@ -46,6 +47,22 @@ const sourceEmoji: Record<string, string> = {
   chatbot: '🤖',
 }
 
+const statusLabels: Record<string, string> = {
+  new: 'Nuevo',
+  contacted: 'Contactado',
+  qualified: 'Calificado',
+  converted: 'Convertido',
+  lost: 'Perdido',
+}
+
+const statusColor: Record<string, string> = {
+  new: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
+  contacted: 'text-violet-300 bg-violet-400/10 border-violet-400/20',
+  qualified: 'text-amber-300 bg-amber-400/10 border-amber-400/20',
+  converted: 'text-emerald-300 bg-emerald-400/10 border-emerald-400/20',
+  lost: 'text-rose-300 bg-rose-400/10 border-rose-400/20',
+}
+
 const timeAgo = (dateStr: string) => {
   const d = new Date(dateStr)
   const now = new Date()
@@ -63,10 +80,24 @@ export default function ClientLeadsPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [filterSource, setFilterSource] = useState<string>('all')
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+  const [filterPeriod, setFilterPeriod] = useState<'7d' | '30d' | '90d' | 'all'>('30d')
   const [selectedLead, setSelectedLead] = useState<LeadDetail | null>(null)
   const [detailLoading, setDetailLoading] = useState(false)
   const [noteText, setNoteText] = useState('')
   const [sending, setSending] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+    status: 'new',
+    tags: '',
+    rating: 0,
+  })
 
   const fetchLeads = useCallback(() => {
     fetch('/api/client/leads')
@@ -79,11 +110,17 @@ export default function ClientLeadsPage() {
   useEffect(() => { fetchLeads() }, [fetchLeads])
 
   /* ─── derived ─── */
+  const daysForPeriod = filterPeriod === '7d' ? 7 : filterPeriod === '30d' ? 30 : filterPeriod === '90d' ? 90 : 0
+  const threshold = daysForPeriod > 0 ? new Date(Date.now() - daysForPeriod * 24 * 60 * 60 * 1000) : null
+
   const filtered = leads.filter(l => {
     const matchSearch = l.name.toLowerCase().includes(search.toLowerCase()) ||
-      l.phone.includes(search)
+      l.phone.includes(search) ||
+      l.email.toLowerCase().includes(search.toLowerCase())
     const matchSource = filterSource === 'all' || l.source === filterSource
-    return matchSearch && matchSource
+    const matchStatus = filterStatus === 'all' || l.status === filterStatus
+    const matchPeriod = !threshold || new Date(l.createdAt) >= threshold
+    return matchSearch && matchSource && matchStatus && matchPeriod
   })
 
   // Count how many times each person appears (by phone, as frequency indicator)
@@ -103,11 +140,21 @@ export default function ClientLeadsPage() {
   const openDetail = async (id: string) => {
     setDetailLoading(true)
     setSelectedLead(null)
+    setEditing(false)
     try {
       const r = await fetch(`/api/client/leads/${id}`)
       if (!r.ok) throw new Error()
       const d = await r.json()
       setSelectedLead(d.lead)
+      setForm({
+        name: d.lead.name || '',
+        phone: d.lead.phone || '',
+        email: d.lead.email || '',
+        message: d.lead.message || '',
+        status: d.lead.status || 'new',
+        tags: d.lead.tags || '',
+        rating: Number(d.lead.rating || 0),
+      })
     } catch { /* noop */ }
     setDetailLoading(false)
   }
@@ -127,6 +174,44 @@ export default function ClientLeadsPage() {
     setSending(false)
   }
 
+  const saveLead = async () => {
+    if (!selectedLead) return
+    setSaving(true)
+    try {
+      const r = await fetch(`/api/client/leads/${selectedLead.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!r.ok) throw new Error()
+      await fetchLeads()
+      await openDetail(selectedLead.id)
+      setEditing(false)
+    } catch {
+      // noop - keep drawer open so user can retry
+    }
+    setSaving(false)
+  }
+
+  const deleteLead = async () => {
+    if (!selectedLead || deleting) return
+    const ok = window.confirm('¿Seguro que deseas eliminar este usuario? Esta acción no se puede deshacer.')
+    if (!ok) return
+
+    setDeleting(true)
+    try {
+      const r = await fetch(`/api/client/leads/${selectedLead.id}`, { method: 'DELETE' })
+      if (!r.ok) throw new Error()
+      setSelectedLead(null)
+      setEditing(false)
+      setNoteText('')
+      await fetchLeads()
+    } catch {
+      // noop - keep user in context if deletion fails
+    }
+    setDeleting(false)
+  }
+
   const parseOrder = (details: string) => {
     try {
       const items = JSON.parse(details)
@@ -141,7 +226,7 @@ export default function ClientLeadsPage() {
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-heading font-bold">Usuarios</h1>
-        <p className="text-muted text-sm mt-1">{leads.length} usuarios registrados</p>
+        <p className="text-muted text-sm mt-1">{filtered.length} de {leads.length} usuarios en el período</p>
       </div>
 
       {/* Quick summary */}
@@ -168,12 +253,29 @@ export default function ClientLeadsPage() {
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white placeholder:text-muted/50 focus:outline-none focus:border-white/20 text-sm" />
         </div>
         <div className="flex flex-wrap gap-1.5">
+          <FilterBtn active={filterPeriod === '7d'} onClick={() => setFilterPeriod('7d')}>Semanal</FilterBtn>
+          <FilterBtn active={filterPeriod === '30d'} onClick={() => setFilterPeriod('30d')}>Mensual</FilterBtn>
+          <FilterBtn active={filterPeriod === '90d'} onClick={() => setFilterPeriod('90d')}>90 días</FilterBtn>
+          <FilterBtn active={filterPeriod === 'all'} onClick={() => setFilterPeriod('all')}>Todo</FilterBtn>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-wrap gap-1.5">
           <FilterBtn active={filterSource === 'all'} onClick={() => setFilterSource('all')}>Todos</FilterBtn>
           {Object.keys(sourceCounts).map(s => (
             <FilterBtn key={s} active={filterSource === s} onClick={() => setFilterSource(s)}>
               {sourceEmoji[s]} {sourceLabels[s] || s}
             </FilterBtn>
           ))}
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          <FilterBtn active={filterStatus === 'all'} onClick={() => setFilterStatus('all')}>Todos los estados</FilterBtn>
+          <FilterBtn active={filterStatus === 'new'} onClick={() => setFilterStatus('new')}>Nuevos</FilterBtn>
+          <FilterBtn active={filterStatus === 'contacted'} onClick={() => setFilterStatus('contacted')}>Contactados</FilterBtn>
+          <FilterBtn active={filterStatus === 'qualified'} onClick={() => setFilterStatus('qualified')}>Calificados</FilterBtn>
+          <FilterBtn active={filterStatus === 'converted'} onClick={() => setFilterStatus('converted')}>Convertidos</FilterBtn>
+          <FilterBtn active={filterStatus === 'lost'} onClick={() => setFilterStatus('lost')}>Perdidos</FilterBtn>
         </div>
       </div>
 
@@ -203,6 +305,9 @@ export default function ClientLeadsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-white">{lead.name}</p>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full border ${statusColor[lead.status] || 'text-white/60 border-white/15 bg-white/[0.05]'}`}>
+                      {statusLabels[lead.status] || lead.status}
+                    </span>
                     {isFrequent && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400/80 font-medium flex items-center gap-0.5">
                         <Repeat size={8} /> Frecuente
@@ -259,8 +364,16 @@ export default function ClientLeadsPage() {
           setNoteText={setNoteText}
           sending={sending}
           onAddNote={addNote}
-          onClose={() => { setSelectedLead(null); setNoteText('') }}
+          onClose={() => { setSelectedLead(null); setNoteText(''); setEditing(false) }}
           phoneCount={phoneCount}
+          editing={editing}
+          setEditing={setEditing}
+          form={form}
+          setForm={setForm}
+          onSave={saveLead}
+          saving={saving}
+          onDelete={deleteLead}
+          deleting={deleting}
         />
       )}
     </div>
@@ -280,12 +393,37 @@ function FilterBtn({ active, onClick, children }: { active: boolean; onClick: ()
 
 /* ━━━━━━━━━━ Contact detail drawer ━━━━━━━━━━ */
 function ContactDrawer({
-  lead, loading, noteText, setNoteText, sending, onAddNote, onClose, phoneCount
+  lead, loading, noteText, setNoteText, sending, onAddNote, onClose, phoneCount,
+  editing, setEditing, form, setForm, onSave, saving, onDelete, deleting
 }: {
   lead: LeadDetail | null; loading: boolean
   noteText: string; setNoteText: (v: string) => void; sending: boolean
   onAddNote: () => void; onClose: () => void
   phoneCount: Record<string, number>
+  editing: boolean
+  setEditing: (v: boolean) => void
+  form: {
+    name: string
+    phone: string
+    email: string
+    message: string
+    status: string
+    tags: string
+    rating: number
+  }
+  setForm: React.Dispatch<React.SetStateAction<{
+    name: string
+    phone: string
+    email: string
+    message: string
+    status: string
+    tags: string
+    rating: number
+  }>>
+  onSave: () => void
+  saving: boolean
+  onDelete: () => void
+  deleting: boolean
 }) {
   const parseOrder = (details: string) => {
     try {
@@ -320,6 +458,9 @@ function ContactDrawer({
                   <span className="text-xs text-muted">
                     {sourceEmoji[lead.source]} {sourceLabels[lead.source] || lead.source}
                   </span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full border ${statusColor[lead.status] || 'text-white/60 border-white/15 bg-white/[0.05]'}`}>
+                    {statusLabels[lead.status] || lead.status}
+                  </span>
                   {lead.phone && phoneCount[lead.phone] > 1 && (
                     <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400/80 font-medium flex items-center gap-0.5">
                       <Repeat size={8} /> Usuario frecuente
@@ -328,6 +469,99 @@ function ContactDrawer({
                 </div>
               </div>
             </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              {!editing ? (
+                <button
+                  onClick={() => setEditing(true)}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/[0.15] hover:bg-white/[0.05] text-xs"
+                >
+                  <Pencil size={12} /> Editar
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={onSave}
+                    disabled={saving}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-emerald-400/25 text-emerald-300 hover:bg-emerald-400/10 text-xs disabled:opacity-50"
+                  >
+                    <Save size={12} /> {saving ? 'Guardando...' : 'Guardar'}
+                  </button>
+                  <button
+                    onClick={() => setEditing(false)}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/[0.15] hover:bg-white/[0.05] text-xs"
+                  >
+                    Cancelar
+                  </button>
+                </>
+              )}
+              <button
+                onClick={onDelete}
+                disabled={deleting}
+                className="ml-auto inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-rose-400/25 text-rose-300 hover:bg-rose-400/10 text-xs disabled:opacity-50"
+              >
+                <Trash2 size={12} /> {deleting ? 'Eliminando...' : 'Borrar'}
+              </button>
+            </div>
+
+            {/* Editable fields */}
+            {editing && (
+              <div className="space-y-3 p-3 rounded-xl border border-white/[0.08] bg-white/[0.02]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input
+                    value={form.name}
+                    onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                    placeholder="Nombre"
+                  />
+                  <input
+                    value={form.phone}
+                    onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                    placeholder="Teléfono"
+                  />
+                  <input
+                    value={form.email}
+                    onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                    placeholder="Email"
+                  />
+                  <select
+                    value={form.status}
+                    onChange={(e) => setForm((prev) => ({ ...prev, status: e.target.value }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                  >
+                    <option value="new">Nuevo</option>
+                    <option value="contacted">Contactado</option>
+                    <option value="qualified">Calificado</option>
+                    <option value="converted">Convertido</option>
+                    <option value="lost">Perdido</option>
+                  </select>
+                  <input
+                    value={form.tags}
+                    onChange={(e) => setForm((prev) => ({ ...prev, tags: e.target.value }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                    placeholder="Tags (separados por coma)"
+                  />
+                  <input
+                    type="number"
+                    min={0}
+                    max={5}
+                    value={form.rating}
+                    onChange={(e) => setForm((prev) => ({ ...prev, rating: Number(e.target.value || 0) }))}
+                    className="px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm"
+                    placeholder="Rating 0-5"
+                  />
+                </div>
+                <textarea
+                  value={form.message}
+                  onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))}
+                  className="w-full px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm min-h-[92px]"
+                  placeholder="Mensaje del usuario"
+                />
+              </div>
+            )}
 
             {/* Contact info */}
             <div className="space-y-2">
@@ -378,7 +612,7 @@ function ContactDrawer({
             )}
 
             {/* Message */}
-            {lead.message && (
+            {lead.message && !editing && (
               <div>
                 <p className="text-xs text-muted mb-1.5 flex items-center gap-1"><MessageCircle size={11} /> Mensaje</p>
                 <p className="text-sm text-white/60 bg-white/[0.03] p-3 rounded-xl border border-white/[0.06]">{lead.message}</p>

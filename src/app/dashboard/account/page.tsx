@@ -78,6 +78,7 @@ export default function ClientAccountPage() {
   if (!data) return <div className="text-center py-20 text-muted">No se pudo cargar tu información</div>
 
   const cls = "w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white text-sm focus:outline-none focus:border-white/20 placeholder:text-muted/50"
+  const isSubscriptionIncluded = data.monthlyPrice <= 0
 
   return (
     <div className="max-w-2xl space-y-6">
@@ -106,7 +107,14 @@ export default function ClientAccountPage() {
           </div>
           <div className="p-3 rounded-lg bg-white/[0.03]">
             <p className="text-xs text-muted mb-1">Plan</p>
-            <p className="text-sm font-medium">{planLabels[data.plan] || data.plan} — <span className="text-white/60">${data.monthlyPrice.toLocaleString()}/mes</span></p>
+            <p className="text-sm font-medium">
+              {planLabels[data.plan] || data.plan} —{' '}
+              {isSubscriptionIncluded ? (
+                <span className="text-emerald-300/90">Suscripción incluida</span>
+              ) : (
+                <span className="text-white/60">${data.monthlyPrice.toLocaleString()}/mes</span>
+              )}
+            </p>
           </div>
         </div>
         {data.subscriptionStart && (

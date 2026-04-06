@@ -4,8 +4,37 @@ import prisma from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+function getRangeStart(range: string): Date | null {
+  const now = new Date()
+  if (range === '7d') {
+    now.setDate(now.getDate() - 7)
+    return now
+  }
+  if (range === '30d') {
+    now.setDate(now.getDate() - 30)
+    return now
+  }
+  if (range === '90d') {
+    now.setDate(now.getDate() - 90)
+    return now
+  }
+  return null
+}
+
+function getRangeLabel(range: string): string {
+  if (range === '7d') return '7 días'
+  if (range === '30d') return '30 días'
+  if (range === '90d') return '90 días'
+  return 'Todo'
+}
+
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const requestedRange = searchParams.get('range') || '30d'
+    const range = ['7d', '30d', '90d', 'all'].includes(requestedRange) ? requestedRange : '30d'
+    const rangeStart = getRangeStart(range)
+
     const user = await getCurrentUser()
     if (!user || user.role !== 'client') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
@@ -19,12 +48,16 @@ export async function GET() {
       return NextResponse.json({ error: 'Cliente no encontrado' }, { status: 404 })
     }
 
+    const whereClause = rangeStart
+      ? { clientId: client.id, createdAt: { gte: rangeStart } }
+      : { clientId: client.id }
+
     const allLeads: any[] = await (prisma.lead as any).findMany({
-      where: { clientId: client.id },
+      where: whereClause,
       orderBy: { createdAt: 'desc' },
     })
 
-    // Simple useful stats derived from leads
+    // Useful stats in selected period
     const totalContacts = allLeads.length
     const weekAgo = new Date()
     weekAgo.setDate(weekAgo.getDate() - 7)
@@ -49,6 +82,8 @@ export async function GET() {
       slug: client.slug,
       status: client.status,
       plan: client.plan,
+      range,
+      rangeLabel: getRangeLabel(range),
       totalContacts,
       newThisWeek,
       ordersCount,

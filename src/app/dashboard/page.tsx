@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {
   Users, ShoppingBag, Phone, MessageCircle, ExternalLink,
   Clock, Repeat, ChevronRight, Sparkles
@@ -17,6 +17,8 @@ interface DashboardData {
   slug: string
   status: string
   plan: string
+  range: '7d' | '30d' | '90d' | 'all'
+  rangeLabel: string
   totalContacts: number
   newThisWeek: number
   ordersCount: number
@@ -61,14 +63,20 @@ const timeAgo = (dateStr: string) => {
 export default function ClientDashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [range, setRange] = useState<'7d' | '30d' | '90d' | 'all'>('30d')
 
-  useEffect(() => {
-    fetch('/api/client/dashboard')
+  const fetchDashboard = useCallback((selectedRange: '7d' | '30d' | '90d' | 'all') => {
+    setLoading(true)
+    fetch(`/api/client/dashboard?range=${selectedRange}`)
       .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then(d => { if (d && d.businessName) setData(d) })
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    fetchDashboard(range)
+  }, [fetchDashboard, range])
 
   if (loading) {
     return <div className="flex justify-center py-20"><div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>
@@ -77,6 +85,26 @@ export default function ClientDashboard() {
   if (!data) {
     return <div className="text-center py-20 text-muted">No se pudo cargar tu información</div>
   }
+
+  const periodSub = data.range === 'all'
+    ? `${data.newThisWeek} esta semana`
+    : `Periodo: ${data.rangeLabel}`
+
+  const revenueSub = data.ordersCount
+    ? `₡${data.totalRevenue.toLocaleString()} en ${data.rangeLabel.toLowerCase()}`
+    : undefined
+
+  const frequentSub = data.range === 'all'
+    ? '2+ pedidos'
+    : `en ${data.rangeLabel.toLowerCase()}`
+
+  const whatsappSub = data.range === 'all'
+    ? 'Personas que llegaron por WhatsApp'
+    : `en ${data.rangeLabel.toLowerCase()}`
+
+  const revenueTotalSub = data.range === 'all'
+    ? `${data.ordersCount} ${data.ordersCount === 1 ? 'pedido' : 'pedidos'} registrados`
+    : `${data.ordersCount} ${data.ordersCount === 1 ? 'pedido' : 'pedidos'} en ${data.rangeLabel.toLowerCase()}`
 
   const parseOrder = (details: string): { name: string; qty: number; price: number }[] | null => {
     try {
@@ -94,20 +122,26 @@ export default function ClientDashboard() {
           <h1 className="text-xl sm:text-2xl font-heading font-bold">{data.businessName}</h1>
           <p className="text-muted text-sm mt-0.5">{planLabels[data.plan] || data.plan}</p>
         </div>
-        {data.slug && data.status === 'active' && (
-          <a href={`/site/${data.slug}`} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm text-white/50 hover:text-white border border-white/[0.08] hover:border-white/[0.15] rounded-xl transition-all">
-            <ExternalLink size={14} /> Ver mi página
-          </a>
-        )}
+        <div className="flex items-center gap-2 flex-wrap">
+          <RangeBtn active={range === '7d'} onClick={() => setRange('7d')}>Semanal</RangeBtn>
+          <RangeBtn active={range === '30d'} onClick={() => setRange('30d')}>Mensual</RangeBtn>
+          <RangeBtn active={range === '90d'} onClick={() => setRange('90d')}>90 días</RangeBtn>
+          <RangeBtn active={range === 'all'} onClick={() => setRange('all')}>Todo</RangeBtn>
+          {data.slug && data.status === 'active' && (
+            <a href={`/site/${data.slug}`} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 text-sm text-white/50 hover:text-white border border-white/[0.08] hover:border-white/[0.15] rounded-xl transition-all">
+              <ExternalLink size={14} /> Ver mi página
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Simple stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard icon={Users} label="Ventas" value={data.totalContacts} sub={data.newThisWeek > 0 ? `+${data.newThisWeek} esta semana` : undefined} />
-        <StatCard icon={ShoppingBag} label="Pedidos" value={data.ordersCount} sub={data.totalRevenue > 0 ? `₡${data.totalRevenue.toLocaleString()} total` : undefined} color="text-emerald-400" />
+        <StatCard icon={Users} label="Ventas" value={data.totalContacts} sub={periodSub} />
+        <StatCard icon={ShoppingBag} label="Pedidos" value={data.ordersCount} sub={revenueSub} color="text-emerald-400" />
         <StatCard icon={MessageCircle} label="Vía chatbot" value={data.chatbotLeads} />
-        <StatCard icon={Repeat} label="Frecuentes" value={data.frequentCount} sub="2+ pedidos" color="text-amber-400" />
+        <StatCard icon={Repeat} label="Frecuentes" value={data.frequentCount} sub={frequentSub} color="text-amber-400" />
       </div>
 
       {/* Recent purchases — the main useful section */}
@@ -201,17 +235,17 @@ export default function ClientDashboard() {
                 <span className="text-xs text-muted">Pedidos por WhatsApp</span>
               </div>
               <p className="text-2xl font-heading font-bold text-green-400">{data.whatsappLeads}</p>
-              <p className="text-[11px] text-muted/40 mt-1">Personas que llegaron por WhatsApp</p>
+              <p className="text-[11px] text-muted/40 mt-1">{whatsappSub}</p>
             </div>
           )}
           {data.totalRevenue > 0 && (
             <div className="p-4 rounded-xl border border-emerald-400/10 bg-emerald-400/[0.03]">
               <div className="flex items-center gap-2 mb-1">
                 <ShoppingBag size={14} className="text-emerald-400/60" />
-                <span className="text-xs text-emerald-400/50">Total en pedidos</span>
+                <span className="text-xs text-emerald-400/50">Ingresos del periodo</span>
               </div>
               <p className="text-2xl font-heading font-bold text-emerald-400">₡{data.totalRevenue.toLocaleString()}</p>
-              <p className="text-[11px] text-muted/40 mt-1">{data.ordersCount} {data.ordersCount === 1 ? 'pedido' : 'pedidos'} registrados</p>
+              <p className="text-[11px] text-muted/40 mt-1">{revenueTotalSub}</p>
             </div>
           )}
         </div>
@@ -233,5 +267,20 @@ function StatCard({ icon: Icon, label, value, sub, color }: {
       <p className={`text-2xl font-heading font-bold ${color || 'text-white'}`}>{value}</p>
       {sub && <p className="text-[11px] text-muted/40 mt-0.5">{sub}</p>}
     </div>
+  )
+}
+
+function RangeBtn({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
+        active
+          ? 'bg-white/[0.12] text-white border-white/[0.2]'
+          : 'text-muted hover:text-white/80 hover:bg-white/[0.04] border-white/[0.08]'
+      }`}
+    >
+      {children}
+    </button>
   )
 }
