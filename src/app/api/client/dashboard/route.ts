@@ -5,6 +5,12 @@ import prisma from '@/lib/prisma'
 export const dynamic = 'force-dynamic'
 
 function getRangeStart(range: string): Date | null {
+  if (range === '1d') {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return today
+  }
+
   const now = new Date()
   if (range === '7d') {
     now.setDate(now.getDate() - 7)
@@ -22,6 +28,7 @@ function getRangeStart(range: string): Date | null {
 }
 
 function getRangeLabel(range: string): string {
+  if (range === '1d') return 'Hoy'
   if (range === '7d') return '7 días'
   if (range === '30d') return '30 días'
   if (range === '90d') return '90 días'
@@ -32,7 +39,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const requestedRange = searchParams.get('range') || '30d'
-    const range = ['7d', '30d', '90d', 'all'].includes(requestedRange) ? requestedRange : '30d'
+    const range = ['1d', '7d', '30d', '90d', 'all'].includes(requestedRange) ? requestedRange : '30d'
     const rangeStart = getRangeStart(range)
 
     const user = await getCurrentUser()
