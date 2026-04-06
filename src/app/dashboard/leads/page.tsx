@@ -55,6 +55,27 @@ function timeAgo(dateStr: string): string {
   return `hace ${Math.floor(diff / 86400)} d`
 }
 
+function normalizeCostaRicaPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, '')
+  if (!digits) return ''
+  if (digits.startsWith('00506')) return digits.slice(2)
+  if (digits.startsWith('506')) return digits
+  if (digits.length === 8) return `506${digits}`
+  return digits
+}
+
+function formatCostaRicaPhone(phone: string): string {
+  const normalized = normalizeCostaRicaPhone(phone)
+  if (!normalized) return ''
+  const local = normalized.startsWith('506') ? normalized.slice(3) : normalized
+
+  if (local.length === 8) {
+    return `+506 ${local.slice(0, 4)} ${local.slice(4)}`
+  }
+
+  return phone
+}
+
 function matchesPeriod(createdAt: string, period: '1d' | '7d' | '30d' | 'all'): boolean {
   if (period === 'all') return true
 
@@ -184,7 +205,7 @@ export default function ClientLeadsPage() {
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-white truncate">{lead.name}</p>
                 <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-xs text-muted">
-                  {lead.phone && <span className="flex items-center gap-1"><Phone size={10} />{lead.phone}</span>}
+                  {lead.phone && <span className="flex items-center gap-1"><Phone size={10} />{formatCostaRicaPhone(lead.phone)}</span>}
                   {lead.email && <span className="flex items-center gap-1"><Mail size={10} />{lead.email}</span>}
                 </div>
                 {lead.message && lead.totalAmount <= 0 && (
@@ -292,13 +313,13 @@ function LeadDrawer({
             <div className="space-y-2">
               {lead.phone && (
                 <a
-                  href={`https://wa.me/${lead.phone.replace(/\D/g, '')}`}
+                  href={`https://wa.me/${normalizeCostaRicaPhone(lead.phone)}`}
                   target="_blank"
                   rel="noopener"
                   className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
                 >
                   <Phone size={16} className="text-green-400/60" />
-                  <p className="text-sm text-white/80 flex-1">{lead.phone}</p>
+                  <p className="text-sm text-white/80 flex-1">{formatCostaRicaPhone(lead.phone)}</p>
                   <ChevronRight size={14} className="text-white/15" />
                 </a>
               )}

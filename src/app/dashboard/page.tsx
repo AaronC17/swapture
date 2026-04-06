@@ -52,6 +52,20 @@ function timeAgo(dateStr: string): string {
   return `hace ${Math.floor(diff / 86400)} d`
 }
 
+function formatCostaRicaPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, '')
+  let local = digits
+
+  if (digits.startsWith('00506')) local = digits.slice(5)
+  else if (digits.startsWith('506')) local = digits.slice(3)
+
+  if (local.length === 8) {
+    return `+506 ${local.slice(0, 4)} ${local.slice(4)}`
+  }
+
+  return phone || 'Sin telefono'
+}
+
 export default function ClientDashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -141,7 +155,7 @@ export default function ClientDashboard() {
                 <div className="min-w-0 flex-1">
                   <p className="text-sm text-white truncate">{lead.name}</p>
                   <p className="text-[11px] text-muted truncate">
-                    {lead.phone || 'Sin telefono'} · {sourceLabels[lead.source] || lead.source}
+                    {formatCostaRicaPhone(lead.phone)} · {sourceLabels[lead.source] || lead.source}
                   </p>
                 </div>
                 <div className="text-right shrink-0">
