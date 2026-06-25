@@ -46,6 +46,7 @@ interface PersistedChatState {
    CONSTANTS
    ═══════════════════════════════════════════════ */
 const G = '#6abf4b'
+const A = '#f59e0b'
 
 const fmt = (n: number) => `\u20A1${n.toLocaleString('es-CR')}`
 
@@ -938,7 +939,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
         {/* Slide indicators */}
         <div className="absolute bottom-6 right-4 sm:bottom-10 sm:right-10 z-10 flex gap-2">
           {heroSlides.map((_, i) => (
-            <button key={i} onClick={() => setHeroSlide(i)} className={`h-1 sm:h-1.5 rounded-full transition-all duration-700 ${heroSlide === i ? 'w-5 sm:w-10' : 'w-1.5 sm:w-3 bg-white/15 hover:bg-white/30'}`} style={heroSlide === i ? { background: G } : undefined} />
+            <button key={i} onClick={() => setHeroSlide(i)} className={`h-1 sm:h-1.5 rounded-full transition-all duration-700 ${heroSlide === i ? 'w-5 sm:w-10' : 'w-1.5 sm:w-3 bg-white/15 hover:bg-white/30'}`} style={heroSlide === i ? { background: A } : undefined} />
           ))}
         </div>
 
@@ -946,7 +947,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 pb-0 pt-20 sm:pt-28 mt-4 sm:mt-0">
           <div className="max-w-4xl text-center sm:text-left mx-auto sm:mx-0">
             {/* Top badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-white/[0.08] text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-5 sm:mb-8" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-white/[0.08] text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-5 sm:mb-8" style={{ color: A }}>
               <Star size={11} className="fill-current shrink-0" /> <span>Smash Burgers hechas con pasi&oacute;n</span>
             </div>
 
@@ -965,9 +966,9 @@ export default function SiteClient({ data }: { data: SiteData }) {
               <span
                 className="block text-[1.08rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.02em] sm:tracking-[0.3em] mt-1 sm:mt-4"
                 style={{
-                  color: G,
+                  color: A,
                   fontFamily: 'Georgia, "Times New Roman", serif',
-                  textShadow: `0 0 16px ${G}22, 0 1px 0 #4a8a33`,
+                  textShadow: `0 0 16px ${A}22, 0 1px 0 #b45309`,
                 }}
               >
                 Smash Burgers
@@ -976,9 +977,9 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
             {/* 100% ANGUS strip — prominent design */}
             <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-5 mb-5 sm:mb-8">
-              <div className="flex items-center justify-center px-3 sm:px-6 py-2 sm:py-3 rounded-xl border-2 backdrop-blur-md shrink-0" style={{ borderColor: `${G}50`, background: `${G}08` }}>
+              <div className="flex items-center justify-center px-3 sm:px-6 py-2 sm:py-3 rounded-xl border-2 backdrop-blur-md shrink-0" style={{ borderColor: `${A}50`, background: `${A}08` }}>
                 <div className="text-center">
-                  <p className="text-base sm:text-2xl font-black tracking-tight leading-none" style={{ color: G }}>100%</p>
+                  <p className="text-base sm:text-2xl font-black tracking-tight leading-none" style={{ color: A }}>100%</p>
                   <p className="text-[7px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] text-white/70">Carne Angus</p>
                 </div>
               </div>
@@ -990,7 +991,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-6 sm:mb-14">
-              <button onClick={() => window.location.href = `/site/${data.slug}/menu`} className="group flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-black text-sm text-black uppercase tracking-wider transition-all hover:scale-[1.03] active:scale-[0.98] shadow-xl" style={{ background: G, boxShadow: `0 8px 30px ${G}35` }}>
+              <button onClick={() => window.location.href = `/site/${data.slug}/menu`} className="group flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-black text-sm text-black uppercase tracking-wider transition-all hover:scale-[1.03] active:scale-[0.98] shadow-xl" style={{ background: A, boxShadow: `0 8px 30px ${A}35` }}>
                 <UtensilsCrossed size={16} /> Ver Men&uacute; <ChevronRight size={13} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button onClick={() => setChatOpen(true)} className="flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-bold text-sm border border-white/15 hover:border-white/30 hover:bg-white/5 transition-all active:scale-[0.98] backdrop-blur-md uppercase tracking-wider">
@@ -1007,7 +1008,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
               ].map((s, i) => (
                 <div key={i} className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08] backdrop-blur-md shrink-0">
-                    <s.icon size={14} className="sm:w-[19px] sm:h-[19px]" style={{ color: G }} />
+                    <s.icon size={14} className="sm:w-[19px] sm:h-[19px]" style={{ color: A }} />
                   </div>
                   <div>
                     <p className="text-sm sm:text-xl font-black leading-none">{s.val}</p>
@@ -1027,11 +1028,11 @@ export default function SiteClient({ data }: { data: SiteData }) {
       </header>
 
       {/* ═══════ MARQUEE BANNER — ANGUS CERTIFIED ═══════ */}
-      <div className="relative py-2.5 sm:py-3 overflow-hidden border-y" style={{ borderColor: `${G}15`, background: `linear-gradient(90deg, ${G}06, ${G}10, ${G}06)` }}>
+      <div className="relative py-2.5 sm:py-3 overflow-hidden border-y border-white/[0.06]" style={{ background: `linear-gradient(90deg, rgba(245,158,11,0.04), rgba(245,158,11,0.08), rgba(245,158,11,0.04))` }}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(12)].map((_, i) => (
-            <span key={i} className="mx-3 sm:mx-8 text-[10px] sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] flex items-center gap-1.5 sm:gap-3" style={{ color: `${G}60` }}>
-              <Flame size={12} className="shrink-0" style={{ color: G }} />
+            <span key={i} className="mx-3 sm:mx-8 text-[10px] sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] flex items-center gap-1.5 sm:gap-3" style={{ color: `${A}60` }}>
+              <Flame size={12} className="shrink-0" style={{ color: A }} />
               100% Angus Beef
               <span className="text-white/15">&bull;</span>
               Brioche Artesanal
@@ -1055,11 +1056,11 @@ export default function SiteClient({ data }: { data: SiteData }) {
             <div key={i} className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-[#111]/80 backdrop-blur-xl text-center hover:border-white/[0.15] transition-all duration-700 hover:translate-y-[-3px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.5)' }}>
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${G}08` }} />
               {s.icon ? (
-                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: G }} />
+                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: A }} />
               ) : (
                 <div className="h-[18px] sm:h-[18px] mb-1 sm:mb-2" />
               )}
-              <p className="text-lg sm:text-3xl font-black relative z-10" style={{ color: G }}>{s.val}</p>
+              <p className="text-lg sm:text-3xl font-black relative z-10 text-white">{s.val}</p>
               <p className="text-[7px] sm:text-[11px] text-white/50 uppercase tracking-[0.1em] sm:tracking-[0.15em] mt-0.5 sm:mt-1 font-black relative z-10">{s.label}</p>
               <p className="text-[6px] sm:text-[10px] text-white/20 uppercase tracking-wider mt-0.5 relative z-10 hidden sm:block">{s.sub}</p>
             </div>
@@ -1069,25 +1070,25 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
       {/* ═══════ HOW TO ORDER — Clean cards ═══════ */}
       <section id="order-section" className="py-16 sm:py-20 relative overflow-hidden scroll-mt-20">
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(106,191,75,0.06) 0%, transparent 60%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.05) 0%, transparent 60%)' }} />
         <div className="absolute top-0 left-0 right-0 flex justify-center gap-1 py-3 hidden sm:flex">
           {[...Array(40)].map((_, i) => (
-            <div key={i} className="w-2 h-2 rotate-45 shrink-0" style={{ background: i % 2 === 0 ? `${G}12` : 'transparent' }} />
+            <div key={i} className="w-2 h-2 rotate-45 shrink-0" style={{ background: i % 2 === 0 ? `${A}10` : 'transparent' }} />
           ))}
         </div>
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: A }}>
               <ShoppingCart size={13} /> Orden&aacute; aqu&iacute;
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[1] sm:leading-[0.9] tracking-tight">
-              &iquest;C&Oacute;MO POD&Eacute;S<br /><span style={{ color: G }}>PEDIR EN QUINCHO&apos;S?</span>
+              &iquest;C&Oacute;MO POD&Eacute;S<br /><span style={{ color: A }}>PEDIR EN QUINCHO&apos;S?</span>
             </h2>
             <p className="text-white/40 mt-4 sm:mt-6 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Escog&eacute; tu opci&oacute;n favorita para el pedido</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto">
             {[
-              { icon: UtensilsCrossed, title: 'Menú Online', desc: 'Mirá el menú con fotos y pedí con un click.', action: () => window.location.href = `/site/${data.slug}/menu`, btn: 'Ver Menú', color: G },
+              { icon: UtensilsCrossed, title: 'Menú Online', desc: 'Mirá el menú con fotos y pedí con un click.', action: () => window.location.href = `/site/${data.slug}/menu`, btn: 'Ver Menú', color: A },
               { icon: Phone, title: 'WhatsApp', desc: 'Escribinos al WhatsApp y te confirmamos al toque.', action: () => waLink && window.open(waLink, '_blank'), btn: 'WhatsApp', color: '#25D366' },
             ].map((opt, i) => (
               <div key={i} className="group relative p-6 sm:p-8 rounded-2xl border border-white/[0.06] bg-white/[0.015] hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-500 text-center" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03)' }}>
@@ -1110,25 +1111,25 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
       {/* ═══════ BRAND DIVIDER ═══════ */}
       <div className="flex items-center justify-center gap-3 py-8 sm:py-6">
-        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(90deg, transparent, ${G}30)` }} />
+        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(90deg, transparent, ${A}30)` }} />
         <div className="flex gap-1.5">
           {[...Array(7)].map((_, i) => (
-            <div key={i} className="w-3 h-3 rotate-45" style={{ background: i % 2 === 0 ? `${G}30` : 'transparent', border: `1px solid ${G}20` }} />
+            <div key={i} className="w-3 h-3 rotate-45" style={{ background: i % 2 === 0 ? `${A}25` : 'transparent', border: `1px solid ${A}18` }} />
           ))}
         </div>
-        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(270deg, transparent, ${G}30)` }} />
+        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(270deg, transparent, ${A}30)` }} />
       </div>
 
       {/* ═══════ ABOUT — Minimal ═══════ */}
       {hasMenu && (
         <section id="about-section" className="relative py-14 sm:py-20 overflow-hidden scroll-mt-20">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(106,191,75,0.05) 0%, transparent 65%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(245,158,11,0.04) 0%, transparent 65%)' }} />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[10px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[10px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5" style={{ color: A }}>
               <Sparkles size={12} /> Sobre nosotros
             </div>
             <h2 className="text-xl sm:text-3xl lg:text-5xl font-black leading-[1] sm:leading-[0.9] mb-4 sm:mb-6 tracking-tight">
-              LA DIFERENCIA<br />EST&Aacute; EN <span style={{ color: G }}>EL SMASH</span>
+              LA DIFERENCIA<br />EST&Aacute; EN <span style={{ color: A }}>EL SMASH</span>
             </h2>
             <p className="text-white/40 leading-relaxed text-xs sm:text-base mb-8 sm:mb-12 max-w-lg mx-auto">Quincho&apos;s naci&oacute; en Orotina y creci&oacute; hasta Jac&oacute; y Esparza con una sola regla: hamburguesas smash hechas como se debe. Carne 100% Angus, sellada en plancha de hierro, queso que se derrite al instante y pan brioche fresco cada ma&ntilde;ana.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
@@ -1138,8 +1139,8 @@ export default function SiteClient({ data }: { data: SiteData }) {
                 { label: 'Tres Sucursales', desc: 'Orotina \u00B7 Jac\u00F3 \u00B7 Esparza' },
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-3 p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.10] transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `${G}15` }}>
-                    <CheckCircle2 size={22} style={{ color: G }} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `${A}15` }}>
+                    <CheckCircle2 size={22} style={{ color: A }} />
                   </div>
                   <p className="text-sm sm:text-base font-bold text-white/85">{item.label}</p>
                   <p className="text-[11px] sm:text-xs text-white/35">{item.desc}</p>
@@ -1152,32 +1153,32 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
       {/* ═══════ BRAND DIVIDER ═══════ */}
       <div className="flex items-center justify-center gap-3 py-4">
-        <div className="h-px flex-1 max-w-[100px]" style={{ background: `linear-gradient(90deg, transparent, ${G}30)` }} />
-        <Flame size={16} style={{ color: `${G}40` }} />
-        <div className="h-px flex-1 max-w-[100px]" style={{ background: `linear-gradient(270deg, transparent, ${G}30)` }} />
+        <div className="h-px flex-1 max-w-[100px]" style={{ background: `linear-gradient(90deg, transparent, ${A}30)` }} />
+        <Flame size={16} style={{ color: `${A}40` }} />
+        <div className="h-px flex-1 max-w-[100px]" style={{ background: `linear-gradient(270deg, transparent, ${A}30)` }} />
       </div>
 
       {/* ═══════ REVIEWS — Premium (hidden on mobile) ═══════ */}
       <section id="reviews-section" className="hidden sm:block py-12 sm:py-20 relative overflow-hidden scroll-mt-20">
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(106,191,75,0.03) 0%, transparent 50%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(245,158,11,0.03) 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
           <div className="text-center mb-8 sm:mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: A }}>
               <Star size={13} className="fill-current" /> Rese&ntilde;as
             </div>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">LO QUE DICEN<br />NUESTROS <span style={{ color: G }}>CLIENTES</span></h2>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">LO QUE DICEN<br />NUESTROS <span style={{ color: A }}>CLIENTES</span></h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {reviews.map((r, i) => (
               <div key={i} className="group flex flex-col p-5 sm:p-7 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12] transition-all duration-500 hover:translate-y-[-4px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03), 0 4px 24px rgba(0,0,0,0.2)' }}>
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: r.rating }).map((_, j) => (
-                    <Star key={j} size={14} className="fill-current" style={{ color: G }} />
+                    <Star key={j} size={14} className="fill-current" style={{ color: A }} />
                   ))}
                 </div>
                 <p className="text-sm text-white/50 leading-relaxed flex-1">&ldquo;{r.text}&rdquo;</p>
                 <div className="flex items-center gap-3 pt-4 mt-6 border-t border-white/[0.06]">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{ background: `${G}15`, color: G }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{ background: `${A}15`, color: A }}>
                     {r.name[0]}
                   </div>
                   <div>
@@ -1194,13 +1195,13 @@ export default function SiteClient({ data }: { data: SiteData }) {
       {/* ═══════ LOCATIONS — Burga-style ═══════ */}
       {menu?.locations && Object.keys(menu.locations).length > 0 && (
         <section id="locations-section" className="py-10 sm:py-20 relative overflow-hidden scroll-mt-20">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(106,191,75,0.04) 0%, transparent 50%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(245,158,11,0.04) 0%, transparent 50%)' }} />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
             <div className="text-center mb-6 sm:mb-14">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-3 sm:mb-4" style={{ color: G }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-3 sm:mb-4" style={{ color: A }}>
                 <MapPin size={13} /> Locales
               </div>
-              <h2 className="text-xl sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: G }}>HORARIOS</span></h2>
+              <h2 className="text-xl sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: A }}>HORARIOS</span></h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {Object.entries(menu.locations as Record<string, { name: string; phone?: string; phone2?: string; whatsapp?: string; hours?: string; categories: MenuCategory[] }>).map(([locKey, loc]) => {
@@ -1213,12 +1214,12 @@ export default function SiteClient({ data }: { data: SiteData }) {
                   <div key={locKey} className="group p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12] transition-all duration-500 hover:translate-y-[-4px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03), 0 4px 30px rgba(0,0,0,0.2)' }}>
                     <div className="flex gap-1 mb-3 sm:mb-5 hidden sm:flex">
                       {[...Array(8)].map((_, j) => (
-                        <div key={j} className="w-2.5 h-2.5 rotate-45 transition-all duration-500" style={{ background: j % 2 === 0 ? `${G}30` : 'transparent', border: `1px solid ${G}15` }} />
+                        <div key={j} className="w-2.5 h-2.5 rotate-45 transition-all duration-500" style={{ background: j % 2 === 0 ? `${A}25` : 'transparent', border: `1px solid ${A}14` }} />
                       ))}
                     </div>
                     <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110" style={{ background: `${G}10`, border: `1px solid ${G}15` }}>
-                        <MapPin size={20} className="sm:w-6 sm:h-6" style={{ color: G }} />
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110" style={{ background: `${A}10`, border: `1px solid ${A}15` }}>
+                        <MapPin size={20} className="sm:w-6 sm:h-6" style={{ color: A }} />
                       </div>
                       <div className="min-w-0">
                         <h3 className="font-black text-lg sm:text-2xl uppercase">Quincho&apos;s</h3>
@@ -1228,7 +1229,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
                     <div className="space-y-2 sm:space-y-3 pt-3 sm:pt-5 border-t border-white/[0.06]">
                       {displayHours && (
                         <div className="flex items-start gap-3">
-                          <Clock size={16} className="mt-0.5 shrink-0" style={{ color: G }} />
+                          <Clock size={16} className="mt-0.5 shrink-0" style={{ color: A }} />
                           <div className="text-sm text-white/40 leading-relaxed">
                             <p className="font-bold text-white/60 mb-1">Horario</p>
                             <p>{displayHours}</p>
@@ -1236,7 +1237,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
                         </div>
                       )}
                       <div className="flex items-center gap-3">
-                        <Truck size={16} style={{ color: G }} />
+                        <Truck size={16} style={{ color: A }} />
                         <span className="text-sm text-white/40">Pick up, Delivery y WhatsApp</span>
                       </div>
                       {loc.phone && (
@@ -1247,11 +1248,11 @@ export default function SiteClient({ data }: { data: SiteData }) {
                       )}
                     </div>
                     {hasLocMenu ? (
-                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: G, boxShadow: `0 4px 15px ${G}25` }}>
+                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: A, boxShadow: `0 4px 15px ${A}25` }}>
                         <UtensilsCrossed size={14} /> Ordenar <ArrowRight size={14} />
                       </a>
                     ) : locWaLink ? (
-                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: G, boxShadow: `0 4px 15px ${G}25` }}>
+                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: A, boxShadow: `0 4px 15px ${A}25` }}>
                         Ordenar <ArrowRight size={14} />
                       </a>
                     ) : null}
@@ -1265,21 +1266,21 @@ export default function SiteClient({ data }: { data: SiteData }) {
 
       {/* ═══════ CTA — Visual banner ═══════ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-16">
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.06]" style={{ background: `linear-gradient(135deg, ${G}08, #0a0a0a, ${G}04)` }}>
-          {/* Green glows */}
-          <div className="absolute top-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full blur-[200px] opacity-[0.07]" style={{ background: G }} />
-          <div className="absolute bottom-0 right-0 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] rounded-full blur-[180px] opacity-[0.05]" style={{ background: G }} />
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.06]" style={{ background: `linear-gradient(135deg, rgba(245,158,11,0.05), #0a0a0a, rgba(106,191,75,0.03))` }}>
+          {/* Warm glows */}
+          <div className="absolute top-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full blur-[200px] opacity-[0.06]" style={{ background: A }} />
+          <div className="absolute bottom-0 right-0 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] rounded-full blur-[180px] opacity-[0.04]" style={{ background: G }} />
 
           <div className="relative grid sm:grid-cols-2 items-center">
             {/* Text side */}
             <div className="relative p-6 sm:p-12 lg:p-16 z-10">
               <div className="flex gap-1.5 mb-5 sm:mb-8 hidden sm:flex">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-3 h-3 rotate-45" style={{ background: i % 2 === 0 ? `${G}40` : 'transparent', border: `1px solid ${G}25` }} />
+                  <div key={i} className="w-3 h-3 rotate-45" style={{ background: i % 2 === 0 ? `${A}35` : 'transparent', border: `1px solid ${A}20` }} />
                 ))}
               </div>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[0.9] mb-3 sm:mb-5 tracking-tight">
-                SABOR QUE<br />SE SIENTE<br /><span style={{ color: G }}>EN CADA MORDIDA</span>
+                SABOR QUE<br />SE SIENTE<br /><span style={{ color: A }}>EN CADA MORDIDA</span>
               </h2>
               <p className="text-white/40 max-w-md text-xs sm:text-base leading-relaxed">Carne 100% Angus aplastada en plancha caliente, queso derretido y pan brioche artesanal. As&iacute; es Quincho&apos;s.</p>
             </div>
@@ -1305,13 +1306,13 @@ export default function SiteClient({ data }: { data: SiteData }) {
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5 text-white/40">
               <Mail size={13} /> Contacto
             </div>
-            <h2 className="text-xl sm:text-4xl font-black mb-2 tracking-tight">PEDIDOS<br /><span style={{ color: G }}>ESPECIALES</span></h2>
+            <h2 className="text-xl sm:text-4xl font-black mb-2 tracking-tight">PEDIDOS<br /><span style={{ color: A }}>ESPECIALES</span></h2>
             <p className="text-white/30 text-xs sm:text-base mt-2 sm:mt-3">D&eacute;janos tus datos y te escribimos</p>
           </div>
           {formSent ? (
             <div className="text-center p-14 rounded-3xl border border-white/[0.06] bg-white/[0.02]">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: `${G}15` }}>
-                <CheckCircle2 size={32} style={{ color: G }} />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: `${A}15` }}>
+                <CheckCircle2 size={32} style={{ color: A }} />
               </div>
               <h3 className="text-xl font-black mb-2">&iexcl;Mensaje enviado!</h3>
               <p className="text-white/40">Te contactaremos pronto.</p>
@@ -1337,7 +1338,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
                 <label className="block text-sm text-white/50 mb-2 font-medium">Mensaje</label>
                 <textarea rows={3} value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} placeholder="&iquest;En qu&eacute; podemos ayudarte?" className="w-full px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-white/20 text-sm focus:outline-none focus:border-white/20 resize-none transition-colors" />
               </div>
-              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold text-black transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: G }}>
+              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold text-black transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: A }}>
                 {formLoading ? <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> : <><Send size={16} /> Enviar mensaje</>}
               </button>
             </form>
@@ -1351,12 +1352,12 @@ export default function SiteClient({ data }: { data: SiteData }) {
           {/* Top row: brand + nav links inline */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-5">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${G}15` }}>
-                <Flame size={16} style={{ color: G }} />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${A}15` }}>
+                <Flame size={16} style={{ color: A }} />
               </div>
               <div>
                 <p className="font-black text-sm uppercase tracking-tight leading-none">Quincho&apos;s</p>
-                <p className="text-[8px] font-semibold uppercase tracking-[0.14em] leading-none mt-0.5" style={{ color: G }}>Smash Burgers</p>
+                <p className="text-[8px] font-semibold uppercase tracking-[0.14em] leading-none mt-0.5" style={{ color: A }}>Smash Burgers</p>
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
@@ -1403,8 +1404,8 @@ export default function SiteClient({ data }: { data: SiteData }) {
           <div className="relative w-full sm:max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-3xl bg-[#111] border-t sm:border border-white/[0.08] shadow-2xl overflow-hidden max-h-[90vh] sm:max-h-[85vh] flex flex-col">
             <div className="px-6 py-5 border-b border-white/[0.06] flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${G}15` }}>
-                  <ShoppingCart size={18} style={{ color: G }} />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${A}15` }}>
+                  <ShoppingCart size={18} style={{ color: A }} />
                 </div>
                 <div>
                   <h3 className="font-black text-lg">Tu orden</h3>
@@ -1423,7 +1424,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
                 <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-sm truncate">{item.name}</h4>
-                    <p className="text-xs mt-0.5" style={{ color: G }}>{fmt(item.price)} c/u</p>
+                    <p className="text-xs mt-0.5" style={{ color: A }}>{fmt(item.price)} c/u</p>
                   </div>
                   <div className="flex items-center gap-0.5 bg-white/[0.06] rounded-xl p-1">
                     <button onClick={() => updateQty(item.name, -1)} className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center hover:bg-white/10 active:bg-white/15"><Minus size={14} className="sm:w-3 sm:h-3" /></button>
@@ -1441,7 +1442,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
               <div className="p-5 border-t border-white/[0.06] shrink-0 space-y-4" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
                 <div className="flex items-center justify-between">
                   <span className="text-white/50 font-medium">Total</span>
-                  <span className="font-black text-xl" style={{ color: G }}>{fmt(cartTotal)}</span>
+                  <span className="font-black text-xl" style={{ color: A }}>{fmt(cartTotal)}</span>
                 </div>
                 {orderSent ? (
                   <div className="flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] font-bold text-sm">
@@ -1460,7 +1461,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ CHATBOT FAB (desktop only) ═══════ */}
-      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95 ${chatOpen ? '' : ''}`} style={{ background: G, boxShadow: `0 4px 20px ${G}50` }}>
+      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95 ${chatOpen ? '' : ''}`} style={{ background: A, boxShadow: `0 4px 20px ${A}50` }}>
         {chatOpen ? <X size={20} className="text-black" /> : <MessageCircle size={20} className="text-black" />}
         {!chatOpen && hasNotif && <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#0a0a0a] animate-pulse" />}
       </button>
@@ -1470,7 +1471,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
         <div className="fixed inset-0 z-[70] sm:inset-auto sm:bottom-24 sm:right-5 sm:w-[380px] sm:h-[520px] sm:rounded-2xl border-0 sm:border border-white/[0.08] bg-[#0f0f0f] shadow-2xl flex flex-col overflow-hidden">
           <div className="px-4 py-3 sm:py-3.5 border-b border-white/[0.06] flex items-center gap-3 shrink-0 bg-[#0a0a0a]" style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}>
             <div className="relative">
-              <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${G}20` }}><Bot size={18} style={{ color: G }} /></div>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: `${A}20` }}><Bot size={18} style={{ color: A }} /></div>
               <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-[#0a0a0a]" />
             </div>
             <div className="flex-1 min-w-0">
@@ -1497,7 +1498,7 @@ export default function SiteClient({ data }: { data: SiteData }) {
             <div className="p-3 border-t border-white/[0.06] shrink-0" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
               <form onSubmit={(e) => { e.preventDefault(); handleStructuredInput() }} className="flex gap-2">
                 <input ref={inputRef} type={phase === 'collect-email' ? 'email' : phase === 'collect-phone' ? 'tel' : 'text'} value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder={getPlaceholder()} className="flex-1 px-3.5 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-[16px] sm:text-sm placeholder:text-white/25 focus:outline-none focus:border-white/20" />
-                <button type="submit" disabled={chatLoading || !chatInput.trim()} className="px-5 sm:px-4 py-3.5 sm:py-3 rounded-xl text-black transition-all hover:brightness-110 active:scale-95 disabled:opacity-30 font-bold min-w-[48px]" style={{ background: G }}><ArrowRight size={18} className="sm:w-4 sm:h-4" /></button>
+                <button type="submit" disabled={chatLoading || !chatInput.trim()} className="px-5 sm:px-4 py-3.5 sm:py-3 rounded-xl text-black transition-all hover:brightness-110 active:scale-95 disabled:opacity-30 font-bold min-w-[48px]" style={{ background: A }}><ArrowRight size={18} className="sm:w-4 sm:h-4" /></button>
               </form>
             </div>
           )}

@@ -4,6 +4,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   allowedDevOrigins: ['192.168.0.15'],
+  output: 'standalone',
   images: {
     formats: ['image/avif', 'image/webp'],
   },
