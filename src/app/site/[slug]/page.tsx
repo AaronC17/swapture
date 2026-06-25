@@ -2,6 +2,9 @@ import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import SiteClient from './SiteClient'
+import TresCuartosClient from './TresCuartosClient'
+
+const TRES_CUARTOS_SLUG = 'tres-cuartos-streetfood'
 
 interface Props {
   params: { slug: string }
@@ -45,6 +48,11 @@ export default async function SitePage({ params }: Props) {
     brandColor: client.brandColor,
     logoUrl: client.logoUrl,
     menuData,
+  }
+
+  // Marca dedicada: Tres Cuartos Streetfood tiene su propia landing/personalidad.
+  if (params.slug === TRES_CUARTOS_SLUG) {
+    return <TresCuartosClient data={data} />
   }
 
   return <SiteClient data={data} />

@@ -2,6 +2,9 @@ import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import MenuClient from '../MenuClient'
+import TresCuartosMenuClient from '../../TresCuartosMenuClient'
+
+const TRES_CUARTOS_SLUG = 'tres-cuartos-streetfood'
 
 function getDisplayHours(locationKey: string, locationName: string, fallbackHours?: string): string | undefined {
   const normalized = `${locationKey} ${locationName}`
@@ -72,6 +75,10 @@ export default async function LocationMenuPage({ params }: Props) {
     locationPhone: locData.phone,
     locationPhone2: locData.phone2,
     locationSlug: params.location,
+  }
+
+  if (params.slug === TRES_CUARTOS_SLUG) {
+    return <TresCuartosMenuClient data={data} />
   }
 
   return <MenuClient data={data} />

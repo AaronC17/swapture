@@ -428,6 +428,142 @@ async function main() {
     })
   }
 
+  /* ═══════════════════════════════════════════
+     CLIENT — Tres Cuartos Streetfood
+     ═══════════════════════════════════════════ */
+
+  // ── Burgers ──
+  const tcBurgers = {
+    name: 'Burgers', emoji: '🍔',
+    items: [
+      { name: 'La Tres Cuartos', desc: 'Hamburguesa clásica con carne de res, queso, lechuga, tomate y salsas.', price: 7800, top: true },
+      { name: 'La Doble Cheeseburger', desc: 'Doble carne con doble queso, lechuga, tomate y cebolla.', price: 7300 },
+      { name: 'La Cheese Bacon', desc: 'Hamburguesa con queso derretido y tocineta crocante.', price: 7600 },
+      { name: 'La Cheese Jr', desc: 'Hamburguesa pequeña con queso — versión infantil o ligera.', price: 5500 },
+      { name: 'Combo Cheeseburgers', desc: '2 hamburguesas con queso + papas fritas.', price: 9000 },
+      { name: 'La Picantita', desc: 'Hamburguesa con un toque picante, jalapeños y salsa especial.', price: 7500 },
+      { name: 'La Trufada', desc: 'Hamburguesa con salsa de trufa y champiñones.', price: 8000, top: true },
+      { name: 'La Portobello', desc: 'Hamburguesa con portobello asado y queso fundido.', price: 6950 },
+    ],
+  }
+
+  // ── Sándwiches ──
+  const tcSandwiches = {
+    name: 'Sándwiches', emoji: '🥪',
+    items: [
+      { name: 'El Bien Montado', desc: 'Sándwich de pollo con vegetales frescos y salsas.', price: 7400 },
+      { name: 'La Tropicana', desc: 'Hamburguesa de pollo con lechuga, tomate y aderezo tropical.', price: 7400 },
+      { name: 'El Pepito', desc: 'Sándwich de salchicha con queso y vegetales.', price: 7900 },
+    ],
+  }
+
+  // ── Aperitivos ──
+  const tcAperitivos = {
+    name: 'Aperitivos', emoji: '🍗',
+    items: [
+      { name: 'Alitas (10 unidades)', desc: 'Alitas de pollo bañadas en salsa BBQ o picante.', price: 12950 },
+      { name: 'Alitas (6 unidades)', desc: 'Alitas de pollo bañadas en salsa BBQ o picante.', price: 7950 },
+      { name: 'Jalapeño Poppers (4 unidades)', desc: 'Jalapeños rellenos de queso crema, empanizados.', price: 4500 },
+      { name: 'Mozzarella Sticks (4 unidades)', desc: 'Palitos de mozzarella empanizados y dorados.', price: 4500 },
+      { name: 'Los Doraditos (300 g de pollo con papas)', desc: 'Piezas de pollo frito empanizadas, crujientes con papas.', price: 5800 },
+    ],
+  }
+
+  // ── Malteadas ──
+  const tcMalteadas = {
+    name: 'Malteadas', emoji: '🥤',
+    items: [
+      { name: 'Malteada de Fresa', desc: 'Malteada cremosa de fresa.', price: 3500 },
+      { name: 'Malteada de Chocolate', desc: 'Malteada cremosa de chocolate.', price: 3500 },
+      { name: 'Malteada de Crema', desc: 'Malteada clásica de crema.', price: 3500 },
+    ],
+  }
+
+  // ── Bebidas ──
+  const tcBebidas = {
+    name: 'Bebidas', emoji: '🥤',
+    items: [
+      { name: 'Coca-Cola Zero', desc: 'Lata 350ml.', price: 1800 },
+      { name: 'Coca-Cola Original', desc: 'Lata 350ml.', price: 1800 },
+      { name: 'Fresca', desc: 'Lata 350ml.', price: 1800 },
+      { name: 'Fanta', desc: 'Lata 350ml.', price: 1800 },
+      { name: 'Tropicales', desc: 'Bebida tropical.', price: 1500 },
+      { name: 'Botella de agua', desc: 'Botella de agua.', price: 1000 },
+    ],
+  }
+
+  // ── Adicionales ──
+  const tcAdicionales = {
+    name: 'Adicionales', emoji: '🧀',
+    items: [
+      { name: 'Papas grandes de 300g', desc: 'Porción de papas fritas grandes.', price: 2100 },
+      { name: 'Torta de carne (100% sostenible de pastoreo 130g)', desc: 'Porción adicional de carne de res.', price: 1950 },
+      { name: 'Mermelada de tocineta', desc: 'Mermelada artesanal de tocineta.', price: 1500 },
+      { name: 'Queso cheddar', desc: 'Porción adicional de queso cheddar.', price: 1200 },
+      { name: 'Salsa de queso', desc: 'Porción adicional de salsa de queso.', price: 1200 },
+      { name: 'Tocineta', desc: 'Porción adicional de tocineta.', price: 950 },
+      { name: 'Salsa adicional', desc: 'Porción adicional de salsa.', price: 550 },
+      { name: 'Pepinillos', desc: 'Porción adicional de pepinillos.', price: 450 },
+    ],
+  }
+
+  const tcMenuJson = JSON.stringify({
+    locations: {
+      guachipli: {
+        name: 'Guachipelí de Escazú',
+        phone: '',
+        phone2: '',
+        whatsapp: '',
+        hours: 'Lunes a viernes: 12 md - 9 pm · Sábados, domingos y feriados: hasta las 10 pm',
+        categories: [
+          tcBurgers,
+          tcSandwiches,
+          tcAperitivos,
+          tcMalteadas,
+          tcBebidas,
+          tcAdicionales,
+        ],
+      },
+    },
+    hours: 'Lunes a viernes: 12 md - 9 pm · Sábados, domingos y feriados: hasta las 10 pm',
+    style: 'dark',
+  })
+
+  /* ── Tres Cuartos client user ── */
+  const tcHashedPassword = await bcrypt.hash('trescuartos2026', 10)
+
+  let tcUser = await prisma.user.findUnique({ where: { email: 'trescuartos@swapture.com' } })
+  if (!tcUser) {
+    tcUser = await prisma.user.create({
+      data: {
+        email: 'trescuartos@swapture.com',
+        password: tcHashedPassword,
+        name: 'Tres Cuartos Streetfood',
+        role: 'client',
+      },
+    })
+  }
+
+  const existingTcClient = await prisma.client.findUnique({ where: { slug: 'tres-cuartos-streetfood' } })
+  if (existingTcClient) {
+    await prisma.client.update({
+      where: { slug: 'tres-cuartos-streetfood' },
+      data: { customNotes: tcMenuJson, userId: tcUser.id },
+    })
+  } else {
+    await prisma.client.create({
+      data: {
+        businessName: 'Tres Cuartos Streetfood',
+        slug: 'tres-cuartos-streetfood',
+        whatsappNumber: '',
+        status: 'active',
+        plan: 'premium',
+        customNotes: tcMenuJson,
+        userId: tcUser.id,
+      },
+    })
+  }
+
   console.log('✅ Database seeded successfully!')
 }
 
