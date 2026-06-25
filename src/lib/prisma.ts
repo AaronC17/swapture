@@ -39,15 +39,34 @@ function getDatabaseUrl(): string {
 	return databaseUrl
 }
 
-const databaseUrl = getDatabaseUrl()
+function createPrismaClient(): PrismaClient {
+	const databaseUrl = getDatabaseUrl()
+	return new PrismaClient({
+		datasources: {
+			db: { url: databaseUrl },
+		},
+	})
+}
 
-const prisma = globalForPrisma.prisma || new PrismaClient({
-	datasources: {
-		db: { url: databaseUrl },
+/* Lazy initialization — PrismaClient is only created on first access,
+   not at module import time. This prevents build-time failures when
+   DATABASE_URL is not available during page data collection. */
+let _client: PrismaClient | null = null
+
+function getClient(): PrismaClient {
+	if (!_client) {
+		_client = globalForPrisma.prisma || createPrismaClient()
+		if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = _client
+	}
+	return _client
+}
+
+export const prisma = new Proxy({} as PrismaClient, {
+	get(_, prop) {
+		const client = getClient()
+		const value = Reflect.get(client, prop)
+		return typeof value === 'function' ? value.bind(client) : value
 	},
 })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
-export { prisma }
 export default prisma
