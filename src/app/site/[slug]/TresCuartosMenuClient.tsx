@@ -103,49 +103,14 @@ const StreetFoodMark = ({ className = '' }: { className?: string }) => (
   <span className={className} style={{ color: ORANGE }}>Streetfood</span>
 )
 
-/* ── Food images — Tres Cuartos (ingredientes reales) ── */
-const itemImages: Record<string, string> = {
-  // — Burgers —
-  'La Tres Cuartos': '/trescuartos/la-tres-cuartos.png',
-  'La Doble Cheeseburger': '/trescuartos/la-doble-cheeseburger.png',
-  'La Cheese Bacon': '/trescuartos/la-cheese-bacon.png',
-  'La Cheese Jr': '/trescuartos/la-cheese-jr.png',
-  'Combo Cheeseburgers': '/trescuartos/combo-cheeseburgers.png',
-  'La Picantita': '/trescuartos/la-picantita.png',
-  'La Trufada': '/trescuartos/la-trufada.png',
-  'La Portobello': '/trescuartos/la-portobello.png',
-  // — Sándwiches —
-  'El Bien Montado': '/trescuartos/el-bien-montado.png',
-  'La Tropicana': '/trescuartos/la-tropicana.png',
-  'El Pepito': '/trescuartos/el-pepito.png',
-  // — Aperitivos —
-  'Alitas': '/trescuartos/alitas.png',
-  'Alitas (10 unidades)': '/trescuartos/alitas.png',
-  'Alitas (6 unidades)': '/trescuartos/alitas.png',
-  'Alitas (6 pzas)': '/trescuartos/alitas.png',
-  'Jalapeño Poppers': '/trescuartos/jalapeno-poppers.jpg',
-  'Jalapeño Poppers (4 unidades)': '/trescuartos/jalapeno-poppers.jpg',
-  'Jalapeño Poppers (6 pzas)': '/trescuartos/jalapeno-poppers.jpg',
-  'Mozzarella Sticks': '/trescuartos/mozarella-sticks.png',
-  'Mozzarella Sticks (4 unidades)': '/trescuartos/mozarella-sticks.png',
-  'Mozzarella Sticks (6 pzas)': '/trescuartos/mozarella-sticks.png',
-  'Los Doraditos': '/trescuartos/los-doraditos.png',
-  'Los Doraditos (300 g de pollo con papas)': '/trescuartos/los-doraditos.png',
-  'Los Doraditos (6 pzas)': '/trescuartos/los-doraditos.png',
-  // — Malteadas —
-  'Malteada de Fresa': '/trescuartos/malteada-fresa.png',
-  'Malteada de Chocolate': '/trescuartos/malteada-chocolate.png',
-  'Malteada de Crema': '/trescuartos/malteada-crema.png',
-}
-
-const fallbackImage = 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=500&fit=crop&q=80'
+import { tresCuartosItemImages, fallbackImage } from '@/lib/menu-images'
 
 /* Extract base product name from a bundled cart item (e.g. "Alitas (6 pzas) + Queso, Tocineta" → "Alitas (6 pzas)") */
 const baseNameFromCart = (name: string) => {
   const idx = name.indexOf(' + ')
   return idx >= 0 ? name.slice(0, idx) : name
 }
-const imgFor = (name: string) => itemImages[name] || itemImages[baseNameFromCart(name)] || fallbackImage
+const imgFor = (name: string) => tresCuartosItemImages[name] || tresCuartosItemImages[baseNameFromCart(name)] || fallbackImage
 
 const drinkNames = (menuData: MenuData | undefined) => {
   const set = new Set<string>()
@@ -504,7 +469,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
               {filteredItems.map((item, idx) => {
                 const inCart = cart.find(c => c.name === item.name)
                 const drink = isDrink(item.name, menu)
-                const img = drink ? undefined : (itemImages[item.name] || fallbackImage)
+                const img = drink ? undefined : (tresCuartosItemImages[item.name] || fallbackImage)
                 return (
                   <div key={idx} className="group flex gap-3.5 p-3 rounded-2xl border border-white/[0.07] bg-white/[0.05] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                     <div className="w-[80px] h-[80px] rounded-xl overflow-hidden shrink-0 border border-white/[0.04]" style={{ background: 'rgba(18,22,18,0.95)' }}>
@@ -604,7 +569,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           : (di.variants.find(v => v.fullName === variantSel[di.baseName]) ?? di.variants[0])
                         const inCart = cart.find(c => c.name === selV.fullName)
                         const drink = isDrink(di.baseName, menu)
-                        const img = drink ? undefined : (itemImages[di.baseName] || itemImages[selV.fullName] || fallbackImage)
+                        const img = drink ? undefined : (tresCuartosItemImages[di.baseName] || tresCuartosItemImages[selV.fullName] || fallbackImage)
                         const justAdded = addedItem === selV.fullName
                         const isLoneOnMobile = total % 2 === 1 && idx === total - 1
                         const isLoneOnDesktop = total % 3 === 1 && idx === total - 1
@@ -977,7 +942,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                 </div>
               ) : (
                 <img
-                  src={itemImages[modalItem.baseName] || itemImages[modalVariant.fullName] || fallbackImage}
+                  src={tresCuartosItemImages[modalItem.baseName] || tresCuartosItemImages[modalVariant.fullName] || fallbackImage}
                   alt={modalItem.baseName}
                   className="w-full h-full object-contain p-4 sm:p-8 drop-shadow-2xl"
                 />

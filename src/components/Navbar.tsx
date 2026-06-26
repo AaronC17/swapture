@@ -76,9 +76,11 @@ export default function Navbar() {
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-6 flex items-center justify-between">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <Image src="/image.png" alt="Swapture" width={300} height={300} priority className="w-9 h-9 sm:w-11 sm:h-11 object-contain brightness-[1.2] contrast-[1.1] group-hover:scale-105 transition-transform duration-300" />
-            <span className="text-lg sm:text-xl font-heading font-bold tracking-tight">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 overflow-hidden transition-transform duration-300 group-hover:scale-110">
+              <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="(max-width: 640px) 48px, 56px" priority className="object-contain mix-blend-screen" />
+            </div>
+            <span className="text-xl sm:text-2xl font-heading font-bold tracking-tight">
               SWAP<span className="text-accent">TURE.</span>
             </span>
           </Link>
@@ -139,8 +141,10 @@ export default function Navbar() {
           'mb-4 transition-all duration-300',
           mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
         )}>
-          <Image src="/image.png" alt="Swapture" width={48} height={48} className="w-20 h-20 mx-auto mb-3 object-contain brightness-[1.2] contrast-[1.1]" />
-          <span className="text-xl font-heading font-bold tracking-tight block text-center">
+          <div className="relative flex items-center justify-center w-24 h-24 mx-auto mb-4 overflow-hidden">
+            <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="96px" className="object-contain mix-blend-screen" />
+          </div>
+          <span className="text-2xl font-heading font-bold tracking-tight block text-center">
             SWAP<span className="text-accent">TURE.</span>
           </span>
         </div>

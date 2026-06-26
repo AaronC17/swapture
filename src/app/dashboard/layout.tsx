@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {
   LayoutDashboard, MessageSquare, FileText, User, LogOut,
-  Menu, X, ChevronRight
+  Menu, X, ChevronRight, UtensilsCrossed
 } from 'lucide-react'
 import clsx from 'clsx'
 
@@ -20,6 +20,7 @@ interface UserData {
 const navItems = [
   { href: '/dashboard', label: 'Inicio', icon: LayoutDashboard },
   { href: '/dashboard/leads', label: 'Usuarios', icon: MessageSquare },
+  { href: '/dashboard/menu', label: 'Mi menú', icon: UtensilsCrossed },
   { href: '/dashboard/info', label: 'Mi negocio', icon: FileText },
   { href: '/dashboard/account', label: 'Mi cuenta', icon: User },
 ]

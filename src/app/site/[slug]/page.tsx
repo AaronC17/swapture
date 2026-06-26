@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import SiteClient from './SiteClient'
 import TresCuartosClient from './TresCuartosClient'
+import { filterArchived } from '@/lib/menu'
 
 const TRES_CUARTOS_SLUG = 'tres-cuartos-streetfood'
 
@@ -31,10 +32,10 @@ export default async function SitePage({ params }: Props) {
 
   const services = client.services ? client.services.split(',').map((s: string) => s.trim()).filter(Boolean) : []
 
-  // Parse menu data from customNotes if available (JSON)
+  // Parse menu data from customNotes if available (JSON) and drop archived items.
   let menuData = null
   if (client.customNotes) {
-    try { menuData = JSON.parse(client.customNotes) } catch { /* not JSON, ignore */ }
+    try { menuData = filterArchived(JSON.parse(client.customNotes)) } catch { /* not JSON, ignore */ }
   }
 
   const data = {

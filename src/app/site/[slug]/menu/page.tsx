@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma'
 import { notFound, redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { filterArchived } from '@/lib/menu'
 
 interface Props {
   params: { slug: string }
@@ -167,14 +168,15 @@ export default async function MenuPage({ params }: Props) {
 
   let menuData = null
   if (client.customNotes) {
-    try { menuData = JSON.parse(client.customNotes) } catch { /* not JSON */ }
+    try { menuData = filterArchived(JSON.parse(client.customNotes)) } catch { /* not JSON */ }
   }
 
   /* ── New format: locations object ── */
   if (menuData?.locations) {
-    const allKeys = Object.keys(menuData.locations)
+    const locations = menuData.locations
+    const allKeys = Object.keys(locations)
     const menuKeys = allKeys.filter(
-      (k) => menuData.locations[k].categories?.length > 0
+      (k) => locations[k].categories?.length > 0
     )
 
     if (menuKeys.length === 1 && allKeys.length === 1) {
@@ -247,7 +249,7 @@ export default async function MenuPage({ params }: Props) {
 
           <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {allKeys.map((key, idx) => {
-              const loc = menuData.locations[key]
+              const loc = locations[key]
               const hasLocMenu = loc.categories && loc.categories.length > 0
               const openNow = hasLocMenu ? isBranchOpen(loc.hours || getDisplayHours(key, loc.name, loc.hours)) : false
               const totalItems = hasLocMenu ? loc.categories.reduce((s: number, c: { items: unknown[] }) => s + c.items.length, 0) : 0
@@ -408,7 +410,11 @@ export default async function MenuPage({ params }: Props) {
     slug: client.slug,
     businessName: client.businessName,
     whatsappNumber: client.whatsappNumber,
-    menuData,
+    menuData: {
+      categories: menuData.categories,
+      hours: menuData.hours,
+      style: menuData.style,
+    },
   }
 
   return <MenuClient data={data} />

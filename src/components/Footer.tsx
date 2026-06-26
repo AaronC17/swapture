@@ -16,9 +16,11 @@ export default function Footer() {
         {/* Main row — all horizontal */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           {/* Brand */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <Image src="/image.png" alt="Swapture" width={24} height={24} className="w-7 h-7 object-contain brightness-[1.2] contrast-[1.1]" />
-            <span className="text-base font-heading font-bold">
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
+              <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
+            </div>
+            <span className="text-lg font-heading font-bold">
               SWAP<span className="text-accent">TURE.</span>
             </span>
           </div>

@@ -51,13 +51,13 @@ export default function LoginPage() {
       <div className="w-full max-w-[420px] relative z-10">
         {/* Logo & brand */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface/50 border border-border/40 mb-5">
+          <div className="relative inline-flex items-center justify-center w-16 h-16 mb-5 overflow-hidden">
             <Image
-              src="/image.png"
+              src="/logo%20(Edit%20with%20AI).png"
               alt="Swapture"
-              width={200}
-              height={200}
-              className="w-9 h-9 object-contain brightness-[1.2]"
+              fill
+              sizes="64px"
+              className="object-contain mix-blend-screen"
             />
           </div>
           <h1 className="text-xl font-heading font-bold tracking-tight mb-1">

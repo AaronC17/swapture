@@ -11,7 +11,7 @@ import Link from 'next/link'
 /* ═══════════════════════════════════════════════
    TYPES
    ═══════════════════════════════════════════════ */
-interface MenuItem { name: string; desc: string; price: number }
+interface MenuItem { name: string; desc: string; price: number; image?: string; archived?: boolean; id?: string }
 interface MenuCategory { name: string; emoji: string; items: MenuItem[] }
 interface MenuData { categories: MenuCategory[]; hours?: string; locations?: string[]; style?: string }
 
@@ -26,7 +26,7 @@ interface MenuSiteData {
   locationSlug?: string
 }
 
-interface CartItem { name: string; price: number; qty: number }
+interface CartItem { name: string; price: number; qty: number; image?: string }
 interface PersistedChatLeadState {
   updatedAt?: number
   leadData?: {
@@ -39,7 +39,7 @@ interface PersistedChatLeadState {
    VARIANT GROUPING
    ═══════════════════════════════════════════════ */
 interface Variant { label: string; fullName: string; price: number }
-interface DisplayItem { baseName: string; desc: string; variants: Variant[]; kind: 'size' | 'liquid' | 'single' }
+interface DisplayItem { baseName: string; desc: string; variants: Variant[]; kind: 'size' | 'liquid' | 'single'; image?: string }
 
 const SIZE_SUFFIXES = ['Small', 'Large', 'XL'] as const
 const LIQUID_SUFFIXES = ['(Agua)', '(Leche)'] as const
@@ -55,7 +55,8 @@ function groupItems(items: MenuItem[]): DisplayItem[] {
     for (const suf of SIZE_SUFFIXES) {
       if (item.name.endsWith(` ${suf}`)) {
         const base = item.name.slice(0, -(suf.length + 1))
-        if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'size' }); order.push(base) }
+        if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'size', image: item.image }); order.push(base) }
+        else if (item.image && !groups.get(base)!.image) groups.get(base)!.image = item.image
         groups.get(base)!.variants.push({ label: suf, fullName: item.name, price: item.price })
         matched = true; break
       }
@@ -65,7 +66,8 @@ function groupItems(items: MenuItem[]): DisplayItem[] {
       for (const suf of LIQUID_SUFFIXES) {
         if (item.name.endsWith(` ${suf}`)) {
           const base = item.name.slice(0, -(suf.length + 1))
-          if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'liquid' }); order.push(base) }
+          if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'liquid', image: item.image }); order.push(base) }
+          else if (item.image && !groups.get(base)!.image) groups.get(base)!.image = item.image
           groups.get(base)!.variants.push({ label: suf === '(Agua)' ? 'Agua' : 'Leche', fullName: item.name, price: item.price })
           matched = true; break
         }
@@ -76,14 +78,15 @@ function groupItems(items: MenuItem[]): DisplayItem[] {
       for (const suf of QTY_SUFFIXES) {
         if (item.name.endsWith(` ${suf}`)) {
           const base = item.name.slice(0, -(suf.length + 1))
-          if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'size' }); order.push(base) }
+          if (!groups.has(base)) { groups.set(base, { baseName: base, desc: item.desc, variants: [], kind: 'size', image: item.image }); order.push(base) }
+          else if (item.image && !groups.get(base)!.image) groups.get(base)!.image = item.image
           groups.get(base)!.variants.push({ label: suf, fullName: item.name, price: item.price })
           matched = true; break
         }
       }
     }
     if (!matched) {
-      groups.set(item.name, { baseName: item.name, desc: item.desc, variants: [{ label: '', fullName: item.name, price: item.price }], kind: 'single' })
+      groups.set(item.name, { baseName: item.name, desc: item.desc, variants: [{ label: '', fullName: item.name, price: item.price }], kind: 'single', image: item.image })
       order.push(item.name)
     }
   }
@@ -97,186 +100,7 @@ const G = '#6abf4b'
 const ORANGE = '#d97706'
 const fmt = (n: number) => `₡${n.toLocaleString('es-CR')}`
 
-/* ── Food images ── */
-const itemImages: Record<string, string> = {
-  // — Batidos —
-  'Batido de Sandía (Agua)': '/resto%20de%20menu/sand%C3%ADa.png',
-  'Batido de Sandía (Leche)': '/resto%20de%20menu/sand%C3%ADa.png',
-  'Batido de Sandía': '/resto%20de%20menu/sand%C3%ADa.png',
-  'Batido de Melón (Agua)': '/resto%20de%20menu/mel%C3%B3n.png',
-  'Batido de Melón (Leche)': '/resto%20de%20menu/mel%C3%B3n.png',
-  'Batido de Melón': '/resto%20de%20menu/mel%C3%B3n.png',
-  'Batido de Fresa (Agua)': '/resto%20de%20menu/fresa.png',
-  'Batido de Fresa (Leche)': '/resto%20de%20menu/fresa.png',
-  'Batido de Fresa': '/resto%20de%20menu/fresa.png',
-  // — Malteadas —
-  'Malteada de Chicle': '/resto%20de%20menu/CHICLE.png',
-  'Malteada de Taro': '/resto%20de%20menu/taro.png',
-  'Malteada de Caramelo': '/resto%20de%20menu/caramelo.png',
-  'Malteada de Algodón de Azúcar': '/resto%20de%20menu/ALGOD%C3%93N%20DE%20AZ%C3%9ACAR.png',
-  'Malteada Algodón de Azúcar': '/resto%20de%20menu/ALGOD%C3%93N%20DE%20AZ%C3%9ACAR.png',
-  'Malteada de Melón Verde': '/resto%20de%20menu/MELON%20VERDE.png',
-  'Malteada de Crema': '/resto%20de%20menu/crema.png',
-  // — Entradas / Snacks —
-  'Palitos de Queso': '/menu/PALITOS%20DE%20QUESO.png',
-  'Aros de Cebolla': '/menu/AROS%20DE%20CEBOLLA.png',
-  'Bolitas de Yuca': '/menu/BOLITAS%20DE%20YUCA.png',
-  // — Desayunos —
-  'Quesopinto': '/menu/QUESOPINTO.png',
-  'Pinto Económico': '/menu/pinto%20econ%C3%B3mico.png',
-  'Burripinto': '/menu/BURRIPINTO.png',
-  'Pinto de la Casa': '/menu/PINTO%20DE%20LA%20CASA.png',
-  // — Casados —
-  'Casado de Pescado': '/resto%20de%20menu/CASADO%20CON%20PESCADO.png',
-  'Casado de Pollo': '/resto%20de%20menu/CASADO%20CON%20POLLO.png',
-  'Casado de Mechada': '/resto%20de%20menu/CASADO%20CON%20CARNE.png',
-  'Casado de Fajitas': '/resto%20de%20menu/CASADO%20CON%20FAJITAS.png',
-  'Casado Carne Mechada': '/resto%20de%20menu/CASADO%20CON%20CARNE.png',
-  'Casado Fajitas de Lomo': '/resto%20de%20menu/CASADO%20CON%20FAJITAS.png',
-  'Casado Pescado': '/resto%20de%20menu/CASADO%20CON%20PESCADO.png',
-  'Casado Pollo': '/resto%20de%20menu/CASADO%20CON%20POLLO.png',
-  // — Classic Burgers —
-  'Cheeseburger': '/menu/CHEESEBURGUER.png',
-  'Bacon Cheeseburger': '/menu/bacon%20cheeseburguer.png',
-  'Bacon Cheese': '/menu/bacon%20cheeseburguer.png',
-  'Cheeseburger Bacon': '/menu/bacon%20cheeseburguer.png',
-  'Doble Cheeseburger': '/menu/double%20cheeseburguer.png',
-  'Doble Cheese': '/menu/double%20cheeseburguer.png',
-  'Doble Bacon': '/menu/double%20bacon.png',
-  'Triple Bacon': '/menu/triple%20bacon.png',
-  'Oklahoma': '/menu/oklahoma.png',
-  // — Premium Burgers —
-  'Maradona': '/menu/maradona.png',
-  'Portobello': '/menu/portobello.png',
-  'Mar y Tierra': '/menu/mar%20y%20tierra.png',
-  'Trufada': '/menu/trufada.png',
-  'Tropical': '/menu/tropical.png',
-  'Pork Belly': '/menu/pork%20belly.png',
-  // — BBQ —
-  'BBQ Burger': '/menu/oklahoma.png',
-  'BBQ Bacon': '/menu/double%20bacon.png',
-  'BBQ Pulled Pork': '/menu/PULLED%20PORK.png',
-  'Pulled Pork': '/menu/PULLED%20PORK.png',
-  'Pulled Pork Small': '/menu/PULLED%20PORK.png',
-  'Pulled Pork Large': '/menu/PULLED%20PORK.png',
-  'Onion BBQ': '/menu/ONION%20BBQ.png',
-  'Cheeselover': '/menu/CHEESELOVER.png',
-  'Cheeselover BBQ': '/menu/CHEESELOVER.png',
-  // — Chicken Burgers —
-  'Crispy Chicken': '/menu/CHICKEN%20CHIPOTLE.png',
-  'Buffalo Chicken': '/menu/CHICKEN%20BBQ.png',
-  'Chicken Bacon': '/menu/bacon%20cheeseburguer.png',
-  'Chipotle Chicken': '/menu/CHICKEN%20CHIPOTLE.png',
-  'Chicken Chipotle': '/menu/CHICKEN%20CHIPOTLE.png',
-  'Chicken Jalapeña': '/menu/CHICKEN%20JALAPE%C3%91A.png',
-  'Maple Fire Chicken': '/menu/MAPLE%20FIRE%20CHICKEN.png',
-  'Chicken BBQ': '/menu/CHICKEN%20BBQ.png',
-  // — Papas Orotina (Classic / Premium Fries con tallas) —
-  'Classic Fries Small': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Classic Fries Medium': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Classic Fries Large': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Classic Fries XL': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Premium Fries Small': '/papas/PAPAS%20ESPECIALES.png',
-  'Premium Fries Medium': '/papas/PAPAS%20ESPECIALES.png',
-  'Premium Fries Large': '/papas/PAPAS%20ESPECIALES.png',
-  'Premium Fries XL': '/papas/PAPAS%20ESPECIALES.png',
-  // — Papas Jacó (Smash / Bacon Fries con tallas) —
-  'Smash Fries Small': '/papas/PAPAS%20SMASH.png',
-  'Smash Fries Medium': '/papas/PAPAS%20SMASH.png',
-  'Smash Fries Large': '/papas/PAPAS%20SMASH.png',
-  'Smash Fries XL': '/papas/PAPAS%20SMASH.png',
-  'Bacon Fries Small': '/papas/PAPAS%20BACON.png',
-  'Bacon Fries Medium': '/papas/PAPAS%20BACON.png',
-  'Bacon Fries Large': '/papas/PAPAS%20BACON.png',
-  // — Papas Esparza (con tallas) —
-  'Francesas Small': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Francesas Large': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Gajo Small': '/papas/ORDEN%20DE%20GAJO.png',
-  'Gajo Large': '/papas/ORDEN%20DE%20GAJO.png',
-  'Salchipapas Small': '/papas/SALCHIPAPAS.png',
-  'Salchipapas Large': '/papas/SALCHIPAPAS.png',
-  'Papicarne Small': '/papas/PAPICARNE.png',
-  'Papicarne Large': '/papas/PAPICARNE.png',
-  'Gajo Mechada Small': '/papas/GAJO%20MECHADA.png',
-  'Gajo Mechada Large': '/papas/GAJO%20MECHADA.png',
-  'Salchipapicarne Small': '/papas/SALCHIPAPICARNE.png',
-  'Salchipapicarne Large': '/papas/SALCHIPAPICARNE.png',
-  'Papas Bacon Small': '/papas/PAPAS%20BACON.png',
-  'Papas Bacon Large': '/papas/PAPAS%20BACON.png',
-  'Papas Especiales Small': '/papas/PAPAS%20ESPECIALES.png',
-  'Papas Especiales Large': '/papas/PAPAS%20ESPECIALES.png',
-  'Papas Quincho Small': '/papas/PAPAS%20QUINCHO.png',
-  'Papas Quincho Large': '/papas/PAPAS%20QUINCHO.png',
-  'Smash Monster Small': '/papas/PAPAS%20SMASH.png',
-  'Smash Monster Large': '/papas/PAPAS%20SMASH.png',
-  'Monster Papas Small': '/papas/MONSTER%20PAPAS.png',
-  'Monster Papas Large': '/papas/MONSTER%20PAPAS.png',
-  'Papas Smash Small': '/papas/PAPAS%20SMASH.png',
-  'Papas Smash Large': '/papas/PAPAS%20SMASH.png',
-  // — Papas genéricas (sin talla) —
-  'Papas Francesas': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Papas Gajo': '/papas/ORDEN%20DE%20GAJO.png',
-  'Salchipapas': '/papas/SALCHIPAPAS.png',
-  'Papicarne': '/papas/PAPICARNE.png',
-  'Gajo Mechada': '/papas/GAJO%20MECHADA.png',
-  'Salchipapicarne': '/papas/SALCHIPAPICARNE.png',
-  'Bacon Fries': '/papas/PAPAS%20BACON.png',
-  'Bacon Fries XL': '/papas/PAPAS%20BACON.png',
-  'Papas Especiales': '/papas/PAPAS%20ESPECIALES.png',
-  'Papas Quincho': '/papas/PAPAS%20QUINCHO.png',
-  'Smash Fries': '/papas/PAPAS%20SMASH.png',
-  'Monster Fries': '/papas/MONSTER%20PAPAS.png',
-  'Monster Papas': '/papas/MONSTER%20PAPAS.png',
-  'Papas Smash': '/papas/PAPAS%20SMASH.png',
-  // — Menú Infantil —
-  'Papas Jr': '/papas/ORDEN%20DE%20FRANCESAS.png',
-  'Salchipapas Jr': '/papas/SALCHIPAPAS.png',
-  // — Sin imagen local → fallback —
-  'Nachos Mix': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos de Pollo': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Pulled Pork': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Mechada': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos de Mechada': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Camarón': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos de Camarón': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Mar y Tierra': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Mixto': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos Trozos de Res': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Nachos de Res': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Platinacho': 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&h=500&fit=crop&q=80',
-  'Quesadilla': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla de Queso': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla de Pollo': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Pollo': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Pulled Pork': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Mechada': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Mixta': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Trozos de Res': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Camarón': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla de Mechada': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla de Fajitas': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla de Camarón': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Quesadilla Mar y Tierra': 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&h=500&fit=crop&q=80',
-  'Burrito': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito de Queso': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito de Pollo': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Pollo': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Pulled Pork': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Mechada': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Mixto': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Chicharrón': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Trozos de Res': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Camarón': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito de Mechada': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito de Fajitas': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito de Camarón': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Burrito Mar y Tierra': 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&h=500&fit=crop&q=80',
-  'Deditos de Queso': 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=500&h=500&fit=crop&q=80',
-  'Hamburguesa Jr': '/menu/CHEESEBURGUER.png',
-  'Dedos de Pollo': 'https://images.unsplash.com/photo-1562967914-608f82629710?w=500&h=500&fit=crop&q=80',
-}
-
-const fallbackImage = 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=500&fit=crop&q=80'
+import { itemImages, fallbackImage } from '@/lib/menu-images'
 
 /* ═══════════════════════════════════════════════
    COMPONENT
@@ -331,11 +155,11 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
     }
   }, [data.slug])
 
-  const addToCart = useCallback((item: MenuItem | { name: string; price: number }) => {
+  const addToCart = useCallback((item: MenuItem | { name: string; price: number; image?: string }) => {
     setCart(prev => {
       const ex = prev.find(c => c.name === item.name)
       if (ex) return prev.map(c => c.name === item.name ? { ...c, qty: c.qty + 1 } : c)
-      return [...prev, { name: item.name, price: item.price, qty: 1 }]
+      return [...prev, { name: item.name, price: item.price, qty: 1, image: item.image }]
     })
     setAddedItem(item.name)
     setCartBumped(false)
@@ -542,7 +366,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {filteredItems.map((item, idx) => {
                 const inCart = cart.find(c => c.name === item.name)
-                const img = itemImages[item.name] || fallbackImage
+                const img = item.image || itemImages[item.name] || fallbackImage
                 return (
                   <div key={idx} className="group flex gap-3.5 p-3 rounded-2xl border border-white/[0.07] bg-white/[0.05] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                     <div className="w-[80px] h-[80px] rounded-xl overflow-hidden shrink-0 border border-white/[0.04]" style={{ background: 'rgba(18,20,16,0.95)' }}>
@@ -638,7 +462,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                           ? di.variants[0]
                           : (di.variants.find(v => v.fullName === variantSel[di.baseName]) ?? di.variants[0])
                         const inCart = cart.find(c => c.name === selV.fullName)
-                        const img = itemImages[di.baseName] || itemImages[selV.fullName] || fallbackImage
+                        const img = di.image || itemImages[di.baseName] || itemImages[selV.fullName] || fallbackImage
                         const justAdded = addedItem === selV.fullName
                         const isLoneOnMobile = total % 2 === 1 && idx === total - 1
                         const isLoneOnDesktop = total % 3 === 1 && idx === total - 1
@@ -733,7 +557,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                   </div>
                                 ) : (
                                   <button
-                                    onClick={() => addToCart({ name: selV.fullName, price: selV.price })}
+                                    onClick={() => addToCart({ name: selV.fullName, price: selV.price, image: di.image })}
                                     className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center text-black transition-all hover:scale-110 active:scale-90"
                                     style={{ background: ORANGE, boxShadow: `0 3px 12px ${ORANGE}25` }}
                                   >
@@ -799,7 +623,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
               ) : cart.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.015] border border-white/[0.03] hover:bg-white/[0.025] transition-colors">
                   <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-white/[0.04]" style={{ background: 'rgba(18,20,16,0.95)' }}>
-                    <img src={itemImages[item.name] || fallbackImage} alt={item.name} className="w-full h-full object-contain p-1 drop-shadow-lg" />
+                    <img src={item.image || itemImages[item.name] || fallbackImage} alt={item.name} className="w-full h-full object-contain p-1 drop-shadow-lg" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-[13px] truncate">{item.name}</h4>

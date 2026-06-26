@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import MenuClient from '../MenuClient'
 import TresCuartosMenuClient from '../../TresCuartosMenuClient'
+import { filterArchived } from '@/lib/menu'
 
 const TRES_CUARTOS_SLUG = 'tres-cuartos-streetfood'
 
@@ -49,7 +50,7 @@ export default async function LocationMenuPage({ params }: Props) {
 
   let menuData = null
   if (client.customNotes) {
-    try { menuData = JSON.parse(client.customNotes) } catch { /* */ }
+    try { menuData = filterArchived(JSON.parse(client.customNotes)) } catch { /* */ }
   }
 
   // Get location-specific menu
@@ -62,8 +63,8 @@ export default async function LocationMenuPage({ params }: Props) {
   // Build a MenuData-compatible object for this location
   const locationMenu = {
     categories: locData.categories,
-    hours: getDisplayHours(params.location, locData.name || params.location, locData.hours || menuData.hours),
-    style: menuData.style,
+    hours: getDisplayHours(params.location, locData.name || params.location, locData.hours || menuData?.hours),
+    style: menuData?.style,
   }
 
   const data = {
