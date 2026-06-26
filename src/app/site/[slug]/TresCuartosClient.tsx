@@ -917,7 +917,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
               </span>
               <span
                 className="block text-[1.08rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.02em] sm:tracking-[0.3em] mt-1 sm:mt-4"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif', color: GREEN }}
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif', color: '#ffffff' }}
               >
                 Streetfood
               </span>
