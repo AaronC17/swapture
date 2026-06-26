@@ -94,7 +94,7 @@ function groupItems(items: MenuItem[]): DisplayItem[] {
    CONSTANTS
    ═══════════════════════════════════════════════ */
 const G = '#6abf4b'
-const A = '#f59e0b'
+const ORANGE = '#d97706'
 const fmt = (n: number) => `₡${n.toLocaleString('es-CR')}`
 
 /* ── Food images ── */
@@ -408,7 +408,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
   return (
     <div className="relative min-h-screen max-w-full overflow-x-clip text-white selection:bg-amber-500/30" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #080808 35%, #0c0c0c 70%, #080808 100%)' }}>
       {/* Ambient warm glow */}
-      <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${A}03, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${A}02, transparent 60%)` }} />
+      <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${G}03, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${G}02, transparent 60%)` }} />
 
       {/* ═══════ FLOATING NAV ═══════ */}
       <nav className="fixed top-0 left-0 right-0 z-50">
@@ -424,12 +424,12 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
 
             {/* Center brand */}
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${A}15` }}>
-                <Flame size={13} style={{ color: A }} />
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${G}15` }}>
+                <Flame size={13} style={{ color: G }} />
               </div>
               <div className="leading-none">
                 <span className="text-xs font-black tracking-tight uppercase">Quincho&apos;s</span>
-                <p className="text-[7px] sm:text-[8px] font-bold tracking-[0.2em] uppercase" style={{ color: `${A}90` }}>
+                <p className="text-[7px] sm:text-[8px] font-bold tracking-[0.2em] uppercase" style={{ color: `${G}90` }}>
                   {data.locationName || 'Menú'}
                 </p>
               </div>
@@ -440,14 +440,14 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
               onClick={() => setCartOpen(true)}
               className={`relative flex items-center gap-1.5 h-8 sm:h-9 px-3 sm:px-4 rounded-xl text-[11px] font-bold transition-colors hover:scale-105 active:scale-95 ${cartBumped ? 'cart-bump' : ''}`}
               style={{
-                background: cartBumped ? `${A}22` : 'rgba(255,255,255,0.04)',
-                color: cartCount > 0 ? A : 'rgba(255,255,255,0.5)',
-                border: `1px solid ${cartCount > 0 ? `${A}40` : 'rgba(255,255,255,0.08)'}`,
+                background: cartBumped ? `${G}22` : 'rgba(255,255,255,0.04)',
+                color: cartCount > 0 ? G : 'rgba(255,255,255,0.5)',
+                border: `1px solid ${cartCount > 0 ? `${G}40` : 'rgba(255,255,255,0.08)'}`,
               }}
             >
               <ShoppingCart size={13} />
               {cartCount > 0 && (
-                <span className="text-[10px] font-black" style={{ color: A }}>{cartCount}</span>
+                <span className="text-[10px] font-black" style={{ color: G }}>{cartCount}</span>
               )}
             </button>
           </div>
@@ -461,7 +461,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
         <div className="relative z-10 flex flex-col items-center justify-end h-full w-full max-w-6xl mx-auto px-5 sm:px-8 pb-6 sm:pb-8">
             {/* Location + phone pills */}
             <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-3">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: A }}>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em]" style={{ color: G }}>
                 <Star size={9} className="fill-current" /> {data.locationName || 'Smash Burgers'}
               </div>
               {data.locationPhone && (
@@ -471,7 +471,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
               )}
             </div>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[0.9] text-center">
-              Nuestro <span style={{ color: A }}>Men&uacute;</span>
+              Nuestro <span style={{ color: G }}>Men&uacute;</span>
             </h1>
             <p className="text-[10px] sm:text-xs text-white/40 mt-1.5 font-medium text-center">
               {menu.categories.length} categorías · {totalItems} productos
@@ -485,13 +485,13 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
           <div className="flex items-center gap-3 sm:gap-5 min-w-0">
             {menu.hours && (
               <div className="flex items-center gap-1.5 text-white/45 shrink-0">
-                <Clock size={11} style={{ color: `${A}80` }} />
+                <Clock size={11} style={{ color: `${G}80` }} />
                 <span className="text-[10px] sm:text-[11px] font-medium max-w-[44vw] truncate sm:max-w-none">{menu.hours}</span>
               </div>
             )}
             {data.locationName && (
               <div className="flex items-center gap-1.5 text-white/45 shrink-0 hidden sm:flex">
-                <MapPin size={11} style={{ color: `${A}80` }} />
+                <MapPin size={11} style={{ color: `${G}80` }} />
                 <span className="text-[11px] font-medium">{data.locationName}</span>
               </div>
             )}
@@ -554,7 +554,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                         <h4 className="font-bold text-[13px] truncate leading-tight">{item.name}</h4>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[13px] font-black" style={{ color: A }}>{fmt(item.price)}</span>
+                        <span className="text-[13px] font-black" style={{ color: G }}>{fmt(item.price)}</span>
                         {inCart ? (
                           <div className="flex items-center gap-0.5 bg-white/[0.04] rounded-lg p-0.5">
                             <button onClick={() => updateQty(item.name, -1)} className="w-6 h-6 rounded flex items-center justify-center hover:bg-white/10"><Minus size={11} /></button>
@@ -562,7 +562,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                             <button onClick={() => updateQty(item.name, 1)} className="w-6 h-6 rounded flex items-center justify-center hover:bg-white/10"><Plus size={11} /></button>
                           </div>
                         ) : (
-                          <button onClick={() => addToCart(item)} className="w-7 h-7 rounded-lg flex items-center justify-center text-black hover:scale-110 active:scale-90 transition-transform" style={{ background: A }}>
+                          <button onClick={() => addToCart(item)} className="w-7 h-7 rounded-lg flex items-center justify-center text-black hover:scale-110 active:scale-90 transition-transform" style={{ background: ORANGE }}>
                             <Plus size={13} strokeWidth={3} />
                           </button>
                         )}
@@ -596,7 +596,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                         ? 'text-black'
                         : 'text-white/45 bg-white/[0.04] hover:text-white/65 hover:bg-white/[0.07]'
                     }`}
-                    style={activeCat === i ? { background: A, boxShadow: `0 2px 15px ${A}25` } : undefined}
+                    style={activeCat === i ? { background: G, boxShadow: `0 2px 15px ${G}25` } : undefined}
                   >
                     {cat.name}
                   </button>
@@ -610,21 +610,21 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
           {/* ═══════ MENU ITEMS ═══════ */}
           <main className="relative max-w-6xl mx-auto w-full px-3 sm:px-8 py-4 sm:py-8 pb-28 overflow-x-clip">
             {/* Ambient category glow */}
-            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-[140px] opacity-[0.04] pointer-events-none" style={{ background: A }} />
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-[140px] opacity-[0.04] pointer-events-none" style={{ background: G }} />
             {menu.categories.map((cat, ci) => ci === activeCat && (
               <div key={ci} className="relative">
                 {/* Category header */}
                 <div className="mb-4 sm:mb-7">
                     <div className="flex items-center gap-3 mb-2.5 sm:mb-3">
-                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center" style={{ background: `${A}12`, border: `1px solid ${A}20` }}>
-                        <span className="text-sm sm:text-base font-black" style={{ color: A }}>{cat.name.charAt(0)}</span>
+                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center" style={{ background: `${G}12`, border: `1px solid ${G}20` }}>
+                        <span className="text-sm sm:text-base font-black" style={{ color: G }}>{cat.name.charAt(0)}</span>
                       </div>
                       <div className="flex-1">
                         <h2 className="text-sm sm:text-xl font-black uppercase tracking-tight leading-tight">{cat.name}</h2>
                         <p className="text-[9px] sm:text-[10px] text-white/40 mt-0.5 font-medium">{cat.items.length} opciones disponibles</p>
                       </div>
                     </div>
-                    <div className="h-px" style={{ background: `linear-gradient(90deg, ${A}22, ${A}06, transparent)` }} />
+                    <div className="h-px" style={{ background: `linear-gradient(90deg, ${G}22, ${G}06, transparent)` }} />
                 </div>
 
                 {/* Items grid */}
@@ -665,13 +665,13 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
 
                               {/* Price pill */}
                               <div key={selV.fullName} className="price-flip absolute top-2 right-2 sm:top-3 sm:right-3 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg backdrop-blur-xl bg-black/60 border border-white/[0.08]">
-                                <span className="text-[11px] sm:text-[13px] font-black" style={{ color: A }}>{fmt(selV.price)}</span>
+                                <span className="text-[11px] sm:text-[13px] font-black" style={{ color: G }}>{fmt(selV.price)}</span>
                               </div>
 
                               {/* Premium tag */}
                               {selV.price >= 8000 && (
                                 <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 py-0.5 rounded-md backdrop-blur-xl bg-black/60 border border-white/[0.08]">
-                                  <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider flex items-center gap-0.5" style={{ color: A }}>
+                                  <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider flex items-center gap-0.5" style={{ color: G }}>
                                     <Star size={6} className="fill-current" /> Premium
                                   </span>
                                 </div>
@@ -683,7 +683,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                   <div className="absolute inset-0 flex items-center justify-center">
                                     <div
                                       className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center"
-                                      style={{ background: A, animation: 'checkIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both' }}
+                                      style={{ background: G, animation: 'checkIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both' }}
                                     >
                                       <CheckCircle2 size={18} className="text-black" strokeWidth={3} />
                                     </div>
@@ -708,7 +708,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                         onClick={() => setVariantSel(prev => ({ ...prev, [di.baseName]: v.fullName }))}
                                         className="min-w-[2.25rem] px-1.5 py-0.5 rounded text-[9px] font-bold text-center transition-all duration-150"
                                         style={isSel
-                                          ? { background: A, color: '#000' }
+                                          ? { background: G, color: '#000' }
                                           : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.08)' }
                                         }
                                       >
@@ -735,7 +735,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                   <button
                                     onClick={() => addToCart({ name: selV.fullName, price: selV.price })}
                                     className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center text-black transition-all hover:scale-110 active:scale-90"
-                                    style={{ background: A, boxShadow: `0 3px 12px ${A}25` }}
+                                    style={{ background: ORANGE, boxShadow: `0 3px 12px ${ORANGE}25` }}
                                   >
                                     <Plus size={14} strokeWidth={3} />
                                   </button>
@@ -775,8 +775,8 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
             {/* Header */}
             <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-white/[0.04] flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${A}10`, border: `1px solid ${A}12` }}>
-                  <ShoppingCart size={16} style={{ color: A }} />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${G}10`, border: `1px solid ${G}12` }}>
+                  <ShoppingCart size={16} style={{ color: G }} />
                 </div>
                 <div>
                   <h3 className="font-black text-base sm:text-lg leading-tight">Tu orden</h3>
@@ -803,7 +803,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-[13px] truncate">{item.name}</h4>
-                    <p className="text-[11px] mt-0.5 font-bold" style={{ color: A }}>{fmt(item.price * item.qty)}</p>
+                    <p className="text-[11px] mt-0.5 font-bold" style={{ color: G }}>{fmt(item.price * item.qty)}</p>
                   </div>
                   <div className="flex items-center gap-0.5 bg-white/[0.03] rounded-lg p-0.5 border border-white/[0.04]">
                     <button onClick={() => updateQty(item.name, -1)} className="w-6 h-6 rounded flex items-center justify-center hover:bg-white/10"><Minus size={11} /></button>
@@ -826,7 +826,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-white/30 text-sm font-medium">Total</span>
-                      <span className="font-black text-lg sm:text-xl" style={{ color: A }}>{fmt(cartTotal)}</span>
+                      <span className="font-black text-lg sm:text-xl" style={{ color: G }}>{fmt(cartTotal)}</span>
                     </div>
                     {orderSent ? (
                       <div className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-[#25D366]/8 border border-[#25D366]/15 text-[#25D366] font-bold text-sm">
@@ -843,7 +843,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                           setTimeout(() => nameInputRef.current?.focus(), 200)
                         }}
                         className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px]"
-                        style={{ background: A, boxShadow: `0 4px 20px ${A}30` }}
+                        style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
                       >
                         <ShoppingCart size={15} /> Confirmar pedido
                       </button>
@@ -884,7 +884,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                               ? 'text-black border-transparent'
                               : 'bg-white/[0.04] border-white/[0.08] text-white/50 hover:text-white/70'
                           }`}
-                          style={custOrderType === opt ? { background: A } : {}}
+                          style={custOrderType === opt ? { background: G } : {}}
                         >
                           {opt === 'recoger' ? 'Para recoger' : 'Envío'}
                         </button>
@@ -894,7 +894,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                       onClick={() => { if (custName.trim() && custPhone.trim()) setCheckoutStep('confirm') }}
                       disabled={!custName.trim() || !custPhone.trim()}
                       className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px] disabled:opacity-30 disabled:pointer-events-none"
-                      style={{ background: A, boxShadow: `0 4px 20px ${A}30` }}
+                      style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
                     >
                       Continuar <ChevronRight size={14} />
                     </button>
@@ -920,7 +920,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                                 ? 'text-black border-transparent'
                                 : 'bg-white/[0.04] border-white/[0.08] text-white/50 hover:text-white/70'
                             }`}
-                            style={custOrderType === opt ? { background: A } : {}}
+                            style={custOrderType === opt ? { background: G } : {}}
                           >
                             {opt === 'recoger' ? 'Para recoger' : 'Envío'}
                           </button>
@@ -951,7 +951,7 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
                       <div className="w-full h-px bg-white/[0.05] my-1" />
                       <div className="flex items-center justify-between">
                         <span className="text-white/50 text-sm font-medium">Total</span>
-                        <span className="font-black text-base" style={{ color: A }}>{fmt(cartTotal)}</span>
+                        <span className="font-black text-base" style={{ color: G }}>{fmt(cartTotal)}</span>
                       </div>
                     </div>
                     <button

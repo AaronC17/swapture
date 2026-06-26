@@ -4,7 +4,8 @@ import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import {
   ArrowLeft, Phone, ShoppingCart, Plus, Minus, Trash2,
   X, ChevronRight, Flame, Star,
-  CheckCircle2, Clock, MapPin, Search, User, Smartphone, Home, Truck
+  CheckCircle2, Clock, MapPin, Search, User, Smartphone, Home, Truck,
+  CupSoda
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -90,7 +91,7 @@ function groupItems(items: MenuItem[]): DisplayItem[] {
 /* ═══════════════════════════════════════════════
    CONSTANTS — Tres Cuartos Streetfood
    ═══════════════════════════════════════════════ */
-const G = '#f8ae1b'        // naranja/ámbar del logo — acento
+const ORANGE = '#d97706'   // naranja/ámbar del logo — acento
 const GREEN = '#028448'    // verde del logo — principal
 const GREEN_SOFT = '#028448cc' // verde suave para textos grandes
 const CREAM = '#f5e6b8'    // crema — realce
@@ -99,7 +100,7 @@ const fmt = (n: number) => `₡${n.toLocaleString('es-CR')}`
 
 /* Reusable Streetfood wordmark: all orange */
 const StreetFoodMark = ({ className = '' }: { className?: string }) => (
-  <span className={className} style={{ color: G }}>Streetfood</span>
+  <span className={className} style={{ color: ORANGE }}>Streetfood</span>
 )
 
 /* ── Food images — Tres Cuartos (ingredientes reales) ── */
@@ -119,12 +120,17 @@ const itemImages: Record<string, string> = {
   'El Pepito': '/trescuartos/el-pepito.png',
   // — Aperitivos —
   'Alitas': '/trescuartos/alitas.png',
+  'Alitas (10 unidades)': '/trescuartos/alitas.png',
+  'Alitas (6 unidades)': '/trescuartos/alitas.png',
   'Alitas (6 pzas)': '/trescuartos/alitas.png',
   'Jalapeño Poppers': '/trescuartos/jalapeno-poppers.jpg',
+  'Jalapeño Poppers (4 unidades)': '/trescuartos/jalapeno-poppers.jpg',
   'Jalapeño Poppers (6 pzas)': '/trescuartos/jalapeno-poppers.jpg',
   'Mozzarella Sticks': '/trescuartos/mozarella-sticks.png',
+  'Mozzarella Sticks (4 unidades)': '/trescuartos/mozarella-sticks.png',
   'Mozzarella Sticks (6 pzas)': '/trescuartos/mozarella-sticks.png',
   'Los Doraditos': '/trescuartos/los-doraditos.png',
+  'Los Doraditos (300 g de pollo con papas)': '/trescuartos/los-doraditos.png',
   'Los Doraditos (6 pzas)': '/trescuartos/los-doraditos.png',
   // — Malteadas —
   'Malteada de Fresa': '/trescuartos/malteada-fresa.png',
@@ -140,6 +146,18 @@ const baseNameFromCart = (name: string) => {
   return idx >= 0 ? name.slice(0, idx) : name
 }
 const imgFor = (name: string) => itemImages[name] || itemImages[baseNameFromCart(name)] || fallbackImage
+
+const drinkNames = (menuData: MenuData | undefined) => {
+  const set = new Set<string>()
+  menuData?.categories?.forEach((cat) => {
+    if (cat.name === 'Bebidas') {
+      cat.items.forEach((item) => set.add(item.name))
+    }
+  })
+  return set
+}
+
+const isDrink = (name: string, menuData: MenuData | undefined) => drinkNames(menuData).has(name)
 
 /* ═══════════════════════════════════════════════
    COMPONENT
@@ -351,9 +369,9 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
   }, [modalItem, closeModal])
 
   return (
-    <div className="relative min-h-screen max-w-full overflow-x-clip text-white selection:bg-[#f8ae1b]/30" style={{ background: 'linear-gradient(180deg, #0d100d 0%, #0a0d0a 35%, #0c100c 70%, #0a0d0a 100%)' }}>
-      {/* Ambient glow */}
-      <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${GREEN}06, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${GREEN}03, transparent 60%)` }} />
+    <div className="relative min-h-screen max-w-full overflow-x-clip text-white selection:bg-[#f8ae1b]/30" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #080808 35%, #0c0c0c 70%, #080808 100%)' }}>
+      {/* Ambient warm glow */}
+      <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${GREEN}04, transparent 70%), radial-gradient(ellipse 60% 40% at 50% 100%, ${GREEN}02, transparent 60%)` }} />
 
       {/* ═══════ FLOATING NAV ═══════ */}
       <nav className="fixed top-0 left-0 right-0 z-50">
@@ -485,11 +503,18 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {filteredItems.map((item, idx) => {
                 const inCart = cart.find(c => c.name === item.name)
-                const img = itemImages[item.name] || fallbackImage
+                const drink = isDrink(item.name, menu)
+                const img = drink ? undefined : (itemImages[item.name] || fallbackImage)
                 return (
                   <div key={idx} className="group flex gap-3.5 p-3 rounded-2xl border border-white/[0.07] bg-white/[0.05] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                     <div className="w-[80px] h-[80px] rounded-xl overflow-hidden shrink-0 border border-white/[0.04]" style={{ background: 'rgba(18,22,18,0.95)' }}>
-                      <img src={img} alt={item.name} className="w-full h-full object-contain p-1.5 drop-shadow-xl" loading="lazy" />
+                      {drink ? (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <CupSoda size={28} className="text-white/30" />
+                        </div>
+                      ) : (
+                        <img src={img} alt={item.name} className="w-full h-full object-contain p-1.5 drop-shadow-xl" loading="lazy" />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                       <div>
@@ -550,21 +575,21 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
 
           {/* ═══════ MENU ITEMS ═══════ */}
           <main className="relative max-w-6xl mx-auto w-full px-3 sm:px-8 py-4 sm:py-8 pb-28 overflow-x-clip">
-            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-[140px] opacity-[0.05] pointer-events-none" style={{ background: GREEN }} />
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full blur-[140px] opacity-[0.04] pointer-events-none" style={{ background: GREEN }} />
             {displayCategories.map((cat, ci) => ci === activeCat && (
               <div key={ci} className="relative">
                 {/* Category header */}
                 <div className="mb-4 sm:mb-7">
-                  <div className="flex items-center gap-3 mb-2.5 sm:mb-3">
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center" style={{ background: `${GREEN}25`, border: `1px solid ${GREEN}35` }}>
-                      <span className="text-sm sm:text-base font-black" style={{ color: GREEN }}>{cat.name.charAt(0)}</span>
+                    <div className="flex items-center gap-3 mb-2.5 sm:mb-3">
+                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center" style={{ background: `${GREEN}12`, border: `1px solid ${GREEN}22` }}>
+                        <span className="text-sm sm:text-base font-black" style={{ color: GREEN }}>{cat.name.charAt(0)}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h2 className="text-sm sm:text-xl font-black uppercase tracking-tight leading-tight">{cat.name}</h2>
+                        <p className="text-[9px] sm:text-[10px] text-white/40 mt-0.5 font-medium">{cat.items.length} opciones disponibles</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h2 className="text-sm sm:text-xl font-black uppercase tracking-tight leading-tight">{cat.name}</h2>
-                      <p className="text-[9px] sm:text-[10px] text-white/40 mt-0.5 font-medium">{cat.items.length} opciones disponibles</p>
-                    </div>
-                  </div>
-                  <div className="h-px" style={{ background: `linear-gradient(90deg, ${GREEN}30, ${GREEN}20, transparent)` }} />
+                    <div className="h-px" style={{ background: `linear-gradient(90deg, ${GREEN}22, ${GREEN}08, transparent)` }} />
                 </div>
 
                 {/* Items grid */}
@@ -578,7 +603,8 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           ? di.variants[0]
                           : (di.variants.find(v => v.fullName === variantSel[di.baseName]) ?? di.variants[0])
                         const inCart = cart.find(c => c.name === selV.fullName)
-                        const img = itemImages[di.baseName] || itemImages[selV.fullName] || fallbackImage
+                        const drink = isDrink(di.baseName, menu)
+                        const img = drink ? undefined : (itemImages[di.baseName] || itemImages[selV.fullName] || fallbackImage)
                         const justAdded = addedItem === selV.fullName
                         const isLoneOnMobile = total % 2 === 1 && idx === total - 1
                         const isLoneOnDesktop = total % 3 === 1 && idx === total - 1
@@ -597,14 +623,20 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                             <div
                               onClick={() => openModal(di)}
                               className="relative h-36 sm:h-48 lg:h-52 overflow-hidden cursor-pointer"
-                              style={{ background: 'rgba(18,22,18,0.95)' }}
+                              style={{ background: 'rgba(18,18,18,0.95)' }}
                             >
-                              <img
-                                src={img}
-                                alt={di.baseName}
-                                className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-[1.04] transition-transform duration-500 drop-shadow-2xl"
-                                loading="lazy"
-                              />
+                              {drink ? (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <CupSoda size={48} className="text-white/30" />
+                                </div>
+                              ) : (
+                                <img
+                                  src={img}
+                                  alt={di.baseName}
+                                  className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-[1.04] transition-transform duration-500 drop-shadow-2xl"
+                                  loading="lazy"
+                                />
+                              )}
                               <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f0b] via-transparent to-transparent opacity-80" />
 
                               {/* Price pill */}
@@ -718,7 +750,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
 
             {/* Header */}
             <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-white/[0.04] flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${GREEN}10`, border: `1px solid ${GREEN}15` }}>
                   <ShoppingCart size={16} style={{ color: GREEN }} />
                 </div>
@@ -743,7 +775,13 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
               ) : cart.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.015] border border-white/[0.03] hover:bg-white/[0.025] transition-colors">
                   <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-white/[0.04]" style={{ background: 'rgba(18,22,18,0.95)' }}>
-                    <img src={imgFor(item.name)} alt={item.name} className="w-full h-full object-contain p-1 drop-shadow-lg" />
+                    {isDrink(item.name, menu) ? (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <CupSoda size={24} className="text-white/30" />
+                      </div>
+                    ) : (
+                      <img src={imgFor(item.name)} alt={item.name} className="w-full h-full object-contain p-1 drop-shadow-lg" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-[13px] truncate">{item.name}</h4>
@@ -787,7 +825,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           setTimeout(() => nameInputRef.current?.focus(), 200)
                         }}
                         className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px]"
-                        style={{ background: GREEN, boxShadow: `0 4px 20px ${GREEN}30` }}
+                        style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
                       >
                         <ShoppingCart size={15} /> Confirmar pedido
                       </button>
@@ -838,7 +876,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                       onClick={() => { if (custName.trim() && custPhone.trim()) setCheckoutStep('confirm') }}
                       disabled={!custName.trim() || !custPhone.trim()}
                       className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px] disabled:opacity-30 disabled:pointer-events-none"
-                      style={{ background: GREEN, boxShadow: `0 4px 20px ${GREEN}30` }}
+                      style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
                     >
                       Continuar <ChevronRight size={14} />
                     </button>
@@ -933,11 +971,17 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
 
             {/* Image */}
             <div className="relative h-44 sm:h-64 shrink-0 overflow-hidden bg-[#0e120e]">
-              <img
-                src={itemImages[modalItem.baseName] || itemImages[modalVariant.fullName] || fallbackImage}
-                alt={modalItem.baseName}
-                className="w-full h-full object-contain p-4 sm:p-8 drop-shadow-2xl"
-              />
+              {isDrink(modalItem.baseName, menu) ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <CupSoda size={64} className="text-white/30" />
+                </div>
+              ) : (
+                <img
+                  src={itemImages[modalItem.baseName] || itemImages[modalVariant.fullName] || fallbackImage}
+                  alt={modalItem.baseName}
+                  className="w-full h-full object-contain p-4 sm:p-8 drop-shadow-2xl"
+                />
+              )}
               <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0e120e] to-transparent" />
 
               {/* Floating close */}
@@ -996,7 +1040,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
               )}
 
               {/* Adicionales (in-modal add-ons) */}
-              {addons.length > 0 && (
+              {addons.length > 0 && !isDrink(modalItem.baseName, menu) && (
                 <div className="mb-2 sm:mb-3 text-left">
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 flex items-center gap-1.5">
@@ -1020,7 +1064,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           onClick={() => setModalAddons(prev => isOn ? prev.filter(n => n !== a.name) : [...prev, a.name])}
                           className="flex items-center justify-between gap-3 w-full px-3.5 py-2.5 rounded-xl transition-all duration-150 active:scale-[0.98]"
                           style={isOn
-                            ? { background: `${GREEN}18`, border: `1px solid ${GREEN}40` }
+                            ? { background: `${GREEN}14`, border: `1px solid ${GREEN}35` }
                             : { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }
                           }
                         >
@@ -1077,7 +1121,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                     closeModal()
                   }}
                   className="flex-1 flex items-center justify-between gap-3 pl-5 pr-4 h-12 sm:h-13 rounded-2xl text-black transition-all hover:brightness-110 active:scale-[0.98] min-h-[48px]"
-                  style={{ background: GREEN, boxShadow: `0 4px 20px ${GREEN}35` }}
+                  style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}35` }}
                 >
                   <span className="text-sm font-black uppercase tracking-wide flex items-center gap-2">
                     <ShoppingCart size={16} /> Agregar

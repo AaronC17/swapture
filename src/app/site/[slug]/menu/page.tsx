@@ -182,12 +182,12 @@ export default async function MenuPage({ params }: Props) {
     }
 
     const G = '#6abf4b'
-    const A = '#f59e0b'
+    const ORANGE = '#d97706'
 
     return (
       <div className="min-h-screen text-white selection:bg-amber-500/30" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #080808 35%, #0c0c0c 70%, #080808 100%)' }}>
         {/* Ambient warm glow */}
-        <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${A}02, transparent 72%), radial-gradient(ellipse 60% 40% at 50% 100%, ${A}01, transparent 62%)` }} />
+        <div className="fixed inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 0%, ${G}02, transparent 72%), radial-gradient(ellipse 60% 40% at 50% 100%, ${G}01, transparent 62%)` }} />
 
         {/* ═══════ FLOATING NAV ═══════ */}
         <nav className="fixed top-0 left-0 right-0 z-50">
@@ -200,12 +200,12 @@ export default async function MenuPage({ params }: Props) {
                 <span className="text-[10px] font-bold uppercase tracking-[0.15em] hidden sm:inline">Sucursales</span>
               </Link>
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${A}15` }}>
-                  <svg className="w-3.5 h-3.5" style={{ color: A }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z" /></svg>
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${G}15` }}>
+                  <svg className="w-3.5 h-3.5" style={{ color: G }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z" /></svg>
                 </div>
                 <div className="leading-none">
                   <span className="text-xs font-black tracking-tight uppercase">Quincho&apos;s</span>
-                  <p className="text-[7px] sm:text-[8px] font-bold tracking-[0.2em] uppercase" style={{ color: `${A}90` }}>Menú</p>
+                  <p className="text-[7px] sm:text-[8px] font-bold tracking-[0.2em] uppercase" style={{ color: `${G}90` }}>Menú</p>
                 </div>
               </div>
               <div className="w-16 sm:w-[72px]" />
@@ -216,18 +216,18 @@ export default async function MenuPage({ params }: Props) {
         {/* ═══════ HERO ═══════ */}
         <header className="relative pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 overflow-hidden">
           {/* Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[560px] h-[380px] rounded-full blur-[170px] opacity-[0.03]" style={{ background: A }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[560px] h-[380px] rounded-full blur-[170px] opacity-[0.03]" style={{ background: G }} />
 
           <div className="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
             {/* Pill badge */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] mb-4 sm:mb-5">
-              <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: A }} />
+              <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: G }} />
               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.25em] text-white/50">Seleccionar sucursal</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[0.9] mb-3">
               <span className="text-white">¿Dónde querés</span><br />
-              <span style={{ color: A }}>ordenar?</span>
+              <span style={{ color: G }}>ordenar?</span>
             </h1>
             <p className="text-xs sm:text-base text-white/40 max-w-md mx-auto leading-relaxed">
               Elegí tu sucursal para ver nuestro menú completo y hacer tu pedido.
@@ -267,7 +267,7 @@ export default async function MenuPage({ params }: Props) {
                   }}
                 >
                   {/* Hover glow */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[20px]" style={{ background: `radial-gradient(ellipse at 50% 0%, ${A}06, transparent 70%)` }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[20px]" style={{ background: `radial-gradient(ellipse at 50% 0%, ${G}06, transparent 70%)` }} />
 
                   {/* Image section */}
                   <div className="relative h-36 sm:h-44 overflow-hidden flex items-center justify-center" style={{ background: '#111111' }}>
@@ -349,7 +349,7 @@ export default async function MenuPage({ params }: Props) {
                         <Link
                           href={`/site/${params.slug}/menu/${key}`}
                           className="flex-1 flex items-center justify-center gap-2 py-3 sm:py-3.5 rounded-xl text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] text-black transition-all hover:brightness-110 active:scale-[0.98] min-h-[42px] sm:min-h-[46px]"
-                          style={{ background: A, boxShadow: `0 4px 25px ${A}20` }}
+                          style={{ background: ORANGE, boxShadow: `0 4px 25px ${ORANGE}20` }}
                         >
                           Ver Menú →
                         </Link>

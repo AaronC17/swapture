@@ -46,7 +46,7 @@ interface PersistedChatState {
    CONSTANTS — Tres Cuartos Streetfood
    Verde oscuro (principal) · Naranja mostaza (acento) · Crema (realce)
    ═══════════════════════════════════════════════ */
-const G = '#f8ae1b'        // naranja/ámbar del logo — acento primario
+const ORANGE = '#d97706'   // naranja/ámbar del logo — acento primario
 const GREEN = '#028448'    // verde del logo — principal (fondos / tints)
 const GREEN_SOFT = '#028448cc' // verde suave para textos grandes
 const CREAM = '#f5e6b8'    // crema — realce (highlights retro)
@@ -56,7 +56,7 @@ const fmt = (n: number) => `\u20A1${n.toLocaleString('es-CR')}`
 
 /* Reusable Streetfood wordmark: all orange */
 const StreetFoodMark = ({ className = '' }: { className?: string }) => (
-  <span className={className} style={{ color: G }}>Streetfood</span>
+  <span className={className} style={{ color: ORANGE }}>Streetfood</span>
 )
 
 const heroSlides = [
@@ -409,7 +409,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
     setTimeout(() => {
       addBot('\u00BFAlgo m\u00E1s?', 'options', [
         { label: '\uD83C\uDF54 Seguir pidiendo', value: 'order' },
-        { label: '\uD83D\uDED2 Ver mi orden', value: 'view-cart' },
+        { label: '🛒 Ver mi orden', value: 'view-cart' },
         { label: '\u2705 Pedir por WhatsApp', value: 'send-order' },
       ])
     }, 500)
@@ -445,7 +445,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       }, 400)
     } else if (value === 'ask') {
       addUser('Consulta')
-      setTimeout(() => { addBot('\u00A1Claro! Escrib\u00ED tu consulta. \uD83D\uDE0A'); setPhase('gpt-chat') }, 400)
+      setTimeout(() => { addBot('\u00A1Claro! Escrib\u00ED tu consulta. 😊'); setPhase('gpt-chat') }, 400)
     } else if (value === 'whatsapp') {
       window.open(`https://wa.me/${data.whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola, me interesa saber m\u00E1s sobre ${data.businessName}`)}`, '_blank')
     } else if (value.startsWith('sucursal:')) {
@@ -601,7 +601,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
   const showInput = true
 
   const BotAvatar = () => (
-    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: `${GREEN}25` }}>
+    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: `${GREEN}20` }}>
       <Bot size={14} style={{ color: GREEN }} />
     </div>
   )
@@ -758,12 +758,12 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
             </h2>
             <p
               className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.28em] mt-1.5"
-              style={{ color: G }}
+              style={{ color: '#ffffff' }}
             >
               Streetfood
             </p>
             <div className="mt-6 w-16 h-[2px] rounded-full bg-white/[0.06] overflow-hidden">
-              <div className="h-full rounded-full animate-[splashLoad_1.4s_ease-in-out_forwards]" style={{ background: G }} />
+              <div className="h-full rounded-full animate-[splashLoad_1.4s_ease-in-out_forwards]" style={{ background: GREEN }} />
             </div>
           </div>
         </div>
@@ -802,7 +802,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 >
                   {s.label}
                   {activeSection === s.id && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full" style={{ background: G }} />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full" style={{ background: GREEN }} />
                   )}
                 </button>
               )
@@ -828,7 +828,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
         style={{ background: 'rgba(6,8,6,0.97)' }}
       >
         <div className="absolute inset-0 backdrop-blur-2xl" />
-        <div className="absolute top-0 left-0 right-0 h-40 opacity-30" style={{ background: `radial-gradient(ellipse at top center, ${G}20, transparent 70%)` }} />
+        <div className="absolute top-0 left-0 right-0 h-40 opacity-30" style={{ background: `radial-gradient(ellipse at top center, ${GREEN}20, transparent 70%)` }} />
 
         <div className="relative z-10 flex items-center justify-between px-6 pt-5 pb-4">
           <div className="flex items-center gap-3">
@@ -862,7 +862,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                   activeSection === s.id ? 'text-black' : 'text-white/50 hover:text-white'
                 }`}
                 style={{
-                  ...(activeSection === s.id ? { background: G } : {}),
+                  ...(activeSection === s.id ? { background: GREEN } : {}),
                   transitionDelay: mobileMenuOpen ? `${i * 50}ms` : '0ms',
                   transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(12px)',
                   opacity: mobileMenuOpen ? undefined : 0,
@@ -878,7 +878,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
           {/* Retro checkerboard divider */}
           <div className="flex justify-center gap-1 mb-6">
             {[...Array(10)].map((_, i) => (
-              <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? G : CREAM, opacity: 0.5 }} />
+              <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? GREEN : CREAM, opacity: 0.5 }} />
             ))}
           </div>
           {waLink && (
@@ -902,7 +902,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
 
         <div className="absolute bottom-6 right-4 sm:bottom-10 sm:right-10 z-10 flex gap-2">
           {heroSlides.map((_, i) => (
-            <button key={i} onClick={() => setHeroSlide(i)} className={`h-1 sm:h-1.5 rounded-full transition-all duration-700 ${heroSlide === i ? 'w-5 sm:w-10' : 'w-1.5 sm:w-3 bg-white/15 hover:bg-white/30'}`} style={heroSlide === i ? { background: G } : undefined} />
+            <button key={i} onClick={() => setHeroSlide(i)} className={`h-1 sm:h-1.5 rounded-full transition-all duration-700 ${heroSlide === i ? 'w-5 sm:w-10' : 'w-1.5 sm:w-3 bg-white/15 hover:bg-white/30'}`} style={heroSlide === i ? { background: ORANGE } : undefined} />
           ))}
         </div>
 
@@ -916,8 +916,8 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 TRES CUARTOS
               </span>
               <span
-                className="block text-[1.08rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.02em] sm:tracking-[0.3em] mt-1 sm:mt-4 text-white"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                className="block text-[1.08rem] sm:text-[2rem] lg:text-[2.8rem] xl:text-[3.2rem] font-black not-italic sm:italic uppercase leading-[1] tracking-[0.02em] sm:tracking-[0.3em] mt-1 sm:mt-4"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif', color: GREEN }}
               >
                 Streetfood
               </span>
@@ -966,25 +966,25 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       </header>
 
       {/* ═══════ MARQUEE BANNER ═══════ */}
-      <div className="relative py-2.5 sm:py-3 overflow-hidden border-y border-white/[0.06]" style={{ background: `linear-gradient(90deg, ${G}06, ${G}10, ${G}06)` }}>
+      <div className="relative py-2.5 sm:py-3 overflow-hidden border-y border-white/[0.06]" style={{ background: `linear-gradient(90deg, ${GREEN}06, ${GREEN}10, ${GREEN}06)` }}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(12)].map((_, i) => (
-            <span key={i} className="mx-3 sm:mx-8 text-[10px] sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] flex items-center gap-1.5 sm:gap-3" style={{ color: `${G}90` }}>
-              <Flame size={12} className="shrink-0" style={{ color: G }} />
+            <span key={i} className="mx-3 sm:mx-8 text-[10px] sm:text-sm font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] flex items-center gap-1.5 sm:gap-3" style={{ color: `${GREEN}90` }}>
+              <Flame size={12} className="shrink-0" style={{ color: GREEN }} />
               Streetfood Urbano
               <span className="text-white/25">&bull;</span>
               Hecho al Momento
               <span className="text-white/25">&bull;</span>
               Sabor que Adicta
               <span className="text-white/25 hidden sm:inline">&bull;</span>
-              <span className="hidden sm:inline">Guachipel&iacute; · Escaz&uacute;</span>
+              <span className="hidden sm:inline">Guachipel&iacute; &middot; Escaz&uacute;</span>
             </span>
           ))}
         </div>
       </div>
 
       {/* ═══════ STATS CARDS ═══════ */}
-      <section className="relative z-20 max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-12">
+      <section className="relative z-20 max-w-5xl mx-auto px-4 sm:px-8 py-12 sm:py-12">
         <div className="grid grid-cols-3 gap-2 sm:gap-5">
             {[
             { icon: Heart, val: 'Real', label: 'SAZÓN', sub: 'Streetfood' },
@@ -992,9 +992,9 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
             { icon: UtensilsCrossed, val: '30+', label: 'ANTOJOS', sub: 'En el Men\u00FA' },
           ].map((s, i) => (
             <div key={i} className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-[#0c110c]/80 backdrop-blur-xl text-center hover:border-white/[0.15] transition-all duration-700 hover:translate-y-[-3px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.5)' }}>
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${G}08` }} />
+              <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${GREEN}08` }} />
               {s.icon ? (
-                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: G }} />
+                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: GREEN }} />
               ) : (
                 <div className="h-[18px] sm:h-[18px] mb-1 sm:mb-2" />
               )}
@@ -1012,22 +1012,22 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
         {/* Retro checkerboard top strip */}
         <div className="absolute top-0 left-0 right-0 flex justify-center gap-1 py-3 hidden sm:flex">
           {[...Array(40)].map((_, i) => (
-            <div key={i} className="w-2 h-2 shrink-0" style={{ background: i % 2 === 0 ? `${G}25` : `${CREAM}15` }} />
+            <div key={i} className="w-2 h-2 shrink-0" style={{ background: i % 2 === 0 ? `${GREEN}25` : `${CREAM}15` }} />
           ))}
         </div>
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: GREEN }}>
               <ShoppingCart size={13} /> Orden&aacute; aqu&iacute;
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[1] sm:leading-[0.9] tracking-tight">
-              &iquest;C&Oacute;MO POD&Eacute;S<br /><span style={{ color: G }}>PEDIR EN TRES CUARTOS?</span>
+              &iquest;C&Oacute;MO POD&Eacute;S<br /><span style={{ color: GREEN }}>PEDIR EN TRES CUARTOS?</span>
             </h2>
             <p className="text-white/40 mt-4 sm:mt-6 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Escog&eacute; tu opci&oacute;n favorita para el pedido</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto">
             {[
-              { icon: UtensilsCrossed, title: 'Menú Online', desc: 'Mirá el menú con fotos y pedí con un click.', action: () => window.location.href = `/site/${data.slug}/menu`, btn: 'Ver Menú', color: G },
+              { icon: UtensilsCrossed, title: 'Menú Online', desc: 'Mirá el menú con fotos y pedí con un click.', action: () => window.location.href = `/site/${data.slug}/menu`, btn: 'Ver Menú', color: GREEN },
               { icon: Phone, title: 'WhatsApp', desc: 'Escribinos al WhatsApp y te confirmamos al toque.', action: () => waLink && window.open(waLink, '_blank'), btn: 'WhatsApp', color: '#25D366' },
             ].map((opt, i) => (
               <div key={i} className="group relative p-6 sm:p-8 rounded-2xl border border-white/[0.06] bg-white/[0.015] hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-500 text-center" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03)' }}>
@@ -1050,13 +1050,13 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
 
       {/* ═══════ BRAND DIVIDER — checkerboard ═══════ */}
       <div className="flex items-center justify-center gap-3 py-8 sm:py-6">
-        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(90deg, transparent, ${G}40)` }} />
+        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(90deg, transparent, ${GREEN}40)` }} />
         <div className="flex gap-1.5">
           {[...Array(7)].map((_, i) => (
-            <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? G : CREAM, opacity: i % 2 === 0 ? 0.6 : 0.5, border: `1px solid ${G}25` }} />
+            <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? GREEN : CREAM, opacity: i % 2 === 0 ? 0.6 : 0.5, border: `1px solid ${GREEN}25` }} />
           ))}
         </div>
-        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(270deg, transparent, ${G}40)` }} />
+        <div className="h-px flex-1 max-w-[120px]" style={{ background: `linear-gradient(270deg, transparent, ${GREEN}40)` }} />
       </div>
 
       {/* ═══════ ABOUT ═══════ */}
@@ -1064,11 +1064,11 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
         <section id="about-section" className="relative py-14 sm:py-20 overflow-hidden scroll-mt-20">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(248,174,27,0.04) 0%, transparent 65%)' }} />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[10px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5" style={{ color: G }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[10px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5" style={{ color: GREEN }}>
               <Sparkles size={12} /> Sobre nosotros
             </div>
             <h2 className="text-xl sm:text-3xl lg:text-5xl font-black leading-[1] sm:leading-[0.9] mb-4 sm:mb-6 tracking-tight">
-              LA DIFERENCIA<br />EST&Aacute; EN <span style={{ color: G }}>EL SAZ&Oacute;N</span>
+              LA DIFERENCIA<br />EST&Aacute; EN <span style={{ color: GREEN }}>EL SAZ&Oacute;N</span>
             </h2>
             <p className="text-white/40 leading-relaxed text-xs sm:text-base mb-8 sm:mb-12 max-w-lg mx-auto">Tres Cuartos naci&oacute; en Guachipel&iacute; de Escaz&uacute; con una sola obsesi&oacute;n: llevar el streetfood urbano a otra vuelta. Burgers jugosas, s&aacute;ndwiches bien montados y antojos crujientes, todo preparado al momento con ingredientes frescos.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
@@ -1078,8 +1078,8 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 { label: 'En Guachipelí de Escazú', desc: 'Tu antojo, cerca tuyo.' },
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-3 p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.10] transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `${G}15` }}>
-                    <CheckCircle2 size={22} style={{ color: G }} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `${GREEN}15` }}>
+                    <CheckCircle2 size={22} style={{ color: GREEN }} />
                   </div>
                   <p className="text-sm sm:text-base font-bold text-white/85">{item.label}</p>
                   <p className="text-[11px] sm:text-xs text-white/35">{item.desc}</p>
@@ -1117,7 +1117,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 </div>
                 <p className="text-sm text-white/50 leading-relaxed flex-1">&ldquo;{r.text}&rdquo;</p>
                 <div className="flex items-center gap-3 pt-4 mt-6 border-t border-white/[0.06]">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{ background: `${GREEN}30`, color: CREAM }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{ background: `${GREEN}20`, color: CREAM }}>
                     {r.name[0]}
                   </div>
                   <div>
@@ -1133,8 +1133,8 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
 
       {/* ═══════ LOCATIONS ═══════ */}
       {menu?.locations && Object.keys(menu.locations).length > 0 && (
-        <section id="locations-section" className="py-10 sm:py-20 relative overflow-hidden scroll-mt-20">
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(2,132,72,0.06) 0%, transparent 50%)' }} />
+        <section id="locations-section" className="py-14 sm:py-20 relative overflow-hidden scroll-mt-20">
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(248,174,27,0.04) 0%, transparent 50%)' }} />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
             <div className="text-center mb-6 sm:mb-14">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-3 sm:mb-4" style={{ color: GREEN }}>
@@ -1153,7 +1153,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                   <div key={locKey} className="group w-full max-w-sm p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12] transition-all duration-500 hover:translate-y-[-4px] text-center" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03), 0 4px 30px rgba(0,0,0,0.2)' }}>
                     <div className="flex justify-center gap-1 mb-3 sm:mb-5 hidden sm:flex">
                       {[...Array(8)].map((_, j) => (
-                        <div key={j} className="w-2.5 h-2.5 transition-all duration-500" style={{ background: j % 2 === 0 ? GREEN : G, opacity: j % 2 === 0 ? 0.5 : 0.4 }} />
+                        <div key={j} className="w-2.5 h-2.5 transition-all duration-500" style={{ background: j % 2 === 0 ? GREEN : CREAM, opacity: j % 2 === 0 ? 0.5 : 0.4 }} />
                       ))}
                     </div>
                     <div className="flex flex-col items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -1187,11 +1187,11 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                       )}
                     </div>
                     {hasLocMenu ? (
-                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: GREEN, boxShadow: `0 4px 15px ${GREEN}25` }}>
+                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
                         <UtensilsCrossed size={14} /> Ordenar <ArrowRight size={14} />
                       </a>
                     ) : locWaLink ? (
-                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: GREEN, boxShadow: `0 4px 15px ${GREEN}25` }}>
+                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-4 sm:mt-6 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[44px] sm:min-h-[48px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
                         Ordenar <ArrowRight size={14} />
                       </a>
                     ) : null}
@@ -1204,16 +1204,16 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ CTA — Visual banner ═══════ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-16">
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.06]" style={{ background: `linear-gradient(135deg, ${GREEN}12, #0a0d0a, ${GREEN}06)` }}>
-          <div className="absolute top-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full blur-[200px] opacity-[0.08]" style={{ background: GREEN }} />
-          <div className="absolute bottom-0 right-0 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] rounded-full blur-[180px] opacity-[0.06]" style={{ background: GREEN }} />
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.06]" style={{ background: `linear-gradient(135deg, ${GREEN}08, #0a0d0a, ${GREEN}04)` }}>
+          <div className="absolute top-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full blur-[200px] opacity-[0.06]" style={{ background: GREEN }} />
+          <div className="absolute bottom-0 right-0 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] rounded-full blur-[180px] opacity-[0.04]" style={{ background: GREEN }} />
 
           <div className="relative grid sm:grid-cols-2 items-center">
             <div className="relative p-6 sm:p-12 lg:p-16 z-10">
               <div className="flex gap-1.5 mb-5 sm:mb-8 hidden sm:flex">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? GREEN : G, opacity: i % 2 === 0 ? 0.6 : 0.5 }} />
+                  <div key={i} className="w-3 h-3" style={{ background: i % 2 === 0 ? GREEN : CREAM, opacity: i % 2 === 0 ? 0.6 : 0.5 }} />
                 ))}
               </div>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-[0.9] mb-3 sm:mb-5 tracking-tight">
@@ -1224,7 +1224,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
 
             <div className="relative h-52 sm:h-full min-h-[220px] sm:min-h-[360px] overflow-hidden">
               <img
-                src="/trescuartos/instagram/malteadas-duo.png"
+                src="/trescuartos/instagram/burger-especial-real.png"
                 alt="Tres Cuartos Streetfood"
                 className="absolute inset-0 w-full h-full object-cover object-[50%_35%] scale-110"
               />
@@ -1238,7 +1238,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       </section>
 
       {/* ═══════ CONTACT ═══════ */}
-      <section id="contacto" className="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-16 scroll-mt-20">
+      <section id="contacto" className="max-w-7xl mx-auto px-4 sm:px-8 py-14 sm:py-16 scroll-mt-20">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-6 sm:mb-14">
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-4 sm:mb-5 text-white/40">
@@ -1276,7 +1276,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 <label className="block text-sm text-white/50 mb-2 font-medium">Mensaje</label>
                 <textarea rows={3} value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} placeholder="&iquest;En qu&eacute; podemos ayudarte?" className="w-full px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-white/20 text-sm focus:outline-none focus:border-white/20 resize-none transition-colors" />
               </div>
-              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold text-black transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: GREEN }}>
+              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold text-black transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: ORANGE }}>
                 {formLoading ? <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> : <><Send size={16} /> Enviar mensaje</>}
               </button>
             </form>
@@ -1329,7 +1329,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setCartOpen(false)} />
           <div className="relative w-full sm:max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-3xl bg-[#0e120e] border-t sm:border border-white/[0.08] shadow-2xl overflow-hidden max-h-[90vh] sm:max-h-[85vh] flex flex-col">
             <div className="px-6 py-5 border-b border-white/[0.06] flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${GREEN}15` }}>
                   <ShoppingCart size={18} style={{ color: GREEN }} />
                 </div>
@@ -1387,7 +1387,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ CHATBOT FAB (desktop only) ═══════ */}
-      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95`} style={{ background: GREEN, boxShadow: `0 4px 20px ${GREEN}50` }}>
+      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95`} style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}50` }}>
         {chatOpen ? <X size={20} className="text-black" /> : <MessageCircle size={20} className="text-black" />}
         {!chatOpen && hasNotif && <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#0a0d0a] animate-pulse" />}
       </button>
