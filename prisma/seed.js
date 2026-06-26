@@ -444,6 +444,8 @@ async function main() {
       { name: 'La Picantita', desc: 'Hamburguesa con un toque picante, jalapeños y salsa especial.', price: 7500 },
       { name: 'La Trufada', desc: 'Hamburguesa con salsa de trufa y champiñones.', price: 8000, top: true },
       { name: 'La Portobello', desc: 'Hamburguesa con portobello asado y queso fundido.', price: 6950 },
+      { name: 'El Bien Montado', desc: 'Sándwich de pollo con vegetales frescos y salsas.', price: 7400 },
+      { name: 'La Tropicana', desc: 'Hamburguesa de pollo con lechuga, tomate y aderezo tropical.', price: 7400 },
     ],
   }
 
@@ -451,8 +453,6 @@ async function main() {
   const tcSandwiches = {
     name: 'Sándwiches', emoji: '🥪',
     items: [
-      { name: 'El Bien Montado', desc: 'Sándwich de pollo con vegetales frescos y salsas.', price: 7400 },
-      { name: 'La Tropicana', desc: 'Hamburguesa de pollo con lechuga, tomate y aderezo tropical.', price: 7400 },
       { name: 'El Pepito', desc: 'Sándwich de salchicha con queso y vegetales.', price: 7900 },
     ],
   }
