@@ -1192,11 +1192,11 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                       )}
                     </div>
                     {hasLocMenu ? (
-                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-5 sm:mt-7 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[46px] sm:min-h-[50px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
+                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-5 sm:mt-7 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] min-h-[46px] sm:min-h-[50px]" style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}>
                         <UtensilsCrossed size={14} /> Ordenar <ArrowRight size={14} />
                       </a>
                     ) : locWaLink ? (
-                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-5 sm:mt-7 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[46px] sm:min-h-[50px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
+                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-5 sm:mt-7 flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] min-h-[46px] sm:min-h-[50px]" style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}>
                         Ordenar <ArrowRight size={14} />
                       </a>
                     ) : null}
