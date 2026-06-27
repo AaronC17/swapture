@@ -505,7 +505,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                             <button onClick={() => updateQty(item.name, 1)} className="w-6 h-6 rounded flex items-center justify-center hover:bg-white/10"><Plus size={11} /></button>
                           </div>
                         ) : (
-                          <button onClick={() => addToCart(item)} className="w-7 h-7 rounded-lg flex items-center justify-center text-black hover:scale-110 active:scale-90 transition-transform" style={{ background: GREEN }}>
+                          <button onClick={() => openModal({ baseName: item.name, desc: item.desc, kind: 'single', variants: [{ label: '', fullName: item.name, price: item.price, top: item.top }] }, item.catName)} className="w-7 h-7 rounded-lg flex items-center justify-center text-black hover:scale-110 active:scale-90 transition-transform" style={{ background: GREEN }}>
                             <Plus size={13} strokeWidth={3} />
                           </button>
                         )}
@@ -684,7 +684,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                                   </div>
                                 ) : (
                                   <button
-                                    onClick={(e) => { e.stopPropagation(); addToCart({ name: selV.fullName, price: selV.price }) }}
+                                    onClick={(e) => { e.stopPropagation(); openModal(di, cat.name) }}
                                     className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center text-black transition-all hover:scale-110 active:scale-90"
                                     style={{ background: GREEN, boxShadow: `0 3px 12px ${GREEN}25` }}
                                   >
@@ -1089,7 +1089,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                 <button
                   onClick={() => {
                     const addonLabel = modalAddons.length > 0 ? ` + ${modalAddons.join(', ')}` : ''
-                    const bundledName = `${modalVariant.fullName}${addonLabel}`
+                    const bundledName = addonLabel ? `${modalVariant.fullName}${addonLabel}` : modalVariant.fullName
                     for (let i = 0; i < modalQty; i++) {
                       addToCart({ name: bundledName, price: modalUnitPrice })
                     }
