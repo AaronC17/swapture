@@ -336,8 +336,9 @@ export default async function MenuPage({ params }: Props) {
                         </span>
                       )}
                       {displayHours && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[9px] font-semibold text-white/50">
-                          🕐 {displayHours}
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[9px] font-semibold text-white/50 max-w-full min-w-0 break-words whitespace-normal">
+                          <span className="shrink-0">🕐</span>
+                          <span className="min-w-0 break-words whitespace-normal">{displayHours}</span>
                         </span>
                       )}
                     </div>

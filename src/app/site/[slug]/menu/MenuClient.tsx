@@ -155,6 +155,14 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
     }
   }, [data.slug])
 
+  useEffect(() => {
+    if (cartOpen) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = prev }
+    }
+  }, [cartOpen])
+
   const addToCart = useCallback((item: MenuItem | { name: string; price: number; image?: string }) => {
     setCart(prev => {
       const ex = prev.find(c => c.name === item.name)
@@ -303,20 +311,20 @@ export default function MenuClient({ data }: { data: MenuSiteData }) {
         </div>
       </div>
 
-      {/* ═══════ SEARCH / INFO BAR ═══════ */}
+{/* ═══════ SEARCH / INFO BAR ═══════ */}
       <div className="border-b border-white/[0.05] bg-[#0b0c0a]">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-wrap">
             {menu.hours && (
-              <div className="flex items-center gap-1.5 text-white/45 shrink-0">
-                <Clock size={11} style={{ color: `${G}80` }} />
-                <span className="text-[10px] sm:text-[11px] font-medium max-w-[44vw] truncate sm:max-w-none">{menu.hours}</span>
+              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
+                <Clock size={11} style={{ color: `${G}80` }} className="shrink-0" />
+                <span className="text-[10px] sm:text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{menu.hours}</span>
               </div>
             )}
             {data.locationName && (
-              <div className="flex items-center gap-1.5 text-white/45 shrink-0 hidden sm:flex">
-                <MapPin size={11} style={{ color: `${G}80` }} />
-                <span className="text-[11px] font-medium">{data.locationName}</span>
+              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
+                <MapPin size={11} style={{ color: `${G}80` }} className="shrink-0" />
+                <span className="text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{data.locationName}</span>
               </div>
             )}
           </div>

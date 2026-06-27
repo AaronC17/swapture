@@ -174,17 +174,30 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
   const [modalItem, setModalItem] = useState<DisplayItem | null>(null)
   const [modalQty, setModalQty] = useState(1)
   const [modalAddons, setModalAddons] = useState<string[]>([])
+  const [modalCatName, setModalCatName] = useState<string>('')
 
-  const openModal = useCallback((di: DisplayItem) => {
+  const openModal = useCallback((di: DisplayItem, catName: string) => {
     setModalItem(di)
+    setModalCatName(catName)
     setModalQty(1)
     setModalAddons([])
   }, [])
   const closeModal = useCallback(() => {
     setModalItem(null)
+    setModalCatName('')
     setModalQty(1)
     setModalAddons([])
   }, [])
+
+  /* ── Bloquear scroll del body cuando un modal esté abierto ── */
+  useEffect(() => {
+    const blocked = cartOpen || modalItem !== null
+    if (blocked) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = prev }
+    }
+  }, [cartOpen, modalItem])
 
   const modalVariant = useMemo(() => {
     if (!modalItem) return null
@@ -192,12 +205,25 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
     return modalItem.variants.find(v => v.fullName === variantSel[modalItem.baseName]) ?? modalItem.variants[0]
   }, [modalItem, variantSel])
 
+  /* ── Adicionales visibles según la categoría del item abierto ── */
+  const visibleAddons = useMemo(() => {
+    const cat = modalCatName.trim().toLowerCase()
+    if (!cat) return addons
+    // En Malteadas no se muestran adicionales
+    if (cat === 'malteadas') return []
+    // En Aperitivos se omiten "Papas grandes" y "Torta de carne"
+    if (cat === 'aperitivos') {
+      return addons.filter(a => !/^papas grandes/i.test(a.name.trim()) && !/^torta de carne/i.test(a.name.trim()))
+    }
+    return addons
+  }, [addons, modalCatName])
+
   const modalAddonsTotal = useMemo(() => {
     return modalAddons.reduce((s, name) => {
-      const a = addons.find(x => x.name === name)
+      const a = visibleAddons.find(x => x.name === name)
       return s + (a?.price || 0)
     }, 0)
-  }, [modalAddons, addons])
+  }, [modalAddons, visibleAddons])
 
   const modalUnitPrice = (modalVariant?.price || 0) + modalAddonsTotal
   const modalTotalPrice = modalUnitPrice * modalQty
@@ -409,17 +435,17 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
       {/* ═══════ SEARCH / INFO BAR ═══════ */}
       <div className="border-b border-white/[0.05] bg-[#0b0f0b]">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-wrap">
             {menu.hours && (
-              <div className="flex items-center gap-1.5 text-white/45 shrink-0">
-                <Clock size={11} style={{ color: `${GREEN}aa` }} />
-                <span className="text-[10px] sm:text-[11px] font-medium max-w-[44vw] truncate sm:max-w-none">{menu.hours}</span>
+              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
+                <Clock size={11} style={{ color: `${GREEN}aa` }} className="shrink-0" />
+                <span className="text-[10px] sm:text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{menu.hours}</span>
               </div>
             )}
             {data.locationName && (
-              <div className="flex items-center gap-1.5 text-white/45 shrink-0 hidden sm:flex">
-                <MapPin size={11} style={{ color: `${GREEN}aa` }} />
-                <span className="text-[11px] font-medium">{data.locationName}</span>
+              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
+                <MapPin size={11} style={{ color: `${GREEN}aa` }} className="shrink-0" />
+                <span className="text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{data.locationName}</span>
               </div>
             )}
           </div>
@@ -586,7 +612,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           >
                             {/* Image */}
                             <div
-                              onClick={() => openModal(di)}
+                              onClick={() => openModal(di, cat.name)}
                               className="relative h-36 sm:h-48 lg:h-52 overflow-hidden cursor-pointer"
                               style={{ background: 'rgba(18,18,18,0.95)' }}
                             >
@@ -1005,7 +1031,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
               )}
 
               {/* Adicionales (in-modal add-ons) */}
-              {addons.length > 0 && !isDrink(modalItem.baseName, menu) && (
+              {visibleAddons.length > 0 && !isDrink(modalItem.baseName, menu) && (
                 <div className="mb-2 sm:mb-3 text-left">
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 flex items-center gap-1.5">
@@ -1021,7 +1047,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                     )}
                   </div>
                   <div className="flex flex-col gap-1.5 max-w-sm mx-auto w-full">
-                    {addons.map(a => {
+                    {visibleAddons.map(a => {
                       const isOn = modalAddons.includes(a.name)
                       return (
                         <button

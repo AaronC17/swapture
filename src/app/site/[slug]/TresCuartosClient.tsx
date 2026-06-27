@@ -720,9 +720,14 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
   const LogoTile = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
     const dim = size === 'sm' ? 'w-8 h-8 rounded-lg' : size === 'lg' ? 'w-20 h-20 rounded-2xl' : 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl'
     return (
-      <div className={`${dim} flex items-center justify-center border border-white/10 overflow-hidden shrink-0 bg-transparent`}>
-        <img src={LOGO} alt="Tres Cuartos" className="w-full h-full object-cover" />
-      </div>
+      <div
+        className={`${dim} flex items-center justify-center border border-white/10 overflow-hidden shrink-0 bg-transparent`}
+        style={{
+          backgroundImage: `url(${LOGO})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
     )
   }
 
@@ -770,7 +775,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ STICKY NAV ═══════ */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-2xl border-b border-white/[0.06] py-2' : 'bg-gradient-to-b from-black/70 to-transparent py-3 sm:py-5'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/90 ${scrolled ? 'backdrop-blur-2xl border-b border-white/[0.06] py-2' : 'bg-gradient-to-b from-black/70 to-transparent py-3 sm:py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-end sm:justify-between relative">
           <button onClick={() => scrollTo('hero-section')} className="flex items-center gap-2 sm:gap-3 group absolute left-1/2 -translate-x-1/2 -ml-4 sm:ml-0 sm:static sm:translate-x-0">
             <LogoTile />
@@ -989,7 +994,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
             {[
             { icon: Heart, val: 'Real', label: 'SAZÓN', sub: 'Streetfood' },
             { icon: MapPin, val: '1', label: 'SUCURSAL', sub: 'Escazú' },
-            { icon: UtensilsCrossed, val: '30+', label: 'ANTOJOS', sub: 'En el Men\u00FA' },
+            { icon: UtensilsCrossed, val: '25+', label: 'opciones En el Menú', sub: '' },
           ].map((s, i) => (
             <div key={i} className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-[#0c110c]/80 backdrop-blur-xl text-center hover:border-white/[0.15] transition-all duration-700 hover:translate-y-[-3px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.5)' }}>
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${GREEN}08` }} />

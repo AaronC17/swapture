@@ -218,16 +218,6 @@ export default function ClientMenuEditorPage() {
     saveMenu(withCategories(nextCats))
   }
 
-  /* ── Mutaciones de locations ── */
-  const addLocation = (name: string) => {
-    const base = menu || { categories: [] }
-    const key = `sucursal-${locationKeys.length + 1}`
-    const newLoc: MenuLocation = { name, categories: [] }
-    const next: MenuData = { ...base, locations: { ...(base.locations || {}), [key]: newLoc } }
-    saveMenu(next)
-    setSelectedLocKey(key)
-  }
-
   /* ── Búsqueda ── */
   const filteredCats = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -330,16 +320,7 @@ export default function ClientMenuEditorPage() {
               </button>
             )
           })}
-          <button
-            onClick={() => {
-              const name = prompt('Nombre de la nueva sucursal:')
-              if (name && name.trim()) addLocation(name.trim())
-            }}
-            className="ml-auto px-3 py-1.5 rounded-lg text-xs font-semibold text-white/50 hover:text-white hover:bg-white/[0.05] flex items-center gap-1.5 transition-all"
-          >
-            <Plus size={12} /> Sucursal
-          </button>
-        </div>
+          </div>
       )}
 
       {/* ── TOOLBAR ── */}
