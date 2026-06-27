@@ -434,7 +434,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
 
       {/* ═══════ SEARCH / INFO BAR ═══════ */}
       <div className="border-b border-white/[0.05] bg-[#0b0f0b]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-end gap-2">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-center gap-2">
             <button
               onClick={() => { setSearchOpen(!searchOpen); if (searchOpen) setSearchQuery('') }}
               className={`flex items-center gap-1.5 h-7 sm:h-8 px-2.5 sm:px-3 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all ${searchOpen ? 'bg-white/[0.08] text-white/60' : 'bg-white/[0.04] border border-white/[0.06] text-white/45 hover:text-white/60 hover:bg-white/[0.06]'}`}
