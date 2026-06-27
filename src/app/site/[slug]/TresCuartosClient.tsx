@@ -990,14 +990,16 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       <section className="relative z-20 max-w-5xl mx-auto px-4 sm:px-8 py-12 sm:py-12">
         <div className="grid grid-cols-3 gap-2 sm:gap-5">
             {[
-            { icon: Heart, val: 'Real', label: 'SAZÓN', sub: 'Streetfood' },
-            { icon: MapPin, val: '1', label: 'SUCURSAL', sub: 'Escazú' },
-            { icon: UtensilsCrossed, val: '25+', label: 'opciones En el Menú', sub: '' },
+            { icon: MapPin, val: '1', label: 'LOCAL', sub: '' },
+            { icon: Clock, val: '15 min', label: 'DELIVERY', sub: '' },
+            { icon: Star, val: '4.9', label: 'RATING', sub: '' },
           ].map((s, i) => (
             <div key={i} className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-[#0c110c]/80 backdrop-blur-xl text-center hover:border-white/[0.15] transition-all duration-700 hover:translate-y-[-3px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.5)' }}>
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ boxShadow: `inset 0 0 60px ${GREEN}08` }} />
               {s.icon ? (
-                <s.icon size={18} className="mx-auto mb-1 sm:mb-2 transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ color: GREEN }} />
+                <div className="mx-auto mb-1 sm:mb-2 w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 relative z-10" style={{ background: `${ORANGE}15`, border: `1px solid ${ORANGE}25` }}>
+                  <s.icon size={16} style={{ color: ORANGE }} />
+                </div>
               ) : (
                 <div className="h-[18px] sm:h-[18px] mb-1 sm:mb-2" />
               )}
