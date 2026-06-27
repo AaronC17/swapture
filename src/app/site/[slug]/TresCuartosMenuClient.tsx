@@ -434,22 +434,7 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
 
       {/* ═══════ SEARCH / INFO BAR ═══════ */}
       <div className="border-b border-white/[0.05] bg-[#0b0f0b]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-3">
-          <div className="flex-1 flex items-center justify-center gap-3 sm:gap-5 min-w-0 flex-wrap">
-            {menu.hours && (
-              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
-                <Clock size={11} style={{ color: `${GREEN}aa` }} className="shrink-0" />
-                <span className="text-[10px] sm:text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{menu.hours}</span>
-              </div>
-            )}
-            {data.locationName && (
-              <div className="flex items-center gap-1.5 text-white/45 min-w-0">
-                <MapPin size={11} style={{ color: `${GREEN}aa` }} className="shrink-0" />
-                <span className="text-[11px] font-medium leading-snug min-w-0 break-words whitespace-normal">{data.locationName}</span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-2.5 sm:py-3 flex items-center justify-end gap-2">
             <button
               onClick={() => { setSearchOpen(!searchOpen); if (searchOpen) setSearchQuery('') }}
               className={`flex items-center gap-1.5 h-7 sm:h-8 px-2.5 sm:px-3 rounded-lg text-[10px] sm:text-[11px] font-bold transition-all ${searchOpen ? 'bg-white/[0.08] text-white/60' : 'bg-white/[0.04] border border-white/[0.06] text-white/45 hover:text-white/60 hover:bg-white/[0.06]'}`}
@@ -461,7 +446,6 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                 <Phone size={10} /> <span className="hidden sm:inline">Pedir</span>
               </a>
             )}
-          </div>
         </div>
 
         {searchOpen && (
