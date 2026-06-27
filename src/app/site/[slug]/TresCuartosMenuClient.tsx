@@ -799,8 +799,8 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                           setCheckoutStep('info')
                           setTimeout(() => nameInputRef.current?.focus(), 200)
                         }}
-                        className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px]"
-                        style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
+                        className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black transition-all active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px]"
+                        style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}
                       >
                         <ShoppingCart size={15} /> Confirmar pedido
                       </button>
@@ -850,8 +850,8 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                     <button
                       onClick={() => { if (custName.trim() && custPhone.trim()) setCheckoutStep('confirm') }}
                       disabled={!custName.trim() || !custPhone.trim()}
-                      className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black text-black transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px] disabled:opacity-30 disabled:pointer-events-none"
-                      style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}30` }}
+                      className="w-full py-3.5 rounded-2xl text-[12px] sm:text-[13px] font-black transition-all active:scale-[0.98] flex items-center justify-center gap-2.5 min-h-[46px] disabled:opacity-30 disabled:pointer-events-none"
+                      style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}
                     >
                       Continuar <ChevronRight size={14} />
                     </button>
@@ -1095,8 +1095,8 @@ export default function TresCuartosMenuClient({ data }: { data: MenuSiteData }) 
                     }
                     closeModal()
                   }}
-                  className="flex-1 flex items-center justify-between gap-3 pl-5 pr-4 h-12 sm:h-13 rounded-2xl text-black transition-all hover:brightness-110 active:scale-[0.98] min-h-[48px]"
-                  style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}35` }}
+                  className="flex-1 flex items-center justify-between gap-3 pl-5 pr-4 h-12 sm:h-13 rounded-2xl transition-all active:scale-[0.98] min-h-[48px]"
+                  style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}
                 >
                   <span className="text-sm font-black uppercase tracking-wide flex items-center gap-2">
                     <ShoppingCart size={16} /> Agregar

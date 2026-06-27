@@ -1281,8 +1281,8 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                 <label className="block text-sm text-white/50 mb-2 font-medium">Mensaje</label>
                 <textarea rows={3} value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} placeholder="&iquest;En qu&eacute; podemos ayudarte?" className="w-full px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-white/20 text-sm focus:outline-none focus:border-white/20 resize-none transition-colors" />
               </div>
-              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold text-black transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: ORANGE }}>
-                {formLoading ? <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> : <><Send size={16} /> Enviar mensaje</>}
+              <button type="submit" disabled={formLoading} className="w-full py-4 rounded-xl text-sm font-bold transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 min-h-[48px]" style={{ background: `${ORANGE}18`, border: `1px solid ${ORANGE}30`, color: ORANGE }}>
+                {formLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><Send size={16} /> Enviar mensaje</>}
               </button>
             </form>
           )}
@@ -1392,8 +1392,8 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ CHATBOT FAB (desktop only) ═══════ */}
-      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95`} style={{ background: ORANGE, boxShadow: `0 4px 20px ${ORANGE}50` }}>
-        {chatOpen ? <X size={20} className="text-black" /> : <MessageCircle size={20} className="text-black" />}
+      <button onClick={() => setChatOpen(prev => !prev)} className={`fixed bottom-5 right-5 z-[80] w-12 h-12 rounded-full shadow-2xl hidden sm:flex items-center justify-center transition-all hover:scale-105 active:scale-95`} style={{ background: `${ORANGE}20`, border: `1px solid ${ORANGE}35`, color: ORANGE }}>
+        {chatOpen ? <X size={20} /> : <MessageCircle size={20} />}
         {!chatOpen && hasNotif && <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#0a0d0a] animate-pulse" />}
       </button>
 
