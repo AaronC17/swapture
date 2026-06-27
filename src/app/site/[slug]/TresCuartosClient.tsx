@@ -114,7 +114,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
   const hasMenu = allCategories.length > 0
 
   /* ── Scroll state ── */
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(() => typeof window !== 'undefined' && window.scrollY > 60)
   const [activeSection, setActiveSection] = useState('hero-section')
   useEffect(() => {
     const fn = () => {
