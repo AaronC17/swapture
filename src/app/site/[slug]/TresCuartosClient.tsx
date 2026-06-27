@@ -56,7 +56,7 @@ const fmt = (n: number) => `\u20A1${n.toLocaleString('es-CR')}`
 
 /* Reusable Streetfood wordmark: all orange */
 const StreetFoodMark = ({ className = '' }: { className?: string }) => (
-  <span className={className} style={{ color: ORANGE }}>Streetfood</span>
+  <span className={className} style={{ color: 'white' }}>Streetfood</span>
 )
 
 const heroSlides = [
@@ -780,7 +780,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
           <button onClick={() => scrollTo('hero-section')} className="flex items-center gap-2 sm:gap-3 group absolute left-1/2 -translate-x-1/2 -ml-4 sm:ml-0 sm:static sm:translate-x-0">
             <LogoTile />
             <div className="leading-none">
-              <span className="text-base sm:text-xl font-black tracking-tight uppercase" style={{ color: GREEN_SOFT }}>Tres Cuartos</span>
+              <span className="text-base sm:text-xl font-black tracking-tight uppercase" style={{ color: ORANGE }}>Tres Cuartos</span>
               <p className="text-[8px] sm:text-[10px] font-semibold tracking-[0.14em] sm:tracking-[0.22em] uppercase mt-0.5"><StreetFoodMark /></p>
             </div>
           </button>
