@@ -1145,7 +1145,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
               </div>
               <h2 className="text-lg sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: GREEN }}>HORARIOS</span></h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 justify-items-center">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               {Object.entries(menu.locations as Record<string, { name: string; phone?: string; phone2?: string; whatsapp?: string; hours?: string; categories: MenuCategory[] }>).map(([locKey, loc]) => {
                 const hasLocMenu = loc.categories && loc.categories.length > 0
                 const displayHours = getDisplayHours(locKey, loc.name, loc.hours || menu.hours)
