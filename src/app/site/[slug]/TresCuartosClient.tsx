@@ -721,14 +721,11 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
     const dim = size === 'sm' ? 'w-8 h-8 rounded-lg' : size === 'lg' ? 'w-20 h-20 rounded-2xl' : 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl'
     return (
       <div
-        className={`${dim} flex items-center justify-center border border-white/10 overflow-hidden shrink-0 relative z-10`}
-        style={{
-          backgroundImage: `url(${LOGO})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundColor: '#0a0d0a',
-        }}
-      />
+        className={`${dim} rounded-xl overflow-hidden shrink-0 relative z-10 border border-white/10`}
+        style={{ backgroundColor: '#0a0d0a' }}
+      >
+        <img src={LOGO} alt="Tres Cuartos" className="w-full h-full object-cover" />
+      </div>
     )
   }
 
