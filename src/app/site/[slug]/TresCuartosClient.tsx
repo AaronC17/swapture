@@ -1138,16 +1138,16 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
 
       {/* ═══════ LOCATIONS ═══════ */}
       {menu?.locations && Object.keys(menu.locations).length > 0 && (
-        <section id="locations-section" className="py-8 sm:py-12 relative overflow-hidden scroll-mt-20">
+        <section id="locations-section" className="py-8 sm:py-20 relative overflow-hidden scroll-mt-20">
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(248,174,27,0.04) 0%, transparent 50%)' }} />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
-            <div className="text-center mb-4 sm:mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-2 sm:mb-3" style={{ color: GREEN }}>
+            <div className="text-center mb-5 sm:mb-14">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/[0.06] text-[11px] font-bold uppercase tracking-[0.25em] mb-2 sm:mb-4" style={{ color: GREEN }}>
                 <MapPin size={13} /> Locales
               </div>
-              <h2 className="text-lg sm:text-3xl lg:text-4xl font-black leading-[0.95] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: GREEN }}>HORARIOS</span></h2>
+              <h2 className="text-lg sm:text-4xl lg:text-5xl font-black leading-[0.9] tracking-tight">VISIT&Aacute;NOS<br /><span style={{ color: GREEN }}>HORARIOS</span></h2>
             </div>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {Object.entries(menu.locations as Record<string, { name: string; phone?: string; phone2?: string; whatsapp?: string; hours?: string; categories: MenuCategory[] }>).map(([locKey, loc]) => {
                 const hasLocMenu = loc.categories && loc.categories.length > 0
                 const displayHours = getDisplayHours(locKey, loc.name, loc.hours || menu.hours)
@@ -1155,47 +1155,49 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
                   ? `https://wa.me/${loc.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola, quiero hacer un pedido en Tres Cuartos — ${loc.name}`)}`
                   : waLink
                 return (
-                  <div key={locKey} className="group w-full sm:max-w-xs p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12] transition-all duration-500 hover:translate-y-[-3px] text-center" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03), 0 2px 20px rgba(0,0,0,0.15)' }}>
-                    <div className="flex justify-center gap-1 mb-2 sm:mb-3 hidden sm:flex">
-                      {[...Array(6)].map((_, j) => (
-                        <div key={j} className="w-2 h-2 transition-all duration-500" style={{ background: j % 2 === 0 ? GREEN : CREAM, opacity: j % 2 === 0 ? 0.5 : 0.4 }} />
+                  <div key={locKey} className="group p-3 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.015] hover:border-white/[0.12] transition-all duration-500 hover:translate-y-[-4px]" style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.03), 0 4px 30px rgba(0,0,0,0.2)' }}>
+                    <div className="flex gap-1 mb-3 sm:mb-5 hidden sm:flex">
+                      {[...Array(8)].map((_, j) => (
+                        <div key={j} className="w-2.5 h-2.5 rotate-45 transition-all duration-500" style={{ background: j % 2 === 0 ? `${GREEN}25` : 'transparent', border: `1px solid ${GREEN}14` }} />
                       ))}
                     </div>
-                    <div className="flex flex-col items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 overflow-hidden transition-transform duration-500 group-hover:scale-110" style={{ background: GREEN }}>
+                    <div className="flex items-start gap-2.5 sm:gap-4 mb-3 sm:mb-6">
+                      <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 overflow-hidden transition-transform duration-500 group-hover:scale-110" style={{ background: `${GREEN}10`, border: `1px solid ${GREEN}15` }}>
                         <img src={LOGO} alt="Tres Cuartos" className="w-full h-full object-cover" />
                       </div>
-                      <div>
-                        <h3 className="font-black text-sm sm:text-lg uppercase">Tres Cuartos</h3>
-                        <p className="text-[10px] sm:text-xs text-white/45 mt-0.5">{loc.name}</p>
+                      <div className="min-w-0">
+                        <h3 className="font-black text-base sm:text-2xl uppercase">Tres Cuartos</h3>
+                        <p className="text-[11px] sm:text-sm text-white/45 mt-0.5 truncate">{loc.name}</p>
                       </div>
                     </div>
-                    <div className="space-y-1.5 sm:space-y-2 pt-2 sm:pt-3 border-t border-white/[0.06]">
+                    <div className="space-y-1.5 sm:space-y-3 pt-2.5 sm:pt-5 border-t border-white/[0.06]">
                       {displayHours && (
-                        <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-white/50 leading-snug">
-                          <Clock size={12} style={{ color: GREEN, flexShrink: 0 }} />
-                          <span className="font-medium text-white/70">Horario:</span>
-                          <span className="break-words whitespace-normal">{displayHours}</span>
+                        <div className="flex items-start gap-2.5">
+                          <Clock size={14} className="mt-0.5 shrink-0 sm:w-4 sm:h-4" style={{ color: GREEN }} />
+                          <div className="text-[11px] sm:text-sm text-white/40 leading-relaxed">
+                            <p className="font-bold text-white/60 mb-0.5">Horario</p>
+                            <p>{displayHours}</p>
+                          </div>
                         </div>
                       )}
-                      <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-white/40">
-                        <Truck size={12} style={{ color: GREEN, flexShrink: 0 }} />
-                        <span>Pick up, Delivery y WhatsApp</span>
+                      <div className="flex items-center gap-2.5">
+                        <Truck size={14} className="sm:w-4 sm:h-4" style={{ color: GREEN }} />
+                        <span className="text-[11px] sm:text-sm text-white/40">Pick up, Delivery y WhatsApp</span>
                       </div>
                       {loc.phone && (
-                        <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-white/40">
-                          <Phone size={12} style={{ color: '#25D366', flexShrink: 0 }} />
-                          <span>{`${loc.phone}${loc.phone2 ? ` / ${loc.phone2}` : ''}`}</span>
+                        <div className="flex items-center gap-2.5">
+                          <Phone size={14} className="sm:w-4 sm:h-4" style={{ color: '#25D366' }} />
+                          <span className="text-[11px] sm:text-sm text-white/40">{`${loc.phone}${loc.phone2 ? ` / ${loc.phone2}` : ''}`}</span>
                         </div>
                       )}
                     </div>
                     {hasLocMenu ? (
-                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-3 sm:mt-4 flex items-center justify-center gap-1.5 w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider text-black transition-all hover:scale-[1.01] active:scale-[0.98] hover:brightness-110 min-h-[40px] sm:min-h-[42px]" style={{ background: ORANGE, boxShadow: `0 2px 10px ${ORANGE}20` }}>
-                        <UtensilsCrossed size={12} /> Ordenar <ArrowRight size={12} />
+                      <a href={`/site/${data.slug}/menu/${locKey}`} className="mt-3 sm:mt-6 flex items-center justify-center gap-2 w-full py-3 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[42px] sm:min-h-[48px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
+                        <UtensilsCrossed size={14} /> Ordenar <ArrowRight size={14} />
                       </a>
                     ) : locWaLink ? (
-                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-3 sm:mt-4 flex items-center justify-center gap-1.5 w-full py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider text-black transition-all hover:scale-[1.01] active:scale-[0.98] hover:brightness-110 min-h-[40px] sm:min-h-[42px]" style={{ background: ORANGE, boxShadow: `0 2px 10px ${ORANGE}20` }}>
-                        Ordenar <ArrowRight size={12} />
+                      <a href={locWaLink} target="_blank" rel="noopener noreferrer" className="mt-3 sm:mt-6 flex items-center justify-center gap-2 w-full py-3 sm:py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider text-black transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 min-h-[42px] sm:min-h-[48px]" style={{ background: ORANGE, boxShadow: `0 4px 15px ${ORANGE}25` }}>
+                        Ordenar <ArrowRight size={14} />
                       </a>
                     ) : null}
                   </div>
