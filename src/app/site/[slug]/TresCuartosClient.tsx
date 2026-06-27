@@ -56,7 +56,7 @@ const fmt = (n: number) => `\u20A1${n.toLocaleString('es-CR')}`
 
 /* Reusable Streetfood wordmark: all orange */
 const StreetFoodMark = ({ className = '' }: { className?: string }) => (
-  <span className={className} style={{ color: 'white' }}>Streetfood</span>
+  <span className={className} style={{ color: ORANGE }}>Streetfood</span>
 )
 
 const heroSlides = [
@@ -777,10 +777,10 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       {/* ═══════ STICKY NAV ═══════ */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#0a0d0f]/95 border-b border-white/[0.06] py-2' : 'bg-gradient-to-b from-black/70 to-transparent py-3 sm:py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-end sm:justify-between relative">
-          <button onClick={() => scrollTo('hero-section')} className="flex items-center gap-2 sm:gap-3 group absolute left-1/2 -translate-x-1/2 -ml-4 sm:ml-0 sm:static sm:translate-x-0">
+          <button onClick={() => scrollTo('hero-section')} className="flex items-center gap-2 sm:gap-3 group absolute left-1/2 -translate-x-1/2 -ml-6 sm:ml-0 sm:static sm:translate-x-0">
             <LogoTile />
             <div className="leading-none">
-              <span className="text-base sm:text-xl font-black tracking-tight uppercase" style={{ color: ORANGE }}>Tres Cuartos</span>
+              <span className="text-base sm:text-xl font-black tracking-tight uppercase" style={{ color: GREEN_SOFT }}>Tres Cuartos</span>
               <p className="text-[8px] sm:text-[10px] font-semibold tracking-[0.14em] sm:tracking-[0.22em] uppercase mt-0.5"><StreetFoodMark /></p>
             </div>
           </button>
