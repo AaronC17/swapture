@@ -721,11 +721,12 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
     const dim = size === 'sm' ? 'w-8 h-8 rounded-lg' : size === 'lg' ? 'w-20 h-20 rounded-2xl' : 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl'
     return (
       <div
-        className={`${dim} flex items-center justify-center border border-white/10 overflow-hidden shrink-0 bg-transparent will-change-transform`}
+        className={`${dim} flex items-center justify-center border border-white/10 overflow-hidden shrink-0 relative z-10`}
         style={{
           backgroundImage: `url(${LOGO})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundColor: '#0a0d0a',
         }}
       />
     )
@@ -775,7 +776,7 @@ export default function TresCuartosClient({ data }: { data: SiteData }) {
       )}
 
       {/* ═══════ STICKY NAV ═══════ */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${scrolled ? 'bg-black/95 border-b border-white/[0.06] py-2' : 'bg-gradient-to-b from-black/70 to-transparent py-3 sm:py-5'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-2xl border-b border-white/[0.06] py-2' : 'bg-gradient-to-b from-black/70 to-transparent py-3 sm:py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-end sm:justify-between relative">
           <button onClick={() => scrollTo('hero-section')} className="flex items-center gap-2 sm:gap-3 group absolute left-1/2 -translate-x-1/2 -ml-4 sm:ml-0 sm:static sm:translate-x-0">
             <LogoTile />
