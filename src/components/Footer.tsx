@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 const navLinks = [
   { label: 'Plataforma', href: '#sistema' },
   { label: 'Resultados', href: '#resultados' },
@@ -16,10 +14,7 @@ export default function Footer() {
         {/* Main row — centered */}
         <div className="flex flex-col items-center gap-8">
           {/* Brand */}
-          <div className="w-fit mx-auto flex items-center gap-3 -ml-3">
-            <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
-              <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
-            </div>
+          <div className="w-fit mx-auto flex items-center gap-3">
             <span className="text-lg font-heading font-bold leading-none">
               SWAP<span className="text-accent">TURE</span>
             </span>
