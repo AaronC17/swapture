@@ -90,6 +90,22 @@
     animation: float 12s ease-in-out infinite 4s;
   }
 
+  /* Smaller orbs on mobile to match desktop proportions */
+  @media (max-width: 639px) {
+    .gradient-orb--1 {
+      width: 360px;
+      height: 360px;
+    }
+    .gradient-orb--2 {
+      width: 240px;
+      height: 240px;
+    }
+    .gradient-orb--3 {
+      width: 210px;
+      height: 210px;
+    }
+  }
+
   /* Section label */
   .section-label {
     @apply inline-block text-xs font-medium text-accent uppercase tracking-[0.2em] mb-4;
