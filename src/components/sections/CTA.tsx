@@ -27,12 +27,17 @@ export default function CTA() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    const nombre = form.nombre.trim()
+    const negocio = form.negocio.trim()
+    const contacto = form.contacto.trim()
+    const mensaje = form.mensaje.trim()
+
     const message = [
-      `Hola, soy *${form.nombre}*.`,
-      `Mi negocio: *${form.negocio}*.`,
-      `Contacto: *${form.contacto}*.`,
+      `Hola, soy *${nombre}*.`,
+      `Mi negocio: *${negocio}*.`,
+      `Contacto: *${contacto}*.`,
       '',
-      `Necesito resolver: ${form.mensaje}`,
+      `Necesito resolver: ${mensaje}`,
     ].join('\n')
 
     const url = `https://wa.me/50661555619?text=${encodeURIComponent(message)}`
@@ -103,7 +108,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿Cómo te llamas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -118,7 +123,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿A qué te dedicas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -133,7 +138,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="Para contactarte"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -148,13 +153,13 @@ export default function CTA() {
                       required
                       rows={3}
                       placeholder="Cuéntanos brevemente..."
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-accent text-white font-semibold rounded-full text-sm hover:shadow-[0_0_40px_rgba(168,85,247,0.2)] hover:bg-accent-light transition-all duration-500 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-accent/[0.08] border border-accent/30 text-accent-light font-semibold rounded-full text-sm hover:bg-accent/15 hover:border-accent/50 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500 flex items-center justify-center gap-2"
                   >
                     Quiero más clientes
                     <ArrowRight size={16} />

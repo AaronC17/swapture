@@ -3,6 +3,16 @@ import Reveal from '../Reveal'
 
 const sectors = [
   {
+    icon: Store,
+    title: 'Servicios Locales',
+    result: 'Presencia profesional en internet con reservas en línea y seguimiento incluido.',
+  },
+  {
+    icon: ShoppingCart,
+    title: 'Tiendas en línea',
+    result: 'Recupera ventas perdidas y mantén a tus clientes comprando una y otra vez.',
+  },
+  {
     icon: Briefcase,
     title: 'Consultores y Agencias',
     result: 'Atrae clientes nuevos sin depender solo de recomendaciones o redes sociales.',
@@ -13,11 +23,6 @@ const sectors = [
     result: 'Agenda de citas en línea, recordatorios automáticos y seguimiento de pacientes.',
   },
   {
-    icon: ShoppingCart,
-    title: 'Tiendas en línea',
-    result: 'Recupera ventas perdidas y mantén a tus clientes comprando una y otra vez.',
-  },
-  {
     icon: GraduationCap,
     title: 'Educación y Coaches',
     result: 'Llena tus cursos y sesiones con una página que inscribe alumnos por ti.',
@@ -26,11 +31,6 @@ const sectors = [
     icon: Building2,
     title: 'Inmobiliarias',
     result: 'Filtra a tus mejores prospectos y agenda visitas sin que tú muevas un dedo.',
-  },
-  {
-    icon: Store,
-    title: 'Servicios Locales',
-    result: 'Presencia profesional en internet con reservas en línea y seguimiento incluido.',
   },
 ]
 
