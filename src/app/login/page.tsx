@@ -127,10 +127,7 @@ export default function LoginPage() {
                   Ingresando...
                 </>
               ) : (
-                <>
-                  Iniciar sesión
-                  <ArrowRight size={14} />
-                </>
+                <>Iniciar sesión</>
               )}
             </button>
           </form>
