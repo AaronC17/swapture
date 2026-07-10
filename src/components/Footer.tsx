@@ -51,9 +51,9 @@ export default function Footer() {
             >
               <Instagram size={18} />
             </a>
-            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+            <a href="/privacidad" className="hover:text-white transition-colors">Privacidad</a>
             <span className="text-border/30">·</span>
-            <a href="#" className="hover:text-white transition-colors">Términos</a>
+            <a href="/terminos" className="hover:text-white transition-colors">Términos</a>
           </div>
         </div>
       </div>
