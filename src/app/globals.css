@@ -93,16 +93,16 @@
   /* Smaller orbs on mobile to match desktop proportions */
   @media (max-width: 639px) {
     .gradient-orb--1 {
-      width: 360px;
-      height: 360px;
+      width: 280px;
+      height: 280px;
     }
     .gradient-orb--2 {
-      width: 240px;
-      height: 240px;
+      width: 180px;
+      height: 180px;
     }
     .gradient-orb--3 {
-      width: 210px;
-      height: 210px;
+      width: 160px;
+      height: 160px;
     }
   }
 
