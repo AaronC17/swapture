@@ -41,7 +41,7 @@ export default function Comparison() {
         <div className="grid md:grid-cols-2 gap-3 sm:gap-5">
           {/* Before */}
           <Reveal delay={2}>
-            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)] h-full">
+            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted/50 mb-4 sm:mb-6 text-center md:text-left">
                 Sin Swapture
               </h3>
@@ -60,7 +60,7 @@ export default function Comparison() {
 
           {/* After */}
           <Reveal delay={3}>
-            <div className="p-4 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.07] backdrop-blur-sm shadow-[0_8px_30px_rgba(168,85,247,0.12)] h-full">
+            <div className="p-4 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.07] shadow-[0_8px_30px_rgba(168,85,247,0.12)] h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent/70 mb-4 sm:mb-6 text-center md:text-left">
                 Con Swapture
               </h3>

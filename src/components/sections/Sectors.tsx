@@ -62,7 +62,7 @@ export default function Sectors() {
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {sectors.map((sector, i) => (
             <Reveal key={sector.title} delay={i + 3}>
-              <div className="group p-3.5 sm:p-6 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center sm:text-left">
+              <div className="group p-3.5 sm:p-6 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center sm:text-left">
                 <div className="mb-2.5 sm:mb-4 flex justify-center sm:justify-start">
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
                     <sector.icon size={18} className="text-accent/70 sm:w-5 sm:h-5" />

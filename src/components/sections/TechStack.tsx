@@ -88,7 +88,7 @@ export default function TechStack() {
           <div className="lg:col-span-3 grid sm:grid-cols-3 gap-6">
             {categories.map((cat, i) => (
               <Reveal key={cat.title} delay={i + 3}>
-                <div className="group p-6 rounded-2xl border border-border/30 bg-surface/20 backdrop-blur-sm hover:border-accent/30 transition-all duration-500 h-full">
+                <div className="group p-6 rounded-2xl border border-border/30 bg-surface/20 hover:border-accent/30 transition-all duration-500 h-full">
                   <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-4">
                     <cat.icon size={20} className="text-accent" />
                   </div>

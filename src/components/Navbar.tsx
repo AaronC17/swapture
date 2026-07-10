@@ -11,8 +11,8 @@ const navLinks = [
   { href: '#sistema', label: 'Plataforma' },
   { href: '#resultados', label: 'Resultados' },
   { href: '#sectores', label: 'Industrias' },
-  { href: '#proceso', label: 'Empezar' },
   { href: '#precios', label: 'Precios' },
+  { href: '#proceso', label: 'Empezar' },
   { href: '#faq', label: 'FAQ' },
 ]
 
@@ -69,8 +69,7 @@ export default function Navbar() {
     <>
       <nav
         className={clsx(
-          'fixed top-0 left-0 right-0 transition-all duration-500',
-          mobileOpen ? 'z-[60]' : 'z-50',
+          'fixed top-0 left-0 right-0 transition-all duration-500 z-50',
           scrolled
             ? 'bg-bg/85 backdrop-blur-2xl border-b border-border/20 py-2.5 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
             : 'bg-transparent py-4 sm:py-5'
@@ -121,7 +120,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden relative z-[70] p-2 text-white hover:text-accent transition-colors"
+            className="lg:hidden relative p-2 text-white hover:text-accent transition-colors"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -132,49 +131,76 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={clsx(
-          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-1 z-[55] transition-all duration-400',
+          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg flex flex-col z-[60] transition-all duration-400',
           mobileOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
         )}
       >
-        {navLinks.map((link, i) => (
+        {/* Header */}
+        <div className="flex items-center justify-end p-5">
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-border/40 bg-surface/20 text-white hover:text-accent transition-colors"
+            aria-label="Cerrar menú"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Links */}
+        <nav className="flex-1 flex flex-col items-center justify-center px-8 -mt-8">
+          <ul className="w-full max-w-xs space-y-3">
+            {navLinks.map((link, i) => (
+              <li
+                key={link.href}
+                className={clsx(
+                  'transition-all duration-300 text-center',
+                  mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                )}
+                style={{ transitionDelay: mobileOpen ? `${(i + 1) * 50}ms` : '0ms' }}
+              >
+                <a
+                  href={link.href}
+                  onClick={(e) => handleMobileClick(e, link.href)}
+                  className={clsx(
+                    'block w-full py-3 rounded-full text-base font-heading font-semibold transition-all duration-300',
+                    i === 0
+                      ? 'bg-accent text-white shadow-[0_0_30px_rgba(168,85,247,0.25)]'
+                      : 'text-white/80 hover:text-white hover:bg-white/[0.04]'
+                  )}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Footer */}
+        <div className="p-6 pb-10 space-y-3">
           <a
-            key={link.href}
-            href={link.href}
-            onClick={(e) => handleMobileClick(e, link.href)}
+            href="#contacto"
+            onClick={(e) => handleMobileClick(e, '#contacto')}
             className={clsx(
-              'text-lg font-heading font-semibold text-white/90 hover:text-accent transition-all duration-300 py-1.5 text-center',
+              'block w-full max-w-xs mx-auto text-center py-3.5 bg-accent text-white font-semibold rounded-full text-sm transition-all duration-300 active:scale-[0.97] shadow-[0_0_30px_rgba(168,85,247,0.2)]',
               mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             )}
-            style={{ transitionDelay: mobileOpen ? `${(i + 1) * 50}ms` : '0ms' }}
+            style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 1) * 50}ms` : '0ms' }}
           >
-            {link.label}
+            Empezar ahora
           </a>
-        ))}
-
-        <a
-          href="#contacto"
-          onClick={(e) => handleMobileClick(e, '#contacto')}
-          className={clsx(
-            'mt-3 px-8 py-2.5 bg-accent text-white font-semibold rounded-full text-sm transition-all duration-300 active:scale-[0.97]',
-            mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-          )}
-          style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 1) * 50}ms` : '0ms' }}
-        >
-          Empezar ahora
-        </a>
-
-        <a
-          href="/login"
-          className={clsx(
-            'mt-1 text-sm text-muted hover:text-accent transition-all duration-300 py-1',
-            mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-          )}
-          style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 2) * 50}ms` : '0ms' }}
-        >
-          Iniciar sesión
-        </a>
+          <a
+            href="/login"
+            className={clsx(
+              'block w-full text-center py-2 text-sm text-muted hover:text-white transition-colors',
+              mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            )}
+            style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 2) * 50}ms` : '0ms' }}
+          >
+            Iniciar sesión
+          </a>
+        </div>
       </div>
     </>
   )

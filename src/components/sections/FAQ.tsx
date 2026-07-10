@@ -72,7 +72,7 @@ export default function FAQ() {
               <Reveal key={i} delay={i + 2}>
                 <div
                   className={clsx(
-                    'rounded-2xl border transition-all duration-500 overflow-hidden backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.2)]',
+                    'rounded-2xl border transition-all duration-500 overflow-hidden shadow-[0_6px_24px_rgba(0,0,0,0.2)]',
                     isOpen
                       ? 'border-accent/30 bg-accent/[0.07]'
                       : 'border-border/60 bg-surface/25 hover:border-border/80 hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)]'

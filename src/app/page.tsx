@@ -1,6 +1,5 @@
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/sections/Hero'
-import Problem from '@/components/sections/Problem'
 import System from '@/components/sections/System'
 import Sectors from '@/components/sections/Sectors'
 import Comparison from '@/components/sections/Comparison'
@@ -17,7 +16,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Problem />
         <System />
         <Comparison />
         <Sectors />

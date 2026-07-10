@@ -82,7 +82,7 @@ export default function CTA() {
 
           {/* Right - Form */}
           <Reveal delay={4}>
-            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               {status === 'sent' ? (
                 <div className="text-center py-10">
                   <div className="w-14 h-14 rounded-full bg-accent/8 border border-accent/15 flex items-center justify-center mx-auto mb-5">

@@ -20,7 +20,7 @@ export default function Reveal({ children, className = '', delay = 0 }: RevealPr
         if (entry.isIntersecting) {
           setTimeout(() => {
             el.classList.add('revealed')
-          }, delay * 40)
+          }, delay * 25)
           observer.unobserve(el)
         }
       },
@@ -35,7 +35,7 @@ export default function Reveal({ children, className = '', delay = 0 }: RevealPr
     <div
       ref={ref}
       suppressHydrationWarning
-      className={`opacity-0 translate-y-5 transition-all duration-300 ease-out [&.revealed]:opacity-100 [&.revealed]:translate-y-0 ${className}`}
+      className={`opacity-0 translate-y-3 transition-all duration-500 ease-out [&.revealed]:opacity-100 [&.revealed]:translate-y-0 ${className}`}
     >
       {children}
     </div>
