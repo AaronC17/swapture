@@ -63,7 +63,7 @@ export default function CTA() {
               </h2>
             </Reveal>
             <Reveal delay={2}>
-              <p className="text-muted text-sm sm:text-base mb-8 leading-relaxed max-w-md mx-auto lg:mx-0">
+              <p className="text-muted text-xs sm:text-base mb-8 leading-relaxed max-w-md mx-auto lg:mx-0">
                 Cuéntanos sobre tu negocio y te mostramos cómo podemos
                 ayudarte a captar más oportunidades con una propuesta realista y aterrizada a tu contexto.
               </p>
@@ -82,23 +82,23 @@ export default function CTA() {
 
           {/* Right - Form */}
           <Reveal delay={4}>
-            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+            <div className="p-4 sm:p-6 rounded-2xl border border-border/40 bg-surface/20 shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
               {status === 'sent' ? (
-                <div className="text-center py-10">
-                  <div className="w-14 h-14 rounded-full bg-accent/8 border border-accent/15 flex items-center justify-center mx-auto mb-5">
-                    <CheckCircle2 size={28} className="text-accent/70" />
+                <div className="text-center py-8">
+                  <div className="w-12 h-12 rounded-full bg-accent/8 border border-accent/15 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 size={22} className="text-accent/70" />
                   </div>
-                  <h3 className="text-lg font-heading font-bold text-white mb-2">
+                  <h3 className="text-base font-heading font-bold text-white mb-1">
                     ¡Mensaje listo!
                   </h3>
-                  <p className="text-sm text-muted">
-                    Se abrió WhatsApp con tu información. Envíanos el mensaje y te contactamos.
+                  <p className="text-xs text-muted">
+                    Se abrió WhatsApp con tu información.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3">
                   <div>
-                    <label className="text-[10px] text-muted/70 uppercase tracking-wider font-semibold mb-1.5 block">
+                    <label className="text-[10px] text-muted/60 uppercase tracking-wider font-semibold mb-1 block">
                       Tu nombre
                     </label>
                     <input
@@ -108,12 +108,12 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿Cómo te llamas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-bg/60 border border-border/40 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[10px] text-muted/70 uppercase tracking-wider font-semibold mb-1.5 block">
+                    <label className="text-[10px] text-muted/60 uppercase tracking-wider font-semibold mb-1 block">
                       Tu negocio
                     </label>
                     <input
@@ -123,12 +123,12 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿A qué te dedicas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-bg/60 border border-border/40 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[10px] text-muted/70 uppercase tracking-wider font-semibold mb-1.5 block">
+                    <label className="text-[10px] text-muted/60 uppercase tracking-wider font-semibold mb-1 block">
                       Email o WhatsApp
                     </label>
                     <input
@@ -138,12 +138,12 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="Para contactarte"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-bg/60 border border-border/40 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[10px] text-muted/70 uppercase tracking-wider font-semibold mb-1.5 block">
+                    <label className="text-[10px] text-muted/60 uppercase tracking-wider font-semibold mb-1 block">
                       ¿Qué necesitas resolver?
                     </label>
                     <textarea
@@ -151,15 +151,15 @@ export default function CTA() {
                       value={form.mensaje}
                       onChange={handleChange}
                       required
-                      rows={3}
+                      rows={2}
                       placeholder="Cuéntanos brevemente..."
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-base focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-bg/60 border border-border/40 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-accent/[0.08] border border-accent/30 text-accent-light font-semibold rounded-full text-sm hover:bg-accent/15 hover:border-accent/50 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-accent/[0.08] border border-accent/30 text-accent-light font-semibold rounded-full text-sm hover:bg-accent/15 hover:border-accent/50 transition-all duration-500 flex items-center justify-center gap-2 pl-[5.25%]"
                   >
                     Quiero más clientes
                     <ArrowRight size={16} />
