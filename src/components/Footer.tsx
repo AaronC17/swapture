@@ -16,7 +16,7 @@ export default function Footer() {
         {/* Main row — centered */}
         <div className="flex flex-col items-center gap-8">
           {/* Brand */}
-          <div className="w-fit mx-auto flex items-center gap-3 ml-0.5">
+          <div className="w-fit mx-auto flex items-center gap-3">
             <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
               <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
