@@ -1,8 +1,6 @@
 import Image from 'next/image'
-import { Instagram } from 'lucide-react'
 
 const navLinks = [
-  { label: 'Problema', href: '#problema' },
   { label: 'Plataforma', href: '#sistema' },
   { label: 'Resultados', href: '#resultados' },
   { label: 'Industrias', href: '#sectores' },
@@ -16,13 +14,13 @@ export default function Footer() {
     <footer className="relative">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
         {/* Main row — all horizontal */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 sm:gap-8">
           {/* Brand */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center justify-start md:justify-center gap-3 -ml-9 md:ml-0">
             <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
               <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
-            <span className="text-lg font-heading font-bold">
+            <span className="text-lg font-heading font-bold leading-none">
               SWAP<span className="text-accent">TURE</span>
             </span>
           </div>
@@ -41,19 +39,51 @@ export default function Footer() {
           </nav>
 
           {/* Legal + Instagram */}
-          <div className="flex items-center gap-4 text-xs text-muted/50 shrink-0">
+          <div className="flex items-center gap-4 sm:gap-5 shrink-0">
             <a
               href="https://www.instagram.com/swapture.cr/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="text-muted/60 hover:text-accent transition-colors duration-300"
+              className="w-9 h-9 rounded-full flex items-center justify-center bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:scale-110 transition-all duration-300"
             >
-              <Instagram size={18} />
+              <svg
+                viewBox="0 0 24 24"
+                className="w-[18px] h-[18px]"
+                fill="none"
+                stroke="url(#instagram-gradient)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <defs>
+                  <linearGradient id="instagram-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#f09433" />
+                    <stop offset="50%" stopColor="#e6683c" />
+                    <stop offset="100%" stopColor="#bc1888" />
+                  </linearGradient>
+                </defs>
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
             </a>
-            <a href="/privacidad" className="hover:text-white transition-colors">Privacidad</a>
-            <span className="text-border/30">·</span>
-            <a href="/terminos" className="hover:text-white transition-colors">Términos</a>
+
+            <div className="flex items-center text-xs text-muted/50">
+              <a
+                href="/privacidad"
+                className="w-[72px] text-center hover:text-white transition-colors duration-300"
+              >
+                Privacidad
+              </a>
+              <span className="text-border/30 mx-2">·</span>
+              <a
+                href="/terminos"
+                className="w-[72px] text-center hover:text-white transition-colors duration-300"
+              >
+                Términos
+              </a>
+            </div>
           </div>
         </div>
       </div>
