@@ -65,7 +65,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-surface/[0.55] border border-border/60 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
+        <div className="bg-surface/[0.35] border border-border/50 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-negative/10 border border-negative/20 flex items-center gap-2.5">
