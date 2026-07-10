@@ -66,7 +66,7 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="relative bg-surface/[0.35] border border-border/50 rounded-2xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.35),inset_0_1px_1px_0_rgba(255,255,255,0.1),inset_0_-1px_1px_0_rgba(0,0,0,0.25)] overflow-hidden">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.06] via-white/[0.02] to-black/10 pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-negative/10 border border-negative/20 flex items-center gap-2.5">
