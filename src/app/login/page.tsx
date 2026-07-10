@@ -65,7 +65,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-surface/[0.35] border border-[#4d4d5e] rounded-2xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
+        <div className="bg-surface/[0.35] border border-border/50 rounded-2xl p-6 sm:p-8 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-negative/10 border border-negative/20 flex items-center gap-2.5">
@@ -86,7 +86,7 @@ export default function LoginPage() {
                 placeholder="tu@email.com"
                 required
                 autoComplete="email"
-                className="w-full px-4 py-3 rounded-xl bg-bg/80 border border-[#4d4d5e] text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl bg-bg/80 border border-border/60 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 pr-11 rounded-xl bg-bg/80 border border-[#4d4d5e] text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-bg/80 border border-border/60 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
                 />
                 <button
                   type="button"
