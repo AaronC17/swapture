@@ -16,7 +16,7 @@ export default function Footer() {
         {/* Main row — centered */}
         <div className="flex flex-col items-center gap-8">
           {/* Brand */}
-          <div className="w-fit mx-auto flex items-center gap-3">
+          <div className="w-fit mx-auto flex items-center gap-3 pl-2">
             <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
               <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
@@ -39,13 +39,13 @@ export default function Footer() {
           </nav>
 
           {/* Legal + Instagram */}
-          <div className="flex items-center gap-4 sm:gap-5 shrink-0 ml-4 sm:ml-6">
+          <div className="grid grid-cols-3 items-center gap-4 max-w-[280px] w-full mx-auto">
             <a
               href="https://www.instagram.com/swapture.cr/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="hover:scale-110 transition-transform duration-300"
+              className="flex justify-center hover:scale-110 transition-transform duration-300"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -69,21 +69,19 @@ export default function Footer() {
               </svg>
             </a>
 
-            <div className="flex items-center text-xs text-muted/50">
-              <a
-                href="/privacidad"
-                className="w-[72px] text-center hover:text-white transition-colors duration-300"
-              >
-                Privacidad
-              </a>
-              <span className="text-border/30 mx-2">·</span>
-              <a
-                href="/terminos"
-                className="w-[72px] text-center hover:text-white transition-colors duration-300"
-              >
-                Términos
-              </a>
-            </div>
+            <a
+              href="/privacidad"
+              className="text-xs text-muted/50 hover:text-white transition-colors duration-300 text-center"
+            >
+              Privacidad
+            </a>
+
+            <a
+              href="/terminos"
+              className="text-xs text-muted/50 hover:text-white transition-colors duration-300 text-center"
+            >
+              Términos
+            </a>
           </div>
         </div>
       </div>
