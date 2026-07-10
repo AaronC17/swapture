@@ -9,6 +9,7 @@ import FAQ from '@/components/sections/FAQ'
 import CTA from '@/components/sections/CTA'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import SectionDivider from '@/components/SectionDivider'
 
 export default function Home() {
   return (
@@ -16,12 +17,19 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <SectionDivider />
         <System />
+        <SectionDivider />
         <Comparison />
+        <SectionDivider />
         <Sectors />
+        <SectionDivider />
         <Process />
+        <SectionDivider />
         <Pricing />
+        <SectionDivider />
         <FAQ />
+        <SectionDivider />
         <CTA />
       </main>
       <Footer />
