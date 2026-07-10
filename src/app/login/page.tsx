@@ -134,7 +134,7 @@ export default function LoginPage() {
         </div>
 
         {/* Footer link */}
-        <div className="text-center mt-6 relative left-[-3%]">
+        <div className="text-center mt-6 relative left-[-2%]">
           <a
             href="/"
             className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent transition-colors"
