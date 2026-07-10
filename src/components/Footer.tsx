@@ -13,10 +13,10 @@ export default function Footer() {
   return (
     <footer className="relative">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
-        {/* Main row — all horizontal */}
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 sm:gap-8">
+        {/* Main row — centered */}
+        <div className="flex flex-col items-center gap-8">
           {/* Brand */}
-          <div className="flex items-center justify-start md:justify-center gap-3 -ml-9 md:ml-0">
+          <div className="flex items-center justify-center gap-3">
             <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
               <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
@@ -39,7 +39,7 @@ export default function Footer() {
           </nav>
 
           {/* Legal + Instagram */}
-          <div className="flex items-center gap-4 sm:gap-5 shrink-0">
+          <div className="flex items-center gap-5 shrink-0">
             <a
               href="https://www.instagram.com/swapture.cr/"
               target="_blank"
