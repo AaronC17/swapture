@@ -1,4 +1,4 @@
-import { Briefcase, Heart, ShoppingCart, GraduationCap, Building2, Scissors } from 'lucide-react'
+import { Briefcase, Heart, ShoppingCart, GraduationCap, Building2, Store } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const sectors = [
@@ -28,7 +28,7 @@ const sectors = [
     result: 'Filtra a tus mejores prospectos y agenda visitas sin que tú muevas un dedo.',
   },
   {
-    icon: Scissors,
+    icon: Store,
     title: 'Servicios Locales',
     result: 'Presencia profesional en internet con reservas en línea y seguimiento incluido.',
   },
@@ -62,7 +62,7 @@ export default function Sectors() {
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {sectors.map((sector, i) => (
             <Reveal key={sector.title} delay={i + 3}>
-              <div className="group p-4 sm:p-6 rounded-2xl border border-border/30 bg-surface/10 hover:border-accent/20 transition-all duration-500 h-full">
+              <div className="group p-4 sm:p-6 rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 h-full">
                 <div className="mb-3 sm:mb-4">
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
                     <sector.icon size={18} className="text-accent/70 sm:w-5 sm:h-5" />

@@ -12,6 +12,7 @@ const navLinks = [
   { href: '#resultados', label: 'Resultados' },
   { href: '#sectores', label: 'Industrias' },
   { href: '#proceso', label: 'Empezar' },
+  { href: '#precios', label: 'Precios' },
   { href: '#faq', label: 'FAQ' },
 ]
 

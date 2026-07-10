@@ -9,32 +9,37 @@ const faqs = [
   {
     question: '¿La página web está incluida?',
     answer:
-      'Sí. La página web forma parte de la solución cuando el proyecto lo requiere. Se define desde el inicio junto con el resto de herramientas.',
+      'Sí. La página web forma parte del sistema. Se diseña y adapta a tu negocio desde el inicio, junto con el resto de herramientas.',
   },
   {
-    question: '¿Hay algún costo de instalación?',
+    question: '¿Cuánto cuesta implementar el sistema?',
     answer:
-      'Depende del alcance. Antes de iniciar te presentamos una propuesta con fases, entregables y costos claros para evitar sorpresas.',
+      'La implementación es un pago único que va de ₡50,000 a ₡100,000 colones, dependiendo del tipo de negocio y los extras que incluyas. El precio exacto se define antes de iniciar, sin sorpresas.',
+  },
+  {
+    question: '¿Hay algún costo mensual?',
+    answer:
+      'Sí. La mensualidad es de ₡25,000 colones fijos. Mantiene tu sistema activo, funcionando y mejorando mes a mes. La gestionas desde tu panel una vez registrado.',
   },
   {
     question: '¿Cuánto tarda en estar listo?',
     answer:
-      'Depende del alcance y del material disponible. Normalmente en pocas semanas puedes tener una primera versión funcional para empezar a operar.',
+      'Normalmente en pocas semanas puedes tener una primera versión funcional para empezar a operar y recibir clientes.',
   },
   {
     question: '¿Necesito saber de computadoras o internet?',
     answer:
-      'Para nada. Nosotros nos encargamos de todo lo técnico. Tú solo recibirás información clara y simple de cómo van las cosas.',
+      'Para nada. Nosotros nos encargamos de todo lo técnico. Tú solo recibes información clara y simple de cómo van las cosas.',
   },
   {
     question: '¿Puedo cancelar cuando quiera?',
     answer:
-      'Las condiciones se acuerdan antes de iniciar. Siempre trabajamos con objetivos, tiempos y responsabilidades claras para ambas partes.',
+      'Sí. La mensualidad no te amarra a contratos eternos. Si en algún momento decides no continuar, lo gestionas desde tu panel.',
   },
   {
     question: '¿Esto sirve para mi tipo de negocio?',
     answer:
-      'Si necesitas conseguir clientes de forma constante — ya sea consultorio, tienda, clínica, agencia, inmobiliaria o cualquier servicio — sí, esto es para ti.',
+      'Si necesitas conseguir clientes de forma constante — ya sea consultorio, tienda, clínica, agencia, inmobiliaria o cualquier servicio — sí, esto es para ti. El sistema se adapta a tu industria.',
   },
 ]
 
@@ -70,7 +75,7 @@ export default function FAQ() {
                     'rounded-2xl border transition-all duration-500 overflow-hidden',
                     isOpen
                       ? 'border-accent/30 bg-accent/5'
-                      : 'border-border/30 bg-surface/20 hover:border-border/50'
+                      : 'border-border/60 bg-surface/20 hover:border-border/80'
                   )}
                 >
                   <button

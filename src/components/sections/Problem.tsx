@@ -5,12 +5,12 @@ const problems = [
   {
     icon: Users,
     title: 'Pagas varias cosas por separado',
-    description: 'Una herramienta para la página, otra para los correos, otra para llevar tus contactos. Nada se conecta y tú pierdes tiempo y dinero.',
+    description: 'Una herramienta para la página, otra para los mensajes, otra para llevar tus contactos. Nada se conecta y tú pierdes tiempo y dinero.',
   },
   {
     icon: Clock,
-    title: 'Todo depende de ti',
-    description: 'Si tú no contestas, no se agenda. Si no le das seguimiento, se pierde el cliente. No puedes estar en todo siempre.',
+    title: 'El seguimiento se te escapa',
+    description: 'Cuando un cliente te escribe, si tardas en contestar o se te olvida darle seguimiento, se enfría y se va. Es difícil estar pendiente de cada uno manualmente.',
   },
   {
     icon: TrendingDown,
@@ -52,7 +52,7 @@ export default function Problem() {
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
           {problems.map((item, i) => (
             <Reveal key={item.title} delay={i + 3}>
-              <div className="group relative p-5 sm:p-7 rounded-2xl border border-border/30 bg-surface/10 hover:border-accent/20 transition-all duration-500 h-full">
+              <div className="group relative p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 h-full">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
                     <item.icon size={20} className="text-accent/70" />

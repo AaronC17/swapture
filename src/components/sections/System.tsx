@@ -1,21 +1,26 @@
-import { Globe, BarChart3, Zap, Bell, LineChart, Shield } from 'lucide-react'
+import { Globe, BarChart3, Zap, Bell, LineChart, LayoutDashboard } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const includes = [
   {
     icon: Globe,
     title: 'Tu propia página web',
-    description: 'Un sitio profesional diseñado para que la gente te contacte. No es un extra, viene incluido.',
-  },
-  {
-    icon: Zap,
-    title: 'Respuestas automáticas',
-    description: 'Cuando alguien te escribe, recibe respuesta al instante. Citas, recordatorios y seguimiento — todo solo.',
+    description: 'Un sitio profesional, adaptado a tu negocio, diseñado para que la gente te contacte.',
   },
   {
     icon: Bell,
     title: 'Captación de clientes',
-    description: 'Formularios y herramientas que capturan a las personas interesadas y te avisan al momento.',
+    description: 'Herramientas que capturan a las personas interesadas y te avisan al momento para que cierres la venta.',
+  },
+  {
+    icon: Zap,
+    title: 'Recibes los contactos al instante',
+    description: 'Cuando alguien te escribe, el sistema lo captura y te avisa de una vez. Nada se pierde en el camino.',
+  },
+  {
+    icon: LayoutDashboard,
+    title: 'Panel de administración',
+    description: 'Un dashboard donde ves y gestionas todo: clientes, pedidos, ventas y la información de tu negocio en un solo lugar.',
   },
   {
     icon: BarChart3,
@@ -24,13 +29,8 @@ const includes = [
   },
   {
     icon: LineChart,
-    title: 'Sabes qué funciona',
-    description: 'Números claros y fáciles de entender. Sabes cuánta gente te visita, te contacta y se convierte en cliente.',
-  },
-  {
-    icon: Shield,
-    title: 'Siempre acompañado',
-    description: 'No te dejamos solo. Revisamos resultados, hacemos ajustes y te acompañamos para que el sistema siga mejorando.',
+    title: 'Métricas claras',
+    description: 'Sabes cuánta gente te visita, te contacta y se convierte en cliente. Decisiones con datos reales.',
   },
 ]
 
@@ -41,19 +41,19 @@ export default function System() {
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <Reveal>
-            <span className="section-label">Solución integral</span>
+            <span className="section-label">Cómo funciona</span>
           </Reveal>
           <Reveal delay={1}>
             <h2 className="section-title">
-              Todo incluido.
+              Software que se adapta
               <br />
-              <span className="text-gradient">Con alcance claro.</span>
+              <span className="text-gradient">a tu negocio.</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>
             <p className="text-muted text-base sm:text-lg max-w-xl mx-auto">
-              Tu página web, la captación de clientes, el seguimiento y los reportes.
-              Definimos contigo el alcance y te entregamos una propuesta clara, sin letras pequeñas.
+              Un sistema completamente funcional, ajustado al tipo de negocio que tienes.
+              Página web, captación de clientes, seguimiento y reportes — todo incluido.
             </p>
           </Reveal>
         </div>
@@ -62,7 +62,7 @@ export default function System() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {includes.map((item, i) => (
             <Reveal key={item.title} delay={i + 3}>
-              <div className="group relative rounded-2xl border border-border/30 bg-surface/10 hover:border-accent/20 transition-all duration-500 h-full">
+              <div className="group relative rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 h-full">
                 <div className="p-5 sm:p-7">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">

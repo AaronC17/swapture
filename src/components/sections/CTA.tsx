@@ -5,10 +5,10 @@ import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const features = [
-  'Diagnóstico inicial del negocio',
-  'Listo en semanas',
-  'Alcance y entregables definidos',
-  'Ajustes según resultados',
+  'Implementación desde ₡50,000',
+  'Mensualidad fija de ₡25,000',
+  'Listo en pocas semanas',
+  'Sistema siempre activo',
 ]
 
 export default function CTA() {
@@ -71,7 +71,7 @@ export default function CTA() {
             <Reveal delay={3}>
               <div className="grid grid-cols-2 gap-3">
                 {features.map((feat) => (
-                  <div key={feat} className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface/20 border border-border/15">
+                  <div key={feat} className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface/20 border border-border/30">
                     <CheckCircle2 size={14} className="text-accent/60 shrink-0" />
                     <span className="text-xs text-white/60 font-medium">{feat}</span>
                   </div>
@@ -82,7 +82,7 @@ export default function CTA() {
 
           {/* Right - Form */}
           <Reveal delay={4}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-border/30 bg-surface/10">
+            <div className="p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10">
               {status === 'sent' ? (
                 <div className="text-center py-10">
                   <div className="w-14 h-14 rounded-full bg-accent/8 border border-accent/15 flex items-center justify-center mx-auto mb-5">
@@ -108,7 +108,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿Cómo te llamas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/30 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -123,7 +123,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="¿A qué te dedicas?"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/30 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -138,7 +138,7 @@ export default function CTA() {
                       onChange={handleChange}
                       required
                       placeholder="Para contactarte"
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/30 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300"
                     />
                   </div>
 
@@ -153,7 +153,7 @@ export default function CTA() {
                       required
                       rows={3}
                       placeholder="Cuéntanos brevemente..."
-                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/30 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/50 text-white placeholder:text-muted/30 text-sm focus:outline-none focus:border-accent/40 transition-all duration-300 resize-none"
                     />
                   </div>
 

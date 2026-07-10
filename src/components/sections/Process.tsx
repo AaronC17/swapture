@@ -50,7 +50,7 @@ export default function Process() {
         <div className="space-y-4 sm:space-y-5">
           {steps.map((step, i) => (
             <Reveal key={step.number} delay={i + 3}>
-              <div className="group flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-5 sm:p-7 rounded-2xl border border-border/30 bg-surface/10 hover:border-accent/20 transition-all duration-500 text-center sm:text-left">
+              <div className="group flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 text-center sm:text-left">
                 <div className="shrink-0">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-accent/8 border border-accent/15 flex items-center justify-center">
                     <step.icon size={22} className="text-accent/70" />

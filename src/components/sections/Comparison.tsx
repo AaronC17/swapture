@@ -4,19 +4,19 @@ import Reveal from '../Reveal'
 const beforeItems = [
   'Pagas varias herramientas por separado',
   'Tu página web no te trae clientes',
-  'Contestas y agendas todo a mano',
+  'Pierdes clientes por no dar seguimiento',
+  'Llevas el negocio con cuadernos o Excel',
   'No sabes qué te está funcionando',
   'Cada mes es una sorpresa',
-  'Si tú paras, todo se detiene',
 ]
 
 const afterItems = [
-  'Todo en un solo lugar con un solo pago',
+  'Todo en un solo sistema, un solo proveedor',
   'Tu página atrae clientes y te los conecta',
-  'Las respuestas y seguimientos son automáticos',
+  'Recibes cada contacto al instante, organizado',
+  'Panel de administración para gestionar todo',
   'Ves exactamente qué funciona y qué no',
   'Clientes llegando de forma constante',
-  'Tu negocio trabaja incluso cuando tú descansas',
 ]
 
 export default function Comparison() {
@@ -41,7 +41,7 @@ export default function Comparison() {
         <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
           {/* Before */}
           <Reveal delay={2}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-border/30 bg-surface/10 h-full">
+            <div className="p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted/50 mb-6">
                 Sin Swapture
               </h3>
@@ -60,7 +60,7 @@ export default function Comparison() {
 
           {/* After */}
           <Reveal delay={3}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-accent/20 bg-accent/[0.03] h-full">
+            <div className="p-5 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.03] h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent/70 mb-6">
                 Con Swapture
               </h3>
