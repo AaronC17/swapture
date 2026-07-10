@@ -32,7 +32,7 @@ export default function Pricing() {
             </h2>
           </Reveal>
           <Reveal delay={2}>
-            <p className="text-muted text-base sm:text-lg max-w-xl mx-auto">
+            <p className="text-muted text-sm sm:text-lg max-w-xl mx-auto">
               Un pago único para implementar tu sistema y una mensualidad fija
               para mantenerlo activo y mejorando.
             </p>
@@ -43,7 +43,7 @@ export default function Pricing() {
         <div className="grid md:grid-cols-2 gap-3 sm:gap-5">
           {/* Implementation */}
           <Reveal delay={3}>
-            <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
+            <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
                   <Rocket size={20} className="text-accent/70" />
@@ -88,7 +88,7 @@ export default function Pricing() {
 
           {/* Monthly */}
           <Reveal delay={4}>
-            <div className="group relative p-4 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.07] shadow-[0_8px_30px_rgba(168,85,247,0.12)] hover:border-accent/50 hover:shadow-[0_12px_40px_rgba(168,85,247,0.2)] transition-all duration-500 h-full text-center md:text-left">
+            <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
                   <RefreshCw size={20} className="text-accent/70" />
@@ -97,7 +97,7 @@ export default function Pricing() {
                   <h3 className="text-base sm:text-lg font-heading font-bold text-white">
                     Mensualidad
                   </h3>
-                  <span className="text-[10px] text-accent/70 uppercase tracking-wider font-semibold">
+                  <span className="text-[10px] text-muted/60 uppercase tracking-wider font-semibold">
                     Fija · mensual
                   </span>
                 </div>

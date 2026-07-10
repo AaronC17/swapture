@@ -76,7 +76,7 @@ export default function Navbar() {
         className={clsx(
           'fixed top-0 left-0 right-0 transition-all duration-500 z-50',
           scrolled
-            ? 'bg-bg/85 backdrop-blur-2xl border-b border-border/20 py-2.5 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
+            ? 'bg-bg/90 backdrop-blur-xl border-b border-border/20 py-2.5 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
             : 'bg-transparent py-4 sm:py-5'
         )}
       >
@@ -136,7 +136,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={clsx(
-          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/25 backdrop-blur-2xl flex flex-col z-[60] transition-all duration-400',
+          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/95 backdrop-blur-xl flex flex-col z-[60] transition-all duration-400',
           mobileOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'

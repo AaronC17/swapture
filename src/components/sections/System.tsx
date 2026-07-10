@@ -51,7 +51,7 @@ export default function System() {
             </h2>
           </Reveal>
           <Reveal delay={2}>
-            <p className="text-muted text-base sm:text-lg max-w-xl mx-auto">
+            <p className="text-muted text-sm sm:text-lg max-w-xl mx-auto">
               Un sistema completamente funcional, ajustado al tipo de negocio que tienes.
               Página web, captación de clientes, seguimiento y reportes — todo incluido.
             </p>
@@ -62,7 +62,7 @@ export default function System() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {includes.map((item, i) => (
             <Reveal key={item.title} delay={i + 3}>
-              <div className="group relative rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full">
+              <div className="group relative rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full">
                 <div className="p-4 sm:p-7 text-center sm:text-left">
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-3 sm:mb-4">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">

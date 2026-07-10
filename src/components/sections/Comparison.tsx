@@ -41,7 +41,7 @@ export default function Comparison() {
         <div className="grid md:grid-cols-2 gap-3 sm:gap-5">
           {/* Before */}
           <Reveal delay={2}>
-            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] h-full">
+            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted/50 mb-4 sm:mb-6 text-center md:text-left">
                 Sin Swapture
               </h3>

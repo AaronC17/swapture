@@ -39,7 +39,7 @@ export default function Process() {
             </h2>
           </Reveal>
           <Reveal delay={2}>
-            <p className="text-muted text-base sm:text-lg max-w-xl mx-auto">
+            <p className="text-muted text-sm sm:text-lg max-w-xl mx-auto">
               Sin procesos complicados ni esperas de meses.
               En poco tiempo tu negocio empieza a recibir clientes nuevos.
             </p>
@@ -50,7 +50,7 @@ export default function Process() {
         <div className="space-y-3 sm:space-y-5">
           {steps.map((step, i) => (
             <Reveal key={step.number} delay={i + 3}>
-              <div className="group flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-6 p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 text-center sm:text-left">
+              <div className="group flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-6 p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 text-center sm:text-left">
                 <div className="shrink-0">
                   <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-accent/8 border border-accent/15 flex items-center justify-center">
                     <step.icon size={20} className="text-accent/70 sm:w-[22px] sm:h-[22px]" />
