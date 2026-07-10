@@ -43,11 +43,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[100dvh] flex items-center justify-center px-5 py-10 relative">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-transparent to-transparent pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-accent/[0.06] rounded-full blur-[180px] pointer-events-none" />
-
+    <div className="min-h-[100dvh] flex items-center justify-center px-5 py-10">
       <div className="w-full max-w-[420px] relative z-10">
         {/* Logo & brand */}
         <div className="text-center mb-8">
@@ -69,7 +65,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-surface/20 border border-border/30 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+        <div className="bg-surface/[0.55] border border-border/60 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 rounded-xl bg-negative/10 border border-negative/20 flex items-center gap-2.5">
@@ -90,7 +86,7 @@ export default function LoginPage() {
                 placeholder="tu@email.com"
                 required
                 autoComplete="email"
-                className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border/40 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl bg-bg/80 border border-border/60 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
               />
             </div>
 
@@ -107,7 +103,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 pr-11 rounded-xl bg-bg/60 border border-border/40 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-bg/80 border border-border/60 text-white placeholder:text-muted/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 transition-all text-sm"
                 />
                 <button
                   type="button"
