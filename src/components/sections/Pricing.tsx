@@ -60,11 +60,11 @@ export default function Pricing() {
 
               <div className="mb-4 sm:mb-5 flex items-baseline justify-center md:justify-start flex-wrap gap-x-2">
                 <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
-                  ₡75,000
+                  ₡100,000
                 </span>
                 <span className="text-muted text-sm">a</span>
                 <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
-                  ₡150,000
+                  ₡200,000
                 </span>
               </div>
 

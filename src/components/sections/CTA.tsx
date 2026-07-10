@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const features = [
-  'Implementación desde ₡75,000',
+  'Implementación desde ₡100,000',
   'Mensualidad fija de ₡25,000',
   'Listo en pocas semanas',
   'Sistema siempre activo',
