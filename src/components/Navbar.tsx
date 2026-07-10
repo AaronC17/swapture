@@ -136,7 +136,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={clsx(
-          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/70 backdrop-blur-2xl flex flex-col z-[60] transition-all duration-400',
+          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/40 backdrop-blur-2xl flex flex-col z-[60] transition-all duration-400',
           mobileOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
