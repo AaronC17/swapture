@@ -39,17 +39,17 @@ export default function Footer() {
           </nav>
 
           {/* Legal + Instagram */}
-          <div className="flex items-center gap-5 shrink-0">
+          <div className="flex items-center gap-4 sm:gap-5 shrink-0 ml-4 sm:ml-6">
             <a
               href="https://www.instagram.com/swapture.cr/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="w-9 h-9 rounded-full flex items-center justify-center bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:scale-110 transition-all duration-300"
+              className="hover:scale-110 transition-transform duration-300"
             >
               <svg
                 viewBox="0 0 24 24"
-                className="w-[18px] h-[18px]"
+                className="w-5 h-5 sm:w-[22px] sm:h-[22px]"
                 fill="none"
                 stroke="url(#instagram-gradient)"
                 strokeWidth="2"
