@@ -72,7 +72,7 @@ export default function CTA() {
               <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                 {features.map((feat) => (
                   <div key={feat} className="flex items-center gap-2 p-2.5 rounded-lg bg-surface/30 border border-border/40 text-center sm:text-left justify-center sm:justify-start">
-                    <CheckCircle2 size={14} className="text-accent/60 shrink-0 hidden sm:block" />
+                    <CheckCircle2 size={14} className="text-positive shrink-0 hidden sm:block" />
                     <span className="text-[11px] sm:text-xs text-white/60 font-medium">{feat}</span>
                   </div>
                 ))}

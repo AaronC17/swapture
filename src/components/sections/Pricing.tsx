@@ -45,8 +45,8 @@ export default function Pricing() {
           <Reveal delay={3}>
             <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
-                  <Rocket size={20} className="text-accent/70" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-accent/30 via-accent/18 to-accent-dim/12 border border-accent/25 border-t-accent-light/30 flex items-center justify-center shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+                  <Rocket size={20} className="text-accent-light drop-shadow-[0_0_10px_rgba(192,132,252,0.8)]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-heading font-bold text-white">
@@ -76,8 +76,8 @@ export default function Pricing() {
               <ul className="space-y-2.5 text-left">
                 {setupIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <div className="w-5 h-5 rounded-md bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check size={12} className="text-accent/70" />
+                    <div className="w-5 h-5 rounded-md bg-positive/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check size={12} className="text-positive" />
                     </div>
                     <span className="text-xs sm:text-sm text-white/70 leading-relaxed">{item}</span>
                   </li>
@@ -90,8 +90,8 @@ export default function Pricing() {
           <Reveal delay={4}>
             <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
-                  <RefreshCw size={20} className="text-accent/70" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-accent/30 via-accent/18 to-accent-dim/12 border border-accent/25 border-t-accent-light/30 flex items-center justify-center shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+                  <RefreshCw size={20} className="text-accent-light drop-shadow-[0_0_10px_rgba(192,132,252,0.8)]" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-heading font-bold text-white">
@@ -118,8 +118,8 @@ export default function Pricing() {
               <ul className="space-y-2.5 text-left">
                 {monthlyIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <div className="w-5 h-5 rounded-md bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check size={12} className="text-accent/70" />
+                    <div className="w-5 h-5 rounded-md bg-positive/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check size={12} className="text-positive" />
                     </div>
                     <span className="text-xs sm:text-sm text-white/70 leading-relaxed">{item}</span>
                   </li>

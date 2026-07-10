@@ -65,8 +65,8 @@ export default function System() {
               <div className="group relative rounded-2xl border border-border/60 bg-surface/[0.42] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full">
                 <div className="p-4 sm:p-7 text-center sm:text-left">
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-3 sm:mb-4">
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
-                      <item.icon size={20} className="text-accent/70" />
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-accent/30 via-accent/18 to-accent-dim/12 border border-accent/25 border-t-accent-light/30 flex items-center justify-center shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+                      <item.icon size={20} className="text-accent-light drop-shadow-[0_0_10px_rgba(192,132,252,0.8)]" />
                     </div>
                     <h3 className="text-base sm:text-lg font-heading font-bold text-white">
                       {item.title}
