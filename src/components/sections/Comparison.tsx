@@ -30,9 +30,9 @@ export default function Comparison() {
           </Reveal>
           <Reveal delay={1}>
             <h2 className="section-title">
-              Antes vs. después
+              Antes vs después
               <br />
-              <span className="text-gradient">de Swapture.</span>
+              <span className="text-gradient">de Swapture</span>
             </h2>
           </Reveal>
         </div>

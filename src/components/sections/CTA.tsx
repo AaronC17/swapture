@@ -1,18 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import Reveal from '../Reveal'
 
 const features = [
-  'Implementación desde ₡50,000',
+  'Implementación desde ₡75,000',
   'Mensualidad fija de ₡25,000',
   'Listo en pocas semanas',
   'Sistema siempre activo',
 ]
 
 export default function CTA() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sent'>('idle')
   const [form, setForm] = useState({
     nombre: '',
     negocio: '',
@@ -24,26 +24,21 @@ export default function CTA() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setStatus('sending')
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
+    const message = [
+      `Hola, soy *${form.nombre}*.`,
+      `Mi negocio: *${form.negocio}*.`,
+      `Contacto: *${form.contacto}*.`,
+      '',
+      `Necesito resolver: ${form.mensaje}`,
+    ].join('\n')
 
-      if (res.ok) {
-        setStatus('sent')
-        setForm({ nombre: '', negocio: '', contacto: '', mensaje: '' })
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
+    const url = `https://wa.me/50661555619?text=${encodeURIComponent(message)}`
+    window.open(url, '_blank')
+    setStatus('sent')
+    setForm({ nombre: '', negocio: '', contacto: '', mensaje: '' })
   }
 
   return (
@@ -59,7 +54,7 @@ export default function CTA() {
               <h2 className="text-3xl sm:text-4xl font-heading font-bold leading-tight mb-5">
                 Empieza a generar
                 <br />
-                <span className="text-gradient">clientes hoy.</span>
+                <span className="text-gradient">clientes hoy</span>
               </h2>
             </Reveal>
             <Reveal delay={2}>
@@ -89,10 +84,10 @@ export default function CTA() {
                     <CheckCircle2 size={28} className="text-accent/70" />
                   </div>
                   <h3 className="text-lg font-heading font-bold text-white mb-2">
-                    ¡Mensaje recibido!
+                    ¡Mensaje listo!
                   </h3>
                   <p className="text-sm text-muted">
-                    Te contactaremos en las próximas 48 horas.
+                    Se abrió WhatsApp con tu información. Envíanos el mensaje y te contactamos.
                   </p>
                 </div>
               ) : (
@@ -157,28 +152,12 @@ export default function CTA() {
                     />
                   </div>
 
-                  {status === 'error' && (
-                    <p className="text-red-400 text-xs text-center">
-                      Hubo un error al enviar. Intenta de nuevo.
-                    </p>
-                  )}
-
                   <button
                     type="submit"
-                    disabled={status === 'sending'}
-                    className="w-full py-3.5 bg-accent text-white font-semibold rounded-full text-sm hover:shadow-[0_0_40px_rgba(168,85,247,0.2)] hover:bg-accent-light transition-all duration-500 flex items-center justify-center gap-2 disabled:opacity-70"
+                    className="w-full py-3.5 bg-accent text-white font-semibold rounded-full text-sm hover:shadow-[0_0_40px_rgba(168,85,247,0.2)] hover:bg-accent-light transition-all duration-500 flex items-center justify-center gap-2"
                   >
-                    {status === 'sending' ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" />
-                        Enviando...
-                      </>
-                    ) : (
-                      <>
-                        Quiero más clientes
-                        <ArrowRight size={16} />
-                      </>
-                    )}
+                    Quiero más clientes
+                    <ArrowRight size={16} />
                   </button>
                 </form>
               )}

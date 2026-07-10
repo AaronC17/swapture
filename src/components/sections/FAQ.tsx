@@ -14,7 +14,7 @@ const faqs = [
   {
     question: '¿Cuánto cuesta implementar el sistema?',
     answer:
-      'La implementación es un pago único que va de ₡50,000 a ₡100,000 colones, dependiendo del tipo de negocio y los extras que incluyas. El precio exacto se define antes de iniciar, sin sorpresas.',
+      'La implementación es un pago único que va de ₡75,000 a ₡150,000 colones, dependiendo del tipo de negocio y los extras que incluyas. El precio exacto se define antes de iniciar, sin sorpresas.',
   },
   {
     question: '¿Hay algún costo mensual?',
@@ -58,7 +58,7 @@ export default function FAQ() {
             <h2 className="section-title">
               ¿Tienes dudas?
               <br />
-              <span className="text-gradient">Es normal.</span>
+              <span className="text-gradient">Es normal</span>
             </h2>
           </Reveal>
         </div>

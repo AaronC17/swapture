@@ -47,7 +47,7 @@ export default function System() {
             <h2 className="section-title">
               Software que se adapta
               <br />
-              <span className="text-gradient">a tu negocio.</span>
+              <span className="text-gradient">a tu negocio</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>

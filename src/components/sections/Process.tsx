@@ -35,7 +35,7 @@ export default function Process() {
             <h2 className="section-title">
               Actívalo
               <br />
-              <span className="text-gradient">en 3 pasos.</span>
+              <span className="text-gradient">en 3 pasos</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>

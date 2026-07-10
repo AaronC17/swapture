@@ -23,7 +23,7 @@ export default function Footer() {
               <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
             <span className="text-lg font-heading font-bold">
-              SWAP<span className="text-accent">TURE.</span>
+              SWAP<span className="text-accent">TURE</span>
             </span>
           </div>
 

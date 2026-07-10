@@ -37,11 +37,16 @@ export default function Navbar() {
   /* Lock body scroll when mobile menu is open */
   useEffect(() => {
     if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
+      document.documentElement.classList.add('overflow-hidden')
+      document.body.classList.add('overflow-hidden')
     } else {
-      document.body.style.overflow = ''
+      document.documentElement.classList.remove('overflow-hidden')
+      document.body.classList.remove('overflow-hidden')
     }
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.documentElement.classList.remove('overflow-hidden')
+      document.body.classList.remove('overflow-hidden')
+    }
   }, [mobileOpen])
 
   const scrollToSection = (href: string) => {
@@ -61,8 +66,9 @@ export default function Navbar() {
 
   const handleMobileClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
+    e.stopPropagation()
     setMobileOpen(false)
-    setTimeout(() => scrollToSection(href), 350)
+    setTimeout(() => scrollToSection(href), 250)
   }
 
   return (
@@ -82,7 +88,7 @@ export default function Navbar() {
               <Image src="/logotipo.png" alt="Swapture" fill sizes="(max-width: 640px) 48px, 56px" priority className="object-contain mix-blend-screen" />
             </div>
             <span className="text-xl sm:text-2xl font-heading font-bold tracking-tight">
-              SWAP<span className="text-accent">TURE.</span>
+              SWAP<span className="text-accent">TURE</span>
             </span>
           </Link>
 
@@ -120,7 +126,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden relative p-2 text-white hover:text-accent transition-colors"
+            className="lg:hidden relative z-[70] p-2 text-white hover:text-accent transition-colors"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}

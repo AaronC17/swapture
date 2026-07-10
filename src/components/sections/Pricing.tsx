@@ -28,7 +28,7 @@ export default function Pricing() {
             <h2 className="section-title">
               Precios claros,
               <br />
-              <span className="text-gradient">sin sorpresas.</span>
+              <span className="text-gradient">sin sorpresas</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>
@@ -60,11 +60,11 @@ export default function Pricing() {
 
               <div className="mb-4 sm:mb-5 flex items-baseline justify-center md:justify-start flex-wrap gap-x-2">
                 <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
-                  ₡50,000
+                  ₡75,000
                 </span>
                 <span className="text-muted text-sm">a</span>
                 <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
-                  ₡100,000
+                  ₡150,000
                 </span>
               </div>
 

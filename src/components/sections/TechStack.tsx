@@ -73,7 +73,7 @@ export default function TechStack() {
           <h2 className="section-title">
             Tecnología de vanguardia,
             <br />
-            <span className="text-gradient">resultados reales.</span>
+            <span className="text-gradient">resultados reales</span>
           </h2>
         </Reveal>
         <Reveal delay={2}>

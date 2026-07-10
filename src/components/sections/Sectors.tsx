@@ -47,7 +47,7 @@ export default function Sectors() {
             <h2 className="section-title">
               Adaptado a
               <br />
-              <span className="text-gradient">tu industria.</span>
+              <span className="text-gradient">tu industria</span>
             </h2>
           </Reveal>
           <Reveal delay={2}>

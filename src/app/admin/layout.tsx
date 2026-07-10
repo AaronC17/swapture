@@ -92,7 +92,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin" className="flex items-center gap-2.5">
               <Image src="/image.png" alt="Swapture" width={100} height={100} className="w-8 h-8 object-contain brightness-[1.2]" />
               <span className="text-lg font-heading font-bold tracking-tight">
-                SWAP<span className="text-accent">TURE.</span>
+                SWAP<span className="text-accent">TURE</span>
               </span>
             </Link>
             <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-muted hover:text-white">
