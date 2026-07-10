@@ -95,14 +95,20 @@
     .gradient-orb--1 {
       width: 280px;
       height: 280px;
+      filter: blur(70px);
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28), transparent 70%);
     }
     .gradient-orb--2 {
       width: 180px;
       height: 180px;
+      filter: blur(60px);
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.18), transparent 70%);
     }
     .gradient-orb--3 {
       width: 160px;
       height: 160px;
+      filter: blur(55px);
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.12), transparent 70%);
     }
   }
 
