@@ -5,7 +5,7 @@ import Reveal from '../Reveal'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center pt-32 sm:pt-36 pb-16 sm:pb-28 overflow-hidden">
+    <section className="relative min-h-[100svh] flex flex-col justify-center pt-32 sm:pt-36 pb-16 sm:pb-28 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 w-full text-center">
         {/* Label */}
         <Reveal>

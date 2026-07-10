@@ -163,12 +163,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={(e) => handleMobileClick(e, link.href)}
-                  className={clsx(
-                    'block w-full py-3 rounded-full text-base font-heading font-semibold transition-all duration-300',
-                    i === 0
-                      ? 'bg-accent text-white shadow-[0_0_30px_rgba(168,85,247,0.25)]'
-                      : 'text-white/80 hover:text-white hover:bg-white/[0.04]'
-                  )}
+                  className="block w-full py-3 rounded-full text-base font-heading font-semibold text-white/80 hover:text-white hover:bg-white/[0.04] transition-all duration-300"
                 >
                   {link.label}
                 </a>
@@ -193,7 +188,7 @@ export default function Navbar() {
           <a
             href="/login"
             className={clsx(
-              'block w-full text-center py-2 text-sm text-muted hover:text-white transition-colors',
+              'block w-full max-w-xs mx-auto text-center py-3.5 bg-accent/[0.08] border border-accent/30 text-accent-light font-semibold rounded-full text-sm transition-all duration-300 hover:bg-accent/15 hover:border-accent/50 active:scale-[0.97]',
               mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             )}
             style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 2) * 50}ms` : '0ms' }}

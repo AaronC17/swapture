@@ -20,7 +20,6 @@
   body {
     @apply bg-bg text-white font-body overflow-x-hidden;
     max-width: 100%;
-    overflow-x: clip;
   }
 
   /* Keyboard-only focus ring (accessibility) */
@@ -68,21 +67,26 @@
 
   /* Gradient orbs - purple tones */
   .gradient-orb {
-    @apply fixed rounded-full pointer-events-none blur-[150px] opacity-[0.07];
+    @apply fixed rounded-full pointer-events-none;
+    will-change: transform;
+    transform: translateZ(0);
   }
   .gradient-orb--1 {
     @apply w-[600px] h-[600px] -top-48 -right-48;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 70%);
+    filter: blur(120px);
     animation: float 8s ease-in-out infinite;
   }
   .gradient-orb--2 {
     @apply w-[400px] h-[400px] top-1/2 -left-48;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.13), transparent 70%);
+    filter: blur(100px);
     animation: float 10s ease-in-out infinite 2s;
   }
   .gradient-orb--3 {
     @apply w-[350px] h-[350px] -bottom-32 right-1/4;
-    background: radial-gradient(circle, rgba(192, 132, 252, 0.1), transparent 70%);
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.08), transparent 70%);
+    filter: blur(90px);
     animation: float 12s ease-in-out infinite 4s;
   }
 
