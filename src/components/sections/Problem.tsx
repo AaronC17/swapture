@@ -26,10 +26,10 @@ const problems = [
 
 export default function Problem() {
   return (
-    <section id="problema" className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="problema" className="relative py-14 sm:py-28 overflow-hidden">
       <div className="max-w-5xl mx-auto px-5 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-16">
           <Reveal>
             <span className="section-label">El problema</span>
           </Reveal>
@@ -49,20 +49,20 @@ export default function Problem() {
         </div>
 
         {/* Problem Cards — clean, minimal */}
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-5">
           {problems.map((item, i) => (
             <Reveal key={item.title} delay={i + 3}>
-              <div className="group relative p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 h-full">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
+              <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
                     <item.icon size={20} className="text-accent/70" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-heading font-semibold text-white flex-1">
+                  <h3 className="text-base sm:text-lg font-heading font-semibold text-white">
                     {item.title}
                   </h3>
                 </div>
 
-                <p className="text-sm text-muted leading-relaxed">
+                <p className="text-[13px] sm:text-sm text-muted leading-relaxed">
                   {item.description}
                 </p>
               </div>

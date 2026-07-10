@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex items-center gap-3 shrink-0">
             <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden">
-              <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
+              <Image src="/logotipo.png" alt="Swapture" fill sizes="44px" className="object-contain mix-blend-screen" />
             </div>
             <span className="text-lg font-heading font-bold">
               SWAP<span className="text-accent">TURE.</span>

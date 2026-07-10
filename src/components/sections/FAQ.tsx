@@ -47,7 +47,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="faq" className="relative py-14 sm:py-28 overflow-hidden">
       <div className="max-w-3xl mx-auto px-5 sm:px-6">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
@@ -72,17 +72,17 @@ export default function FAQ() {
               <Reveal key={i} delay={i + 2}>
                 <div
                   className={clsx(
-                    'rounded-2xl border transition-all duration-500 overflow-hidden',
+                    'rounded-2xl border transition-all duration-500 overflow-hidden backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.2)]',
                     isOpen
-                      ? 'border-accent/30 bg-accent/5'
-                      : 'border-border/60 bg-surface/20 hover:border-border/80'
+                      ? 'border-accent/30 bg-accent/[0.07]'
+                      : 'border-border/60 bg-surface/25 hover:border-border/80 hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
                   )}
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between p-4 sm:p-6 text-left"
+                    className="w-full flex items-center justify-between p-3.5 sm:p-6 text-left gap-3"
                   >
-                    <span className="text-sm md:text-base font-semibold text-white pr-4">
+                    <span className="text-[13px] sm:text-base font-semibold text-white">
                       {faq.question}
                     </span>
                     <ChevronDown
@@ -100,8 +100,8 @@ export default function FAQ() {
                       isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                     )}
                   >
-                    <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                      <p className="text-sm text-muted leading-relaxed">{faq.answer}</p>
+                    <div className="px-3.5 sm:px-6 pb-3.5 sm:pb-6">
+                      <p className="text-[13px] sm:text-sm text-muted leading-relaxed">{faq.answer}</p>
                     </div>
                   </div>
                 </div>

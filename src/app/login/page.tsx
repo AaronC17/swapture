@@ -53,7 +53,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="relative inline-flex items-center justify-center w-16 h-16 mb-5 overflow-hidden">
             <Image
-              src="/logo%20(Edit%20with%20AI).png"
+              src="/logotipo.png"
               alt="Swapture"
               fill
               sizes="64px"

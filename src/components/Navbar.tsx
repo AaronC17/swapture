@@ -69,7 +69,8 @@ export default function Navbar() {
     <>
       <nav
         className={clsx(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+          'fixed top-0 left-0 right-0 transition-all duration-500',
+          mobileOpen ? 'z-[60]' : 'z-50',
           scrolled
             ? 'bg-bg/85 backdrop-blur-2xl border-b border-border/20 py-2.5 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
             : 'bg-transparent py-4 sm:py-5'
@@ -79,7 +80,7 @@ export default function Navbar() {
           {/* Brand */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 overflow-hidden transition-transform duration-300 group-hover:scale-110">
-              <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="(max-width: 640px) 48px, 56px" priority className="object-contain mix-blend-screen" />
+              <Image src="/logotipo.png" alt="Swapture" fill sizes="(max-width: 640px) 48px, 56px" priority className="object-contain mix-blend-screen" />
             </div>
             <span className="text-xl sm:text-2xl font-heading font-bold tracking-tight">
               SWAP<span className="text-accent">TURE.</span>
@@ -120,7 +121,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden relative z-[60] p-2 text-white hover:text-accent transition-colors"
+            className="lg:hidden relative z-[70] p-2 text-white hover:text-accent transition-colors"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -131,34 +132,19 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={clsx(
-          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-6 z-[55] transition-all duration-400',
+          'lg:hidden fixed inset-0 w-full h-[100dvh] bg-bg/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-1 z-[55] transition-all duration-400',
           mobileOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
         )}
       >
-        {/* Logo in mobile menu */}
-        <div className={clsx(
-          'mb-4 transition-all duration-300',
-          mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-        )}>
-          <div className="relative flex items-center justify-center w-24 h-24 mx-auto mb-4 overflow-hidden">
-            <Image src="/logo%20(Edit%20with%20AI).png" alt="Swapture" fill sizes="96px" className="object-contain mix-blend-screen" />
-          </div>
-          <span className="text-2xl font-heading font-bold tracking-tight block text-center">
-            SWAP<span className="text-accent">TURE.</span>
-          </span>
-        </div>
-
-        <div className="w-12 h-px bg-border/30 mb-2" />
-
         {navLinks.map((link, i) => (
           <a
             key={link.href}
             href={link.href}
             onClick={(e) => handleMobileClick(e, link.href)}
             className={clsx(
-              'text-xl font-heading font-semibold text-white hover:text-accent transition-all duration-300',
+              'text-lg font-heading font-semibold text-white/90 hover:text-accent transition-all duration-300 py-1.5 text-center',
               mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             )}
             style={{ transitionDelay: mobileOpen ? `${(i + 1) * 50}ms` : '0ms' }}
@@ -171,7 +157,7 @@ export default function Navbar() {
           href="#contacto"
           onClick={(e) => handleMobileClick(e, '#contacto')}
           className={clsx(
-            'mt-3 px-8 py-3 bg-accent text-white font-semibold rounded-full text-base transition-all duration-300',
+            'mt-3 px-8 py-2.5 bg-accent text-white font-semibold rounded-full text-sm transition-all duration-300 active:scale-[0.97]',
             mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
           )}
           style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 1) * 50}ms` : '0ms' }}
@@ -182,7 +168,7 @@ export default function Navbar() {
         <a
           href="/login"
           className={clsx(
-            'mt-1 text-sm text-muted hover:text-accent transition-all duration-300',
+            'mt-1 text-sm text-muted hover:text-accent transition-all duration-300 py-1',
             mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
           )}
           style={{ transitionDelay: mobileOpen ? `${(navLinks.length + 2) * 50}ms` : '0ms' }}

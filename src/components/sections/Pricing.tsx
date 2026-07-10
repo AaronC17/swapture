@@ -17,10 +17,10 @@ const monthlyIncludes = [
 
 export default function Pricing() {
   return (
-    <section id="precios" className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="precios" className="relative py-14 sm:py-28 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-16">
           <Reveal>
             <span className="section-label">Inversión</span>
           </Reveal>
@@ -40,12 +40,12 @@ export default function Pricing() {
         </div>
 
         {/* Pricing cards */}
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-5">
           {/* Implementation */}
           <Reveal delay={3}>
-            <div className="group relative p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 hover:border-accent/30 transition-all duration-500 h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
+            <div className="group relative p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:border-accent/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-500 h-full text-center md:text-left">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
                   <Rocket size={20} className="text-accent/70" />
                 </div>
                 <div>
@@ -58,22 +58,22 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="mb-5">
-                <span className="text-3xl sm:text-4xl font-heading font-bold text-white">
+              <div className="mb-4 sm:mb-5 flex items-baseline justify-center md:justify-start flex-wrap gap-x-2">
+                <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
                   ₡50,000
                 </span>
-                <span className="text-muted text-sm mx-2">a</span>
-                <span className="text-3xl sm:text-4xl font-heading font-bold text-white">
+                <span className="text-muted text-sm">a</span>
+                <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
                   ₡100,000
                 </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-muted leading-relaxed mb-5">
+              <p className="text-xs sm:text-sm text-muted leading-relaxed mb-4 sm:mb-5">
                 Varía según el tipo de negocio y los extras que incluyas.
                 Te damos el precio exacto antes de iniciar.
               </p>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-2.5 text-left">
                 {setupIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
                     <div className="w-5 h-5 rounded-md bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
@@ -88,9 +88,9 @@ export default function Pricing() {
 
           {/* Monthly */}
           <Reveal delay={4}>
-            <div className="group relative p-5 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.03] hover:border-accent/50 transition-all duration-500 h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center">
+            <div className="group relative p-4 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.07] backdrop-blur-sm shadow-[0_8px_30px_rgba(168,85,247,0.12)] hover:border-accent/50 hover:shadow-[0_12px_40px_rgba(168,85,247,0.2)] transition-all duration-500 h-full text-center md:text-left">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 mb-4 sm:mb-5">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center shrink-0">
                   <RefreshCw size={20} className="text-accent/70" />
                 </div>
                 <div>
@@ -103,19 +103,19 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="mb-5">
-                <span className="text-3xl sm:text-4xl font-heading font-bold text-white">
+              <div className="mb-4 sm:mb-5 flex items-baseline justify-center md:justify-start">
+                <span className="text-2xl sm:text-4xl font-heading font-bold text-white">
                   ₡25,000
                 </span>
                 <span className="text-muted text-sm ml-2">/mes</span>
               </div>
 
-              <p className="text-xs sm:text-sm text-muted leading-relaxed mb-5">
+              <p className="text-xs sm:text-sm text-muted leading-relaxed mb-4 sm:mb-5">
                 Mantiene tu sistema activo, funcionando y mejorando.
                 Sin contratos eternos, cancelas cuando quieras.
               </p>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-2.5 text-left">
                 {monthlyIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
                     <div className="w-5 h-5 rounded-md bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">

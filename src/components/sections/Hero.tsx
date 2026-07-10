@@ -5,7 +5,7 @@ import Reveal from '../Reveal'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center pt-24 sm:pt-28 pb-20 sm:pb-28 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex flex-col justify-center pt-32 sm:pt-36 pb-16 sm:pb-28 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 w-full text-center">
         {/* Label */}
         <Reveal>
@@ -25,26 +25,24 @@ export default function Hero() {
 
         {/* Subtitle */}
         <Reveal delay={2}>
-          <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-            Página web, captación de clientes, seguimiento y más — todo en uno.
-            <br className="hidden sm:block" />
-            Tú te enfocas en lo tuyo, nosotros nos encargamos del resto.
+          <p className="text-sm sm:text-base md:text-lg text-muted max-w-xl mx-auto mb-6 sm:mb-10 leading-relaxed">
+            Sistemas que capturan ingresos: tu página web, clientes y administración en un solo lugar.
           </p>
         </Reveal>
 
         {/* CTAs */}
         <Reveal delay={3}>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-10 sm:mb-14 px-2 sm:px-0">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-14 px-2 sm:px-0">
             <a
               href="#contacto"
-              className="group inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 bg-accent text-white font-semibold rounded-full text-sm sm:text-base hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] hover:bg-accent-light transition-all duration-500"
+              className="group inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 bg-accent/[0.08] border border-accent/30 text-accent-light font-semibold rounded-full text-sm sm:text-base hover:bg-accent/15 hover:border-accent/50 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500"
             >
               Quiero saber más
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#sistema"
-              className="inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 border border-border/40 text-white font-medium rounded-full text-sm sm:text-base hover:border-accent/30 hover:bg-accent/5 transition-all duration-500"
+              className="inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 border border-border/60 bg-surface/15 text-white font-medium rounded-full text-sm sm:text-base hover:border-accent/40 hover:bg-accent/10 hover:text-accent-light transition-all duration-500"
             >
               ¿Qué incluye?
             </a>
@@ -53,13 +51,9 @@ export default function Hero() {
 
         {/* Minimal trust line */}
         <Reveal delay={4}>
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-muted/50">
-            <span>Desde ₡50,000 implementación</span>
-            <span className="w-1 h-1 rounded-full bg-border/40 hidden sm:block" />
-            <span>Mensualidad ₡25,000</span>
-            <span className="w-1 h-1 rounded-full bg-border/40 hidden sm:block" />
-            <span>Listo en semanas</span>
-          </div>
+          <p className="text-xs sm:text-sm text-muted/70 font-medium text-center">
+            +10 negocios confían en Swapture
+          </p>
         </Reveal>
       </div>
     </section>

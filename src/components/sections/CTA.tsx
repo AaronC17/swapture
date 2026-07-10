@@ -47,11 +47,11 @@ export default function CTA() {
   }
 
   return (
-    <section id="contacto" className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="contacto" className="relative py-14 sm:py-28 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           {/* Left - Copy */}
-          <div>
+          <div className="text-center lg:text-left">
             <Reveal>
               <span className="section-label">Activa tu sistema</span>
             </Reveal>
@@ -63,17 +63,17 @@ export default function CTA() {
               </h2>
             </Reveal>
             <Reveal delay={2}>
-              <p className="text-muted text-sm sm:text-base mb-8 leading-relaxed">
+              <p className="text-muted text-sm sm:text-base mb-8 leading-relaxed max-w-md mx-auto lg:mx-0">
                 Cuéntanos sobre tu negocio y te mostramos cómo podemos
                 ayudarte a captar más oportunidades con una propuesta realista y aterrizada a tu contexto.
               </p>
             </Reveal>
             <Reveal delay={3}>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                 {features.map((feat) => (
-                  <div key={feat} className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface/20 border border-border/30">
-                    <CheckCircle2 size={14} className="text-accent/60 shrink-0" />
-                    <span className="text-xs text-white/60 font-medium">{feat}</span>
+                  <div key={feat} className="flex items-center gap-2 p-2.5 rounded-lg bg-surface/30 border border-border/40 text-center sm:text-left justify-center sm:justify-start">
+                    <CheckCircle2 size={14} className="text-accent/60 shrink-0 hidden sm:block" />
+                    <span className="text-[11px] sm:text-xs text-white/60 font-medium">{feat}</span>
                   </div>
                 ))}
               </div>
@@ -82,7 +82,7 @@ export default function CTA() {
 
           {/* Right - Form */}
           <Reveal delay={4}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10">
+            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               {status === 'sent' ? (
                 <div className="text-center py-10">
                   <div className="w-14 h-14 rounded-full bg-accent/8 border border-accent/15 flex items-center justify-center mx-auto mb-5">

@@ -21,10 +21,10 @@ const afterItems = [
 
 export default function Comparison() {
   return (
-    <section id="resultados" className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="resultados" className="relative py-14 sm:py-28 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-16">
           <Reveal>
             <span className="section-label">Resultados</span>
           </Reveal>
@@ -38,20 +38,20 @@ export default function Comparison() {
         </div>
 
         {/* Before / After Grid */}
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-5">
           {/* Before */}
           <Reveal delay={2}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-border/60 bg-surface/10 h-full">
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted/50 mb-6">
+            <div className="p-4 sm:p-7 rounded-2xl border border-border/60 bg-surface/25 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.25)] h-full">
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted/50 mb-4 sm:mb-6 text-center md:text-left">
                 Sin Swapture
               </h3>
-              <ul className="space-y-3.5">
+              <ul className="space-y-3 sm:space-y-3.5">
                 {beforeItems.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-md bg-muted/8 flex items-center justify-center shrink-0 mt-0.5">
                       <X size={12} className="text-muted/40" />
                     </div>
-                    <span className="text-sm text-muted leading-relaxed">{item}</span>
+                    <span className="text-[13px] sm:text-sm text-muted leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -60,17 +60,17 @@ export default function Comparison() {
 
           {/* After */}
           <Reveal delay={3}>
-            <div className="p-5 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.03] h-full">
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent/70 mb-6">
+            <div className="p-4 sm:p-7 rounded-2xl border border-accent/30 bg-accent/[0.07] backdrop-blur-sm shadow-[0_8px_30px_rgba(168,85,247,0.12)] h-full">
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent/70 mb-4 sm:mb-6 text-center md:text-left">
                 Con Swapture
               </h3>
-              <ul className="space-y-3.5">
+              <ul className="space-y-3 sm:space-y-3.5">
                 {afterItems.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-md bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
                       <Check size={12} className="text-accent/70" />
                     </div>
-                    <span className="text-sm text-white/80 leading-relaxed">{item}</span>
+                    <span className="text-[13px] sm:text-sm text-white/80 leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
