@@ -39,7 +39,7 @@ module.exports = {
         'scroll-line': 'scroll-line 2s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'marquee': 'marquee 30s linear infinite',
-        'marquee-reverse': 'marquee 30s linear infinite reverse',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
       },
       keyframes: {
         'pulse-dot': {
@@ -63,6 +63,10 @@ module.exports = {
         'marquee': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
         },
       },
     },
