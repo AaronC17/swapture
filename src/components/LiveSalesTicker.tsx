@@ -70,7 +70,7 @@ function MarqueeRow({ sales, reverse = false, duration = 28 }: { sales: Sale[]; 
       <div
         className="flex w-max gap-2.5"
         style={{
-          animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${duration}s linear infinite`,
+          animation: `marquee ${duration}s linear infinite${reverse ? ' reverse' : ''}`,
           willChange: 'transform',
           backfaceVisibility: 'hidden',
         }}
