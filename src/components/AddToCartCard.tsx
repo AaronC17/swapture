@@ -54,6 +54,7 @@ export default function AddToCartCard() {
 
           if (!mounted) return
           setPhase('arrived')
+          await wait(100)
           setAddedCount((c) => c + 1)
           setTotal((t) => t + ITEMS[i].price)
           await wait(i === ITEMS.length - 1 ? 1000 : 600)
@@ -146,13 +147,13 @@ export default function AddToCartCard() {
                         className="absolute inset-0 rounded-xl bg-accent/30 will-change-[opacity]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 0.45, 0] }}
-                        transition={{ duration: 1.8, ease: 'easeInOut' }}
+                        transition={{ duration: 1, ease: 'easeInOut' }}
                       />
                       <motion.span
                         className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_8px_rgba(168,85,247,0.25)] will-change-[opacity]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 0.9, 0] }}
-                        transition={{ duration: 1.8, ease: 'easeInOut' }}
+                        transition={{ duration: 1, ease: 'easeInOut' }}
                       />
                     </>
                   )}
@@ -175,7 +176,7 @@ export default function AddToCartCard() {
             <motion.div
               initial={{ top: '0%', opacity: 0 }}
               animate={{ top: '100%', opacity: [0, 1, 0.6, 0] }}
-              transition={{ duration: 0.65, ease: 'easeInOut' }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_16px_rgba(168,85,247,0.9)] z-10 pointer-events-none"
             />
           )}
@@ -199,19 +200,14 @@ export default function AddToCartCard() {
                 >
                   {isAdded ? (
                     <motion.div
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 24 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.38, ease: 'easeOut' }}
                       className="relative flex items-center justify-center w-full"
                     >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 14 }}
-                        className="absolute left-0 w-5 h-5 rounded-full bg-positive/12 flex items-center justify-center"
-                      >
+                      <div className="absolute left-0 w-5 h-5 rounded-full bg-positive/12 flex items-center justify-center">
                         <Check size={10} className="text-positive" />
-                      </motion.div>
+                      </div>
                       <div className="flex flex-col text-center">
                         <span className="text-[11px] text-white/80">Producto agregado</span>
                         <span className="text-[9px] text-white/30">Confirmado</span>
