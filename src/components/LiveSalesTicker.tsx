@@ -51,22 +51,31 @@ function SaleCard({ sale }: { sale: Sale }) {
 }
 
 function MarqueeRow({ sales, reverse = false, duration = 28 }: { sales: Sale[]; reverse?: boolean; duration?: number }) {
-  const duplicated = useMemo(() => [...sales, ...sales], [sales])
+  const content = useMemo(() => (
+    <>
+      {sales.map((sale, i) => (
+        <SaleCard key={`a-${i}`} sale={sale} />
+      ))}
+      {sales.map((sale, i) => (
+        <SaleCard key={`b-${i}`} sale={sale} />
+      ))}
+    </>
+  ), [sales])
 
   return (
     <div className="relative overflow-hidden">
-      {/* Left fade mask */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#0a0a12]/80 to-transparent" />
-      {/* Right fade mask */}
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#0a0a12]/80 to-transparent" />
 
       <div
-        className={`flex w-max gap-2.5 will-change-transform ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
-        style={{ animationDuration: `${duration}s` }}
+        className="flex w-max gap-2.5"
+        style={{
+          animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${duration}s linear infinite`,
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+        }}
       >
-        {duplicated.map((sale, i) => (
-          <SaleCard key={`${sale.initials}-${i}`} sale={sale} />
-        ))}
+        {content}
       </div>
     </div>
   )
@@ -77,7 +86,7 @@ export default function LiveSalesTicker() {
   const row2 = useMemo(() => sales.slice(5).reverse(), [])
 
   return (
-    <div className="group/ticker relative w-full max-w-3xl mx-auto">
+    <div className="relative w-full max-w-3xl mx-auto">
       <div className="flex flex-col gap-3 py-2">
         <MarqueeRow sales={row1} duration={26} />
         <MarqueeRow sales={row2} reverse duration={32} />
