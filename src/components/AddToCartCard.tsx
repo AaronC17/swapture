@@ -149,7 +149,7 @@ export default function AddToCartCard() {
                         transition={{ duration: 1.8, ease: 'easeInOut' }}
                       />
                       <motion.span
-                        className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_12px_rgba(168,85,247,0.35)] will-change-[opacity]"
+                        className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_8px_rgba(168,85,247,0.25)] will-change-[opacity]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 0.9, 0] }}
                         transition={{ duration: 1.8, ease: 'easeInOut' }}
