@@ -174,10 +174,10 @@ export default function AddToCartCard() {
           {/* Arrival scan line */}
           {phase === 'arrived' && (
             <motion.div
-              initial={{ top: '0%', opacity: 0 }}
-              animate={{ top: '100%', opacity: [0, 1, 0.6, 0] }}
+              initial={{ y: -2, opacity: 0 }}
+              animate={{ y: 196, opacity: [0, 1, 0.6, 0] }}
               transition={{ duration: 0.8, ease: 'easeInOut' }}
-              className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_16px_rgba(168,85,247,0.9)] z-10 pointer-events-none"
+              className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_16px_rgba(168,85,247,0.9)] z-10 pointer-events-none will-change-transform"
             />
           )}
 
