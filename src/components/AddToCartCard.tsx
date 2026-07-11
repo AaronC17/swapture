@@ -50,7 +50,7 @@ export default function AddToCartCard() {
           if (!mounted) return
           setActiveIndex(i)
           setPhase('flying')
-          await wait(1400)
+          await wait(1800)
 
           if (!mounted) return
           setPhase('arrived')
@@ -144,13 +144,15 @@ export default function AddToCartCard() {
                     <>
                       <motion.div
                         className="absolute inset-0 rounded-xl bg-accent/30 will-change-[opacity]"
-                        animate={{ opacity: [0.1, 0.45, 0.1] }}
-                        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 0.45, 0] }}
+                        transition={{ duration: 1.8, ease: 'easeInOut' }}
                       />
                       <motion.span
                         className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_12px_rgba(168,85,247,0.35)] will-change-[opacity]"
-                        animate={{ opacity: [0.35, 0.9, 0.35] }}
-                        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 0.9, 0] }}
+                        transition={{ duration: 1.8, ease: 'easeInOut' }}
                       />
                     </>
                   )}

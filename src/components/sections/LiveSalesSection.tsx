@@ -5,7 +5,7 @@ import LiveSalesTicker from '../LiveSalesTicker'
 
 export default function LiveSalesSection() {
   return (
-    <section className="relative py-10 sm:py-16 overflow-hidden">
+    <section className="relative py-10 sm:py-16 pb-12 sm:pb-20 overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 text-center">
         <Reveal>
           <div className="flex items-center justify-center mb-5">
