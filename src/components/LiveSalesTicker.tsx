@@ -56,9 +56,9 @@ function MarqueeRow({ sales, reverse = false, duration = 28 }: { sales: Sale[]; 
   return (
     <div className="relative overflow-hidden">
       {/* Left fade mask */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#0a0a12] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#0a0a12]/70 to-transparent" />
       {/* Right fade mask */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#0a0a12] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#0a0a12]/70 to-transparent" />
 
       <div
         className={`flex w-max gap-2.5 will-change-transform group-hover/ticker:[animation-play-state:paused] ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}

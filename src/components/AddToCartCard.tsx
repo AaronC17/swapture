@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
 import { ShoppingCart, Check, Package } from 'lucide-react'
 
@@ -16,16 +16,10 @@ export default function AddToCartCard() {
   const [activeIndex, setActiveIndex] = useState(-1)
   const [phase, setPhase] = useState<'idle' | 'flying' | 'arrived'>('idle')
   const [cycle, setCycle] = useState(0)
-  const [orbKey, setOrbKey] = useState(0)
 
   const totalMotion = useMotionValue(0)
   const displayTotal = useTransform(totalMotion, (v) => Math.max(0, Math.round(v)))
-  const [displayTotalValue, setDisplayTotalValue] = useState(0)
-
-  useEffect(() => {
-    const unsub = displayTotal.on('change', (v) => setDisplayTotalValue(v))
-    return unsub
-  }, [displayTotal])
+  const totalRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const controls = animate(totalMotion, total, {
@@ -34,6 +28,12 @@ export default function AddToCartCard() {
     })
     return () => controls.stop()
   }, [total, totalMotion])
+
+  useEffect(() => {
+    return displayTotal.on('change', (v) => {
+      if (totalRef.current) totalRef.current.textContent = `¢${v}`
+    })
+  }, [displayTotal])
 
   useEffect(() => {
     let mounted = true
@@ -49,9 +49,8 @@ export default function AddToCartCard() {
         for (let i = 0; i < ITEMS.length; i++) {
           if (!mounted) return
           setActiveIndex(i)
-          setOrbKey((k) => k + 1)
           setPhase('flying')
-          await wait(1000)
+          await wait(1400)
 
           if (!mounted) return
           setPhase('arrived')
@@ -97,10 +96,10 @@ export default function AddToCartCard() {
         >
           <motion.span
             key={addedCount}
-            initial={{ y: -14, opacity: 0, filter: 'blur(4px)' }}
-            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+            initial={{ y: -12, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-            className="text-[11px] font-bold text-accent-light"
+            className="text-[11px] font-bold text-accent-light will-change-transform"
           >
             {addedCount}
           </motion.span>
@@ -109,43 +108,6 @@ export default function AddToCartCard() {
 
       {/* Stage */}
       <div className="relative">
-        {/* Flying orb */}
-        {phase === 'flying' && activeIndex >= 0 && (
-          <motion.div
-            key={orbKey}
-            initial={{
-              left: `${14 + activeIndex * 36}%`,
-              top: 26,
-            }}
-            animate={{
-              left: '50%',
-              top: 164,
-            }}
-            transition={{ duration: 1, ease: [0.22, 0.61, 0.36, 1] }}
-            className="absolute -translate-x-1/2 z-30 pointer-events-none"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 0.75, 0.75, 0], scale: [0.5, 0.9, 0.75, 0.3] }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-              className="relative w-1.5 h-1.5 rounded-full bg-gradient-to-br from-white/90 to-accent-light/80 shadow-[0_0_10px_rgba(200,180,255,0.55)]"
-            >
-              <motion.div
-                className="absolute -inset-1 rounded-full bg-accent/25 blur-sm"
-                initial={{ opacity: 0.35, scale: 1 }}
-                animate={{ opacity: [0.35, 0.15, 0], scale: [1, 1.8, 2.2] }}
-                transition={{ duration: 1, ease: 'easeOut' }}
-              />
-              <motion.div
-                className="absolute -inset-2 rounded-full bg-accent/10 blur-md"
-                initial={{ opacity: 0.2, scale: 1 }}
-                animate={{ opacity: [0.2, 0.06, 0], scale: [1, 2, 2.4] }}
-                transition={{ duration: 1, ease: 'easeOut' }}
-              />
-            </motion.div>
-          </motion.div>
-        )}
-
         {/* Product sources */}
         <div className="flex items-center justify-between mb-8 px-1">
           {ITEMS.map((item, i) => {
@@ -161,7 +123,7 @@ export default function AddToCartCard() {
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className={`relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden ${
                     isActive
-                      ? 'bg-gradient-to-br from-accent/50 to-accent-dim/30 border border-accent/60'
+                      ? 'bg-gradient-to-br from-accent/35 to-accent-dim/25 border border-accent/45'
                       : 'bg-bg/70 border border-white/[0.06]'
                   }`}
                 >
@@ -180,13 +142,16 @@ export default function AddToCartCard() {
 
                   {isActive && (
                     <>
-                      <motion.span
-                        className="absolute inset-0 rounded-xl border border-accent/60"
-                        initial={{ scale: 1, opacity: 0.8 }}
-                        animate={{ scale: 1.45, opacity: 0 }}
-                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeOut' }}
+                      <motion.div
+                        className="absolute inset-0 rounded-xl bg-accent/30 will-change-[opacity]"
+                        animate={{ opacity: [0.1, 0.45, 0.1] }}
+                        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
                       />
-                      <div className="absolute -inset-3 rounded-2xl bg-accent/12 blur-xl" />
+                      <motion.span
+                        className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_12px_rgba(168,85,247,0.35)] will-change-[opacity]"
+                        animate={{ opacity: [0.35, 0.9, 0.35] }}
+                        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                      />
                     </>
                   )}
                 </motion.div>
@@ -201,7 +166,7 @@ export default function AddToCartCard() {
         <motion.div
           animate={phase === 'arrived' ? { scale: [1, 1.015, 1] } : { scale: 1 }}
           transition={{ type: 'spring', stiffness: 500, damping: 18 }}
-          className="relative h-[196px] rounded-2xl bg-bg/60 border border-white/[0.06] p-4 overflow-hidden"
+          className="relative h-[196px] rounded-2xl bg-bg/60 border border-white/[0.06] p-4 overflow-hidden will-change-transform"
         >
           {/* Arrival scan line */}
           {phase === 'arrived' && (
@@ -213,13 +178,13 @@ export default function AddToCartCard() {
             />
           )}
 
-          <div className="space-y-2.5">
+          <div className="flex flex-col justify-center h-full gap-y-2.5">
             {ITEMS.map((item, i) => {
               const isAdded = i < addedCount
 
               return (
                 <motion.div
-                  key={`${cycle}-${item.id}`}
+                  key={item.id}
                   initial={false}
                   animate={{
                     backgroundColor: isAdded ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0)',
@@ -251,8 +216,8 @@ export default function AddToCartCard() {
                       </div>
                     </motion.div>
                   ) : (
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-white/[0.05]" />
+                    <div className="relative flex items-center justify-center w-full">
+                      <div className="absolute left-0 w-5 h-5 rounded-full bg-white/[0.05]" />
                       <div className="flex flex-col gap-1">
                         <div className="w-20 h-2 rounded-full bg-white/[0.06]" />
                         <div className="w-12 h-1.5 rounded-full bg-white/[0.04]" />
@@ -269,8 +234,8 @@ export default function AddToCartCard() {
       {/* Footer total */}
       <div className="relative flex items-center justify-between mt-5 pt-4 border-t border-white/[0.05]">
         <span className="text-[11px] text-muted">Total</span>
-        <span className="text-sm font-semibold font-mono text-white">
-          ¢{displayTotalValue}
+        <span ref={totalRef} className="text-sm font-semibold font-mono text-white">
+          ¢0
         </span>
       </div>
     </div>
