@@ -78,7 +78,7 @@ export default function AddToCartCard() {
   return (
     <div className="relative w-full max-w-[300px] mx-auto overflow-hidden rounded-[24px] border border-border/60 bg-surface/[0.42] p-5 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
       {/* Ambient top glow */}
-      <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full bg-accent/8 blur-[70px]" />
+      <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full bg-accent/8 blur-[40px]" />
 
       {/* Header */}
       <div className="relative flex items-center justify-between mb-6">
@@ -100,7 +100,7 @@ export default function AddToCartCard() {
             initial={{ y: -12, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-            className="text-[11px] font-bold text-accent-light will-change-transform"
+            className="text-[11px] font-bold text-accent-light"
           >
             {addedCount}
           </motion.span>
@@ -144,13 +144,13 @@ export default function AddToCartCard() {
                   {isActive && (
                     <>
                       <motion.div
-                        className="absolute inset-0 rounded-xl bg-accent/30 will-change-[opacity]"
+                        className="absolute inset-0 rounded-xl bg-accent/30"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 0.45, 0] }}
                         transition={{ duration: 1, ease: 'easeInOut' }}
                       />
                       <motion.span
-                        className="absolute inset-0 rounded-xl border border-accent/60 shadow-[0_0_8px_rgba(168,85,247,0.25)] will-change-[opacity]"
+                        className="absolute inset-0 rounded-xl border border-accent/60"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 0.9, 0] }}
                         transition={{ duration: 1, ease: 'easeInOut' }}
@@ -166,18 +166,18 @@ export default function AddToCartCard() {
         </div>
 
         {/* Cart area - fixed height */}
-        <motion.div
-          animate={phase === 'arrived' ? { scale: [1, 1.015, 1] } : { scale: 1 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 18 }}
-          className="relative h-[196px] rounded-2xl bg-bg/60 border border-white/[0.06] p-4 overflow-hidden will-change-transform"
+        <div
+          className="relative h-[196px] rounded-2xl bg-bg/60 border border-white/[0.06] p-4 overflow-hidden"
+          style={{ transform: 'translate3d(0,0,0)' }}
         >
           {/* Arrival scan line */}
           {phase === 'arrived' && (
-            <motion.div
-              initial={{ y: -2, opacity: 0 }}
-              animate={{ y: 196, opacity: [0, 1, 0.6, 0] }}
-              transition={{ duration: 0.8, ease: 'easeInOut' }}
-              className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_16px_rgba(168,85,247,0.9)] z-10 pointer-events-none will-change-transform"
+            <div
+              className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent z-10 pointer-events-none"
+              style={{
+                animation: 'scanDown 0.8s ease-in-out forwards',
+                transform: 'translate3d(0,0,0)',
+              }}
             />
           )}
 
@@ -186,25 +186,14 @@ export default function AddToCartCard() {
               const isAdded = i < addedCount
 
               return (
-                <motion.div
+                <div
                   key={item.id}
-                  initial={false}
-                  animate={{
-                    backgroundColor: isAdded ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0)',
-                    borderColor: isAdded ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.05)',
-                  }}
-                  transition={{ duration: 0.35, ease: 'easeOut' }}
-                  className={`flex items-center justify-center py-2 px-3 rounded-xl border ${
-                    isAdded ? 'border-white/[0.06]' : 'border-dashed border-white/[0.05]'
+                  className={`flex items-center justify-center py-2 px-3 rounded-xl border transition-colors duration-300 ${
+                    isAdded ? 'bg-white/[0.04] border-white/[0.06]' : 'border-dashed border-white/[0.05]'
                   }`}
                 >
                   {isAdded ? (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.38, ease: 'easeOut' }}
-                      className="relative flex items-center justify-center w-full"
-                    >
+                    <div className="relative flex items-center justify-center w-full opacity-0 animate-[fadeIn_0.38s_ease-out_forwards]">
                       <div className="absolute left-0 w-5 h-5 rounded-full bg-positive/12 flex items-center justify-center">
                         <Check size={10} className="text-positive" />
                       </div>
@@ -212,7 +201,7 @@ export default function AddToCartCard() {
                         <span className="text-[11px] text-white/80">Producto agregado</span>
                         <span className="text-[9px] text-white/30">Confirmado</span>
                       </div>
-                    </motion.div>
+                    </div>
                   ) : (
                     <div className="relative flex items-center justify-center w-full">
                       <div className="absolute left-0 w-5 h-5 rounded-full bg-white/[0.05]" />
@@ -222,11 +211,11 @@ export default function AddToCartCard() {
                       </div>
                     </div>
                   )}
-                </motion.div>
+                </div>
               )
             })}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Footer total */}

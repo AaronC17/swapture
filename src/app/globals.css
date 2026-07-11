@@ -211,6 +211,18 @@
   50% { top: 88%; }
 }
 
+@keyframes scanDown {
+  0% { transform: translateY(-2px); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(196px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .modal-overlay {
   animation: modalFadeIn 0.25s ease both;
 }
