@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
-import { ShoppingCart, Check, Package } from 'lucide-react'
+import { ShoppingCart, Check, Package, LayoutDashboard } from 'lucide-react'
 
 const ITEMS = [
   { id: 1, price: 5200 },
@@ -14,8 +14,9 @@ export default function AddToCartCard() {
   const [addedCount, setAddedCount] = useState(0)
   const [total, setTotal] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1)
-  const [phase, setPhase] = useState<'idle' | 'flying' | 'arrived'>('idle')
+  const [phase, setPhase] = useState<'idle' | 'flying' | 'arrived' | 'synced'>('idle')
   const [cycle, setCycle] = useState(0)
+  const [showDashboard, setShowDashboard] = useState(false)
 
   const totalMotion = useMotionValue(0)
   const displayTotal = useTransform(totalMotion, (v) => Math.max(0, Math.round(v)))
@@ -44,6 +45,7 @@ export default function AddToCartCard() {
         setTotal(0)
         setActiveIndex(-1)
         setPhase('idle')
+        setShowDashboard(false)
         await wait(600)
 
         for (let i = 0; i < ITEMS.length; i++) {
@@ -64,7 +66,11 @@ export default function AddToCartCard() {
           }
         }
 
-        await wait(1500)
+        if (!mounted) return
+        await wait(800)
+        setPhase('synced')
+        setShowDashboard(true)
+        await wait(2500)
         setCycle((c) => c + 1)
       }
     }
@@ -225,6 +231,19 @@ export default function AddToCartCard() {
           ¢0
         </span>
       </div>
+
+      {/* Dashboard sync indicator */}
+      {showDashboard && (
+        <div className="opacity-0 animate-[fadeIn_0.4s_ease-out_forwards] mt-3 pt-3 border-t border-white/[0.05]">
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center w-5 h-5 rounded-md bg-accent/15">
+              <LayoutDashboard size={11} className="text-accent-light" />
+            </div>
+            <span className="text-[10px] text-accent-light/80">Guardado en dashboard</span>
+            <Check size={10} className="text-positive" />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
