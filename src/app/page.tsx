@@ -1,6 +1,8 @@
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/sections/Hero'
+import LiveSalesSection from '@/components/sections/LiveSalesSection'
 import System from '@/components/sections/System'
+import ScannerFeature from '@/components/sections/ScannerFeature'
 import Sectors from '@/components/sections/Sectors'
 import Comparison from '@/components/sections/Comparison'
 import Process from '@/components/sections/Process'
@@ -18,7 +20,11 @@ export default function Home() {
       <main>
         <Hero />
         <SectionDivider />
+        <LiveSalesSection />
+        <SectionDivider />
         <System />
+        <SectionDivider />
+        <ScannerFeature />
         <SectionDivider />
         <Comparison />
         <SectionDivider />

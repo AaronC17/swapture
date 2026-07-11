@@ -206,6 +206,11 @@
   100% { opacity: 1; transform: scale(1); }
 }
 
+@keyframes scan {
+  0%, 100% { top: 6%; }
+  50% { top: 88%; }
+}
+
 .modal-overlay {
   animation: modalFadeIn 0.25s ease both;
 }

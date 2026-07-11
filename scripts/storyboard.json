@@ -1,0 +1,158 @@
+{
+  "title": "Swapture — Sistemas que capturan ingresos",
+  "totalDuration": 32,
+  "voice": "onyx",
+  "language": "es",
+  "beats": [
+    {
+      "id": "intro-question",
+      "start": 0,
+      "end": 3,
+      "layout": "center",
+      "screen": "full-text",
+      "text": "¿Cuántos pedidos se te pierden al día?",
+      "subtext": null,
+      "voiceover": "Cada pedido que se pierde… es dinero que se va.",
+      "video": null,
+      "sfx": [
+        { "type": "tick", "at": 0.0 },
+        { "type": "tick", "at": 0.5 },
+        { "type": "tick", "at": 1.0 },
+        { "type": "tick", "at": 1.5 },
+        { "type": "tick", "at": 2.0 },
+        { "type": "tick", "at": 2.5 }
+      ]
+    },
+    {
+      "id": "logo-reveal",
+      "start": 3,
+      "end": 5,
+      "layout": "center",
+      "screen": "logo",
+      "text": "Swapture",
+      "subtext": "Sistemas que capturan ingresos",
+      "voiceover": "Swapture convierte tu web en una máquina de captar ingresos.",
+      "video": null,
+      "sfx": [
+        { "type": "whoosh", "at": 0.0 },
+        { "type": "impact", "at": 1.2 }
+      ]
+    },
+    {
+      "id": "phone-splash",
+      "start": 5,
+      "end": 7,
+      "layout": "split",
+      "screen": "phone",
+      "text": "Tu cliente entra a tu sitio",
+      "subtext": "Experiencia móvil pensada para convertir",
+      "voiceover": "Tu cliente entra a tu sitio…",
+      "video": "customer",
+      "sfx": [
+        { "type": "swoosh", "at": 0.0 }
+      ]
+    },
+    {
+      "id": "phone-form",
+      "start": 7,
+      "end": 10,
+      "layout": "split",
+      "screen": "phone",
+      "text": "Te escribe directo",
+      "subtext": "Formulario de contacto que captura leads",
+      "voiceover": "…te escribe directo,",
+      "video": "customer",
+      "sfx": [
+        { "type": "keyboard", "at": 0.0 },
+        { "type": "ding", "at": 2.2 }
+      ]
+    },
+    {
+      "id": "phone-menu",
+      "start": 10,
+      "end": 12,
+      "layout": "split",
+      "screen": "phone",
+      "text": "Elige su burger favorita",
+      "subtext": "Menú digital claro y rápido",
+      "voiceover": "elige su burger favorita,",
+      "video": "customer",
+      "sfx": [
+        { "type": "tap", "at": 0.2 }
+      ]
+    },
+    {
+      "id": "phone-cart",
+      "start": 12,
+      "end": 15,
+      "layout": "split",
+      "screen": "phone",
+      "text": "Agrega al carrito en un toque",
+      "subtext": "2× burger · ₡7.800",
+      "voiceover": "la agrega al carrito en un toque,",
+      "video": "customer",
+      "sfx": [
+        { "type": "pop", "at": 0.3 },
+        { "type": "ding-cart", "at": 1.5 }
+      ]
+    },
+    {
+      "id": "phone-checkout",
+      "start": 15,
+      "end": 19,
+      "layout": "split",
+      "screen": "phone",
+      "text": "Pide en segundos",
+      "subtext": "Sin apps. Sin fricción. Directo a WhatsApp.",
+      "voiceover": "y pide en segundos. Sin apps, sin fricción.",
+      "video": "customer",
+      "sfx": [
+        { "type": "keyboard", "at": 0.2 },
+        { "type": "cha-ching", "at": 2.8 }
+      ]
+    },
+    {
+      "id": "transition-admin",
+      "start": 19,
+      "end": 21,
+      "layout": "split",
+      "screen": "admin",
+      "text": "Y tú, desde tu panel…",
+      "subtext": "Todo lo que ocurre en tu web, en tiempo real",
+      "voiceover": "Y tú, desde tu panel…",
+      "video": "admin",
+      "sfx": [
+        { "type": "whoosh", "at": 0.0 }
+      ]
+    },
+    {
+      "id": "admin-dashboard",
+      "start": 21,
+      "end": 27,
+      "layout": "split",
+      "screen": "admin",
+      "text": "Todo organizado, todo capturado",
+      "subtext": "Leads, pedidos y métricas en un solo lugar",
+      "voiceover": "ves el pedido al instante. Todo organizado, todo capturado.",
+      "video": "admin",
+      "sfx": [
+        { "type": "ding-admin", "at": 0.5 },
+        { "type": "swell", "at": 1.0 }
+      ]
+    },
+    {
+      "id": "cta-final",
+      "start": 27,
+      "end": 32,
+      "layout": "center",
+      "screen": "cta",
+      "text": "Swapture.",
+      "subtext": "Sistemas que capturan ingresos. Activa el tuyo hoy.",
+      "voiceover": "Swapture. Sistemas que capturan ingresos. Activa el tuyo hoy.",
+      "video": null,
+      "sfx": [
+        { "type": "impact-final", "at": 0.4 }
+      ]
+    }
+  ]
+}

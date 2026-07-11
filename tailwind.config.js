@@ -39,6 +39,7 @@ module.exports = {
         'scroll-line': 'scroll-line 2s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'marquee': 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee 30s linear infinite reverse',
       },
       keyframes: {
         'pulse-dot': {

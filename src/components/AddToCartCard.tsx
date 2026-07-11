@@ -1,0 +1,282 @@
+﻿'use client'
+
+import { useEffect, useState } from 'react'
+import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
+import { ShoppingCart, Check, Package } from 'lucide-react'
+
+const ITEMS = [
+  { id: 1, price: 5200 },
+  { id: 2, price: 3800 },
+  { id: 3, price: 6400 },
+]
+
+export default function AddToCartCard() {
+  const [addedCount, setAddedCount] = useState(0)
+  const [total, setTotal] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const [phase, setPhase] = useState<'idle' | 'flying' | 'arrived'>('idle')
+  const [cycle, setCycle] = useState(0)
+  const [orbKey, setOrbKey] = useState(0)
+
+  const totalMotion = useMotionValue(0)
+  const displayTotal = useTransform(totalMotion, (v) => Math.max(0, Math.round(v)))
+  const [displayTotalValue, setDisplayTotalValue] = useState(0)
+
+  useEffect(() => {
+    const unsub = displayTotal.on('change', (v) => setDisplayTotalValue(v))
+    return unsub
+  }, [displayTotal])
+
+  useEffect(() => {
+    const controls = animate(totalMotion, total, {
+      duration: total === 0 ? 0.35 : 0.5,
+      ease: 'easeOut',
+    })
+    return () => controls.stop()
+  }, [total, totalMotion])
+
+  useEffect(() => {
+    let mounted = true
+
+    const runCycle = async () => {
+      while (mounted) {
+        setAddedCount(0)
+        setTotal(0)
+        setActiveIndex(-1)
+        setPhase('idle')
+        await wait(600)
+
+        for (let i = 0; i < ITEMS.length; i++) {
+          if (!mounted) return
+          setActiveIndex(i)
+          setOrbKey((k) => k + 1)
+          setPhase('flying')
+          await wait(1000)
+
+          if (!mounted) return
+          setPhase('arrived')
+          setAddedCount((c) => c + 1)
+          setTotal((t) => t + ITEMS[i].price)
+          await wait(i === ITEMS.length - 1 ? 1000 : 600)
+          if (i !== ITEMS.length - 1) {
+            setPhase('idle')
+            await wait(300)
+          }
+        }
+
+        await wait(1500)
+        setCycle((c) => c + 1)
+      }
+    }
+
+    runCycle()
+    return () => {
+      mounted = false
+    }
+  }, [cycle])
+
+  return (
+    <div className="relative w-full max-w-[300px] mx-auto overflow-hidden rounded-[24px] border border-border/60 bg-surface/[0.42] p-5 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
+      {/* Ambient top glow */}
+      <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full bg-accent/8 blur-[70px]" />
+
+      {/* Header */}
+      <div className="relative flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-accent/30 to-accent-dim/20 border border-accent/25 flex items-center justify-center overflow-hidden">
+            <ShoppingCart size={16} className="text-accent-light relative z-10" />
+            <div className="absolute inset-0 bg-accent/10 blur-md" />
+          </div>
+          <span className="text-xs font-medium text-white/80 tracking-tight">Pedido en curso</span>
+        </div>
+
+        <motion.div
+          animate={phase === 'arrived' ? { scale: [1, 1.18, 1] } : { scale: 1 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 12 }}
+          className="relative min-w-[26px] h-6 px-1.5 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center overflow-hidden"
+        >
+          <motion.span
+            key={addedCount}
+            initial={{ y: -14, opacity: 0, filter: 'blur(4px)' }}
+            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+            transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+            className="text-[11px] font-bold text-accent-light"
+          >
+            {addedCount}
+          </motion.span>
+        </motion.div>
+      </div>
+
+      {/* Stage */}
+      <div className="relative">
+        {/* Flying orb */}
+        {phase === 'flying' && activeIndex >= 0 && (
+          <motion.div
+            key={orbKey}
+            initial={{
+              left: `${14 + activeIndex * 36}%`,
+              top: 26,
+            }}
+            animate={{
+              left: '50%',
+              top: 164,
+            }}
+            transition={{ duration: 1, ease: [0.22, 0.61, 0.36, 1] }}
+            className="absolute -translate-x-1/2 z-30 pointer-events-none"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: [0, 0.75, 0.75, 0], scale: [0.5, 0.9, 0.75, 0.3] }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              className="relative w-1.5 h-1.5 rounded-full bg-gradient-to-br from-white/90 to-accent-light/80 shadow-[0_0_10px_rgba(200,180,255,0.55)]"
+            >
+              <motion.div
+                className="absolute -inset-1 rounded-full bg-accent/25 blur-sm"
+                initial={{ opacity: 0.35, scale: 1 }}
+                animate={{ opacity: [0.35, 0.15, 0], scale: [1, 1.8, 2.2] }}
+                transition={{ duration: 1, ease: 'easeOut' }}
+              />
+              <motion.div
+                className="absolute -inset-2 rounded-full bg-accent/10 blur-md"
+                initial={{ opacity: 0.2, scale: 1 }}
+                animate={{ opacity: [0.2, 0.06, 0], scale: [1, 2, 2.4] }}
+                transition={{ duration: 1, ease: 'easeOut' }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Product sources */}
+        <div className="flex items-center justify-between mb-8 px-1">
+          {ITEMS.map((item, i) => {
+            const isActive = activeIndex === i && phase === 'flying'
+            const isDone = i < addedCount
+
+            return (
+              <div key={item.id} className="relative flex flex-col items-center gap-1.5">
+                <motion.div
+                  animate={{
+                    opacity: isDone ? 0.45 : 1,
+                  }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className={`relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden ${
+                    isActive
+                      ? 'bg-gradient-to-br from-accent/50 to-accent-dim/30 border border-accent/60'
+                      : 'bg-bg/70 border border-white/[0.06]'
+                  }`}
+                >
+                  {isDone ? (
+                    <motion.div
+                      initial={{ scale: 0, rotate: -45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 16 }}
+                      className="w-5 h-5 rounded-full bg-positive/18 flex items-center justify-center"
+                    >
+                      <Check size={10} className="text-positive" />
+                    </motion.div>
+                  ) : (
+                    <Package size={16} className="text-white/40" />
+                  )}
+
+                  {isActive && (
+                    <>
+                      <motion.span
+                        className="absolute inset-0 rounded-xl border border-accent/60"
+                        initial={{ scale: 1, opacity: 0.8 }}
+                        animate={{ scale: 1.45, opacity: 0 }}
+                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeOut' }}
+                      />
+                      <div className="absolute -inset-3 rounded-2xl bg-accent/12 blur-xl" />
+                    </>
+                  )}
+                </motion.div>
+
+                <span className="text-[11px] text-white/30 font-mono">¢{item.price}</span>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Cart area - fixed height */}
+        <motion.div
+          animate={phase === 'arrived' ? { scale: [1, 1.015, 1] } : { scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+          className="relative h-[196px] rounded-2xl bg-bg/60 border border-white/[0.06] p-4 overflow-hidden"
+        >
+          {/* Arrival scan line */}
+          {phase === 'arrived' && (
+            <motion.div
+              initial={{ top: '0%', opacity: 0 }}
+              animate={{ top: '100%', opacity: [0, 1, 0.6, 0] }}
+              transition={{ duration: 0.65, ease: 'easeInOut' }}
+              className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_16px_rgba(168,85,247,0.9)] z-10 pointer-events-none"
+            />
+          )}
+
+          <div className="space-y-2.5">
+            {ITEMS.map((item, i) => {
+              const isAdded = i < addedCount
+
+              return (
+                <motion.div
+                  key={`${cycle}-${item.id}`}
+                  initial={false}
+                  animate={{
+                    backgroundColor: isAdded ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0)',
+                    borderColor: isAdded ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.05)',
+                  }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className={`flex items-center justify-center py-2 px-3 rounded-xl border ${
+                    isAdded ? 'border-white/[0.06]' : 'border-dashed border-white/[0.05]'
+                  }`}
+                >
+                  {isAdded ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 24 }}
+                      className="relative flex items-center justify-center w-full"
+                    >
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 14 }}
+                        className="absolute left-0 w-5 h-5 rounded-full bg-positive/12 flex items-center justify-center"
+                      >
+                        <Check size={10} className="text-positive" />
+                      </motion.div>
+                      <div className="flex flex-col text-center">
+                        <span className="text-[11px] text-white/80">Producto agregado</span>
+                        <span className="text-[9px] text-white/30">Confirmado</span>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-white/[0.05]" />
+                      <div className="flex flex-col gap-1">
+                        <div className="w-20 h-2 rounded-full bg-white/[0.06]" />
+                        <div className="w-12 h-1.5 rounded-full bg-white/[0.04]" />
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Footer total */}
+      <div className="relative flex items-center justify-between mt-5 pt-4 border-t border-white/[0.05]">
+        <span className="text-[11px] text-muted">Total</span>
+        <span className="text-sm font-semibold font-mono text-white">
+          ¢{displayTotalValue}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
